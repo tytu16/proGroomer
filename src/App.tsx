@@ -38,7 +38,7 @@ import CreateFamily from './pages/CreateFamily/CreateFamily';
 
 interface AppState {
   families: Array<BaseFamily>,
-  maxFamilyIndex: number
+  topIndex: number
 }
 
 export default class App extends React.Component<any,AppState> {
@@ -47,26 +47,36 @@ export default class App extends React.Component<any,AppState> {
     super(props);
     this.state = {
       families: [],
-      maxFamilyIndex: 0
+      topIndex: 0
     }
   }
 
   onNewFamily = (familyName: string) => {
     let currentState: AppState = this.state;
     const newFamily = new BaseFamily({
-      id: currentState.maxFamilyIndex + 1,
+      id: currentState.topIndex + 1,
       familyName
     })
     currentState.families.push(newFamily);
-    let newIndex = currentState.maxFamilyIndex + 1
+    let newIndex = currentState.topIndex + 1
     this.setState({
       families: currentState.families,
-      maxFamilyIndex: newIndex
+      topIndex: newIndex
     });
   }
 
   onCreateFamily = (newFamily: BaseFamily) => {
     console.log('creating family');
+    let localState: AppState = this.state;
+
+    localState.families.push(newFamily);
+    let newIndex = localState.topIndex+1
+
+    this.setState({
+      families: localState.families,
+      topIndex: newIndex,
+
+    })
   }
 
   render() {
@@ -76,9 +86,9 @@ export default class App extends React.Component<any,AppState> {
         <IonTabs>
           <IonRouterOutlet>
             <Route exact path="/families">
-              <FamiliesTab families={this.state.families} onCreateFamily={this.onCreateFamily} onNewFamily={this.onNewFamily} />
+              <FamiliesTab currentIndex={this.state.topIndex} families={this.state.families} onCreateFamily={this.onCreateFamily} onNewFamily={this.onNewFamily} />
               <Route exact path="/families/createFamily" >
-                <CreateFamily onCreateFamily={this.onCreateFamily}/>
+                <CreateFamily index={this.state.topIndex} onCreateFamily={this.onCreateFamily}/>
               </Route>
             </Route>
 

@@ -1,14 +1,19 @@
-import { IonContent, IonFab, IonFabButton, IonHeader, IonIcon, IonPage, IonRouterOutlet, IonTitle, IonToolbar } from '@ionic/react';
-import { personAdd } from 'ionicons/icons';
+import {IonPage, IonRouterOutlet } from '@ionic/react';
 import React from 'react';
 import './FamiliesTab.css';
 
-import { FamiliesState, FamiliesTabProps } from '../../interfaces/FamilyInterface';
-import FamilyRow from '../../components/FamilyRow/FamilyRow';
+import { FamiliesState } from '../../interfaces/FamilyInterface';
 import FamilyList from '../FamilyList/FamilyList';
-import { IonReactRouter } from '@ionic/react-router';
-import { Redirect, Route } from 'react-router';
+import { Route } from 'react-router';
 import CreateFamily from '../CreateFamily/CreateFamily';
+import BaseFamily from '../../models/baseFamily';
+
+export interface FamiliesTabProps{
+  families: Array<BaseFamily>,
+  currentIndex: number
+  onNewFamily: (family: string) => void,
+  onCreateFamily: (family: BaseFamily) => void
+}
 
 export default class FamiliesTab extends React.Component<FamiliesTabProps,FamiliesState> {
   
@@ -20,15 +25,15 @@ export default class FamiliesTab extends React.Component<FamiliesTabProps,Famili
   }
 
   render() {
-    const { onNewFamily, families, onCreateFamily } = this.props;
+    const { onNewFamily, families, currentIndex, onCreateFamily } = this.props;
     return (
       <IonPage>
           <IonRouterOutlet>
             <Route exact path="/families">
               <FamilyList families={families} onNewFamily={onNewFamily} />
-            </Route>
-            <Route exact path="/families/createFamily" >
-              <CreateFamily onCreateFamily={onCreateFamily}/>
+              <Route exact path="/families/createFamily" >
+                <CreateFamily index={currentIndex} onCreateFamily={onCreateFamily}/>
+              </Route>
             </Route>
           </IonRouterOutlet>
       </IonPage>
