@@ -5,7 +5,7 @@ import './FamilyList.css';
 
 import { FamiliesState, FamiliesProps } from '../../interfaces/FamilyInterface';
 import FamilyRow from '../../components/FamilyRow/FamilyRow';
-import BaseFamily from '../../models/baseFamily';
+import { FamilyInfo } from '../../models/FamilyInfo';
 
 export default class FamilyList extends React.Component<FamiliesProps,FamiliesState> {
   
@@ -37,7 +37,7 @@ export default class FamilyList extends React.Component<FamiliesProps,FamiliesSt
           {
             familiesToDisplay ? (
               <>{
-                families.map(( family: BaseFamily ) => {
+                families.map(( family: FamilyInfo ) => {
                     return (
                         <FamilyRow family={family.familyName} text={familyText}/>
                     );

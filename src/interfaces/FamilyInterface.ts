@@ -1,11 +1,11 @@
-import BaseFamily from "../models/baseFamily";
+import { FamilyInfo } from "../models/FamilyInfo";
 
 export interface FamiliesProps {
-    families: Array<BaseFamily>,
+    families: Array<FamilyInfo>,
     onNewFamily: (family: string) => void,
 }
 
 
 export interface FamiliesState {
-    families: Array<BaseFamily>;
+    families: Array<FamilyInfo>;
 }

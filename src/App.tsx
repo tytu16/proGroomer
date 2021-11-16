@@ -33,11 +33,11 @@ import '@ionic/react/css/display.css';
 /* Theme variables */
 import './theme/variables.css';
 import React from 'react';
-import BaseFamily from './models/baseFamily';
 import CreateFamily from './pages/CreateFamily/CreateFamily';
+import { FamilyInfo } from './models/FamilyInfo';
 
 interface AppState {
-  families: Array<BaseFamily>,
+  families: Array<FamilyInfo>,
   topIndex: number
 }
 
@@ -53,7 +53,7 @@ export default class App extends React.Component<any,AppState> {
 
   onNewFamily = (familyName: string) => {
     let currentState: AppState = this.state;
-    const newFamily = new BaseFamily({
+    const newFamily = new FamilyInfo({
       id: currentState.topIndex + 1,
       familyName
     })
@@ -65,7 +65,7 @@ export default class App extends React.Component<any,AppState> {
     });
   }
 
-  onCreateFamily = (newFamily: BaseFamily) => {
+  onCreateFamily = (newFamily: FamilyInfo) => {
     console.log('creating family');
     let localState: AppState = this.state;
 

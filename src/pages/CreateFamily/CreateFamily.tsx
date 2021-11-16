@@ -1,11 +1,11 @@
 import { IonButton, IonCol, IonGrid, IonInput, IonRow, IonText } from "@ionic/react";
-import BaseFamily from "../../models/baseFamily";
 import {useForm } from 'react-hook-form'
 
 import './CreateFamily.css'; 
+import { FamilyInfo } from "../../models/FamilyInfo";
 
 export interface CreateFamilyProps {
-    onCreateFamily: (family: BaseFamily) => void,
+    onCreateFamily: (family: FamilyInfo) => void,
     index: number
 }
 
@@ -22,7 +22,7 @@ const CreateFamily = (props: CreateFamilyProps) => {
 
     const onSubmit = (data: any) => {
         console.log(data);
-        let newFamily = new BaseFamily({
+        let newFamily = new FamilyInfo({
             familyName: data.familyName,
             id: index+1
         })
