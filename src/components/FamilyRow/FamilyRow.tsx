@@ -1,14 +1,20 @@
+import { IonButton } from '@ionic/react';
+import { FamilyInfo } from '../../models/FamilyInfo';
 import './FamilyRow.css';
 
 interface FamilyRowProps {
-  family: string;
+  family: FamilyInfo;
   text: string;
 }
 
 const FamilyRow: React.FC<FamilyRowProps> = ({ family, text }) => {
   return (
     <div>
-      <p>{text} <strong>{family}</strong></p>
+      <h1>
+        <IonButton routerLink={"/families/details:"+family.id}>
+          {text} - <strong>{family.familyName}</strong>
+        </IonButton>
+      </h1>
     </div>
   );
 };

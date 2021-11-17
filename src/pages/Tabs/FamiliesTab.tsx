@@ -7,6 +7,8 @@ import FamilyList from '../FamilyList/FamilyList';
 import { Route } from 'react-router';
 import CreateFamily from '../CreateFamily/CreateFamily';
 import { FamilyInfo } from '../../models/FamilyInfo';
+import FamilyDetails from '../FamilyDetails/FamilyDetails';
+import FamilyDetail from '../FamilyDetails/FamilyDetails';
 
 export interface FamiliesTabProps{
   families: Array<FamilyInfo>,
@@ -28,14 +30,19 @@ export default class FamiliesTab extends React.Component<FamiliesTabProps,Famili
     const { onNewFamily, families, currentIndex, onCreateFamily } = this.props;
     return (
       <IonPage>
-          <IonRouterOutlet>
-            <Route exact path="/families">
-              <FamilyList families={families} onNewFamily={onNewFamily} />
-              <Route exact path="/families/createFamily" >
-                <CreateFamily index={currentIndex} onCreateFamily={onCreateFamily}/>
-              </Route>
+        <IonRouterOutlet>
+          <Route exact path="/families">
+            <FamilyList families={families} onNewFamily={onNewFamily} />
+            <Route exact path="/families/createFamily" >
+              <CreateFamily index={currentIndex} onCreateFamily={onCreateFamily}/>
             </Route>
-          </IonRouterOutlet>
+            <Route exact path="/families/details:id" render={({match}) => (
+              <FamilyDetail family={families.find( f => ':'+f.id.toString == match.params.id) || new FamilyInfo({})}
+              />
+            )}
+            />
+          </Route>
+        </IonRouterOutlet>
       </IonPage>
     );
   }

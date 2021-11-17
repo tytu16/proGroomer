@@ -39,7 +39,7 @@ export default class FamilyList extends React.Component<FamiliesProps,FamiliesSt
               <>{
                 families.map(( family: FamilyInfo ) => {
                     return (
-                        <FamilyRow family={family.familyName} text={familyText}/>
+                        <FamilyRow key={family.id} family={family} text={familyText}/>
                     );
                 })
                 }

@@ -41,7 +41,7 @@ export default class CalendarsTab extends React.Component<FamiliesProps,Families
                 {
                   families.map(( family ) => {
                     return (
-                      <FamilyRow family={family.familyName} text={calendarText}/>
+                      <FamilyRow key={family.id} family={family} text={calendarText}/>
                   );})
                 }
               </>

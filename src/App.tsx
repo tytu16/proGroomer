@@ -35,6 +35,7 @@ import './theme/variables.css';
 import React from 'react';
 import CreateFamily from './pages/CreateFamily/CreateFamily';
 import { FamilyInfo } from './models/FamilyInfo';
+import FamilyDetail from './pages/FamilyDetails/FamilyDetails';
 
 interface AppState {
   families: Array<FamilyInfo>,
@@ -90,6 +91,15 @@ export default class App extends React.Component<any,AppState> {
               <Route exact path="/families/createFamily" >
                 <CreateFamily index={this.state.topIndex} onCreateFamily={this.onCreateFamily}/>
               </Route>
+              <Route exact path="/families/details:id" render={({match}) => (
+                <FamilyDetail family={this.state.families.find( f =>  ':'+f.id.toString() == match.params.id ) 
+                  || new FamilyInfo({
+                    familyName: "defaultFam",
+                    id: -1
+                  }
+                )}/>
+              )}
+              />
             </Route>
 
             <Route exact path="/calendars">

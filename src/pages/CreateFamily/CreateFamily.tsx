@@ -3,6 +3,8 @@ import {useForm } from 'react-hook-form'
 
 import './CreateFamily.css'; 
 import { FamilyInfo } from "../../models/FamilyInfo";
+import { HumanInfo } from "../../models/HumanInfo";
+import { useHistory } from "react-router";
 
 export interface CreateFamilyProps {
     onCreateFamily: (family: FamilyInfo) => void,
@@ -15,6 +17,7 @@ export interface CreateFamilyState {
 
 const CreateFamily = (props: CreateFamilyProps) => {
     const { onCreateFamily, index } = props;
+    const history  = useHistory();
     const { register, handleSubmit, formState: { errors } } = useForm({
         mode: "onTouched",
         reValidateMode: "onChange"
@@ -22,11 +25,17 @@ const CreateFamily = (props: CreateFamilyProps) => {
 
     const onSubmit = (data: any) => {
         console.log(data);
+        let newHuman: HumanInfo = new HumanInfo({
+            firstName: data.firstName,
+            lastName:  data.lastName,
+        })
         let newFamily = new FamilyInfo({
             familyName: data.familyName,
+            humans: [newHuman],
             id: index+1
         })
         onCreateFamily(newFamily);
+        history.goBack();
     }
 
     return (
@@ -37,7 +46,9 @@ const CreateFamily = (props: CreateFamilyProps) => {
                     <p>creating la fambam</p>
                     <form onSubmit={handleSubmit(onSubmit)}>
                         <IonInput class="input-field" placeholder="Family Name" {...register("familyName", {required: true})} />
-                        <IonButton type="submit" routerLink="/families">Submit Family</IonButton>
+                        <IonInput class="input-field" placeholder="Human's first name" {...register("firstName", {required: true})} />
+                        <IonInput class="input-field" placeholder="Human's last name" {...register("lastName", {required: true})} />
+                        <IonButton type="submit">Submit Family</IonButton>
                     </form>
                 </IonCol>
             </IonRow>

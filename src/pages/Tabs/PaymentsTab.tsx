@@ -40,7 +40,7 @@ export default class PaymentsTab extends React.Component<FamiliesProps, Families
                 {
                   families.map(( family ) => {
                     return (
-                      <FamilyRow family={family.familyName} text={paymentText}/>
+                      <FamilyRow key={family.id} family={family} text={paymentText}/>
                   );})
                 }
               </>
