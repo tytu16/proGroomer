@@ -37,7 +37,7 @@ export default class FamiliesTab extends React.Component<FamiliesTabProps,Famili
               <CreateFamily index={currentIndex} onCreateFamily={onCreateFamily}/>
             </Route>
             <Route exact path="/families/details:id" render={({match}) => (
-              <FamilyDetail family={families.find( f => ':'+f.id.toString == match.params.id) || new FamilyInfo({})}
+              <FamilyDetail family={families.find( f => ':'+f.id.toString() == match.params.id) || new FamilyInfo({})}
               />
             )}
             />

@@ -6,6 +6,7 @@ import './FamilyList.css';
 import { FamiliesState, FamiliesProps } from '../../interfaces/FamilyInterface';
 import FamilyRow from '../../components/FamilyRow/FamilyRow';
 import { FamilyInfo } from '../../models/FamilyInfo';
+import FamilyTabEmptyState from '../../components/FamilyTabEmptyState';
 
 export default class FamilyList extends React.Component<FamiliesProps,FamiliesState> {
   
@@ -46,8 +47,7 @@ export default class FamilyList extends React.Component<FamiliesProps,FamiliesSt
               </>
             ) : (
               <>
-                <h1> Looks like you don't have any families yet,</h1>
-                <h2> Press the button below to get started.</h2>
+                <FamilyTabEmptyState />
               </>
             )
           }
