@@ -4,6 +4,11 @@ import { PetInfo } from "./PetInfo";
 export class FamilyInfo {
     private _id: number;
     private _familyName: string;
+    private _addrOne: string;
+    private _addrTwo: string;
+    private _addrCity: string;
+    private _addrState: string;
+    private _addrZip: string;
     private _humans: HumanInfo[];
     private _pets: PetInfo[];
 
@@ -12,6 +17,52 @@ export class FamilyInfo {
         this._familyName = data.familyName;
         this._humans = data.humans;
         this._pets = data.pets;
+        this._addrOne =  data.addrOne;
+        this._addrTwo = data.addrTwo;
+        this._addrCity = data.addrCity;
+        this._addrState = data.addrState;
+        this._addrZip = data.addrZip;
+    }
+
+    get addrOne(){
+        return this._addrOne
+    }
+
+    set addrOne(addrOne: string){
+        this._addrOne = addrOne;
+    }
+
+    get addrTwo(){
+        return this._addrTwo
+    }
+
+    set addrTwo(addrTwo: string){
+        this._addrTwo = addrTwo;
+    }
+
+    get addrCity(){
+        return this._addrCity
+    }
+
+    set addrCity(addrCity: string){
+        this._addrCity = addrCity;
+    }
+
+    get addrState(){
+        return this._addrState;
+    }
+
+    set addrState(addrState: string){
+        this._addrState = addrState;
+    }
+
+
+    get addrZip(){
+        return this._addrZip;
+    }
+
+    set addrZip(addrZip: string){
+        this._addrZip = addrZip; 
     }
 
     get id(): number{
