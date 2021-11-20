@@ -1,13 +1,13 @@
 import { IonButton, IonCol, IonGrid, IonInput, IonRow, IonSlide } from "@ionic/react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { PetInfo } from "../../models/PetInfo";
 import "./Questions.css";
 
 export interface PetQuestionsProps{
-    anotherPet: () => void,
+    anotherPet: (petInfo: PetInfo) => void,
     backToHumans: () => void,
-    submitFamily: (petInfo: PetInfo) => void,
-
+    submitFamily: (petInfo: PetInfo | null) => void,
 }
 
 const PetQuestions = (props: PetQuestionsProps) => {
@@ -16,14 +16,45 @@ const PetQuestions = (props: PetQuestionsProps) => {
         reValidateMode: "onChange"
     });
 
+    const [index, setIndex] = useState(0);
+    const [pets, setPets] = useState<Array<PetInfo>>([]);
+
+    const createPet = (data: any) => {
+        const newPet = new PetInfo(data);
+        if(pets.length > 0){
+            for(let pet of pets) {
+                if(newPet.isEqualWithoutId(pet)){
+                    console.log('already have this pet');
+                    return null;
+                }
+            }
+        } 
+        newPet.id = index;
+        setIndex(index+1);
+
+        if(pets.length == 0){
+            setPets([newPet])
+        } else {
+            let localPets = pets;
+            localPets.push(newPet);
+            setPets(localPets);
+        }
+        return newPet;
+        
+    }
+
+    const createAndSavePet = (data: any) => {
+
+        let newPet = createPet(data);
+        if(newPet == null){
+            // toast, we already have this pet
+            return;
+        }
+        props.anotherPet(newPet);
+    }
+
     const submitPetInfo = (data: any) => {
-        let newPet = new PetInfo({
-            id: 0,
-            name: data.petName,
-            breed: data.petBreed,
-            sex: data.petSex
-        })
-        props.submitFamily(newPet);
+        props.submitFamily(createPet(data));
     }
 
     return (
@@ -36,18 +67,18 @@ const PetQuestions = (props: PetQuestionsProps) => {
                             <h1>Pet Information</h1>
 
                             <form onSubmit={handleSubmit(()=>{})}>
-                                <IonInput class="input-field" placeholder="Name" {...register("petName", {required: true})} />
-                                <IonInput class="input-field" placeholder="Breed" {...register("petBreed", {required: true})} />
-                                <IonInput class="input-field" placeholder="Male or Female" {...register("petSex", {required: true})} />
+                                <IonInput class="input-field" placeholder="Name" {...register("name", {required: true})} />
+                                <IonInput class="input-field" placeholder="Breed" {...register("breed", {required: true})} />
+                                <IonInput class="input-field" placeholder="Male or Female" {...register("sex", {required: true})} />
                                 <IonGrid>
                                     <IonRow>
                                         <IonCol>
-                                            <IonButton expand="block" no-margin type="submit" onClick={handleSubmit(props.anotherPet)}>Add Another</IonButton>
+                                            <IonButton expand="block" no-margin type="submit" onClick={handleSubmit(createAndSavePet)}>Add Another</IonButton>
                                         </IonCol>
                                     </IonRow>
                                     <IonRow>
                                         <IonCol no-padding>
-                                            <IonButton expand="block" no-margin type="submit" onClick={handleSubmit(props.backToHumans)}>&lt; H</IonButton>
+                                            <IonButton expand="block" no-margin type="submit" onClick={handleSubmit(props.backToHumans)}>&lt; Humans</IonButton>
                                         </IonCol>
                                         <IonCol no-padding>
                                             <IonButton expand="block" no-margin type="submit" onClick={handleSubmit(submitPetInfo)}>Finish</IonButton>

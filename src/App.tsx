@@ -80,6 +80,11 @@ export default class App extends React.Component<any,AppState> {
     })
   }
 
+  defaultFam = new FamilyInfo({
+    familyName: "defaultFam",
+    id: -1
+  });
+
   render() {
     return (
       <IonApp>
@@ -92,14 +97,8 @@ export default class App extends React.Component<any,AppState> {
                 <CreateFamily index={this.state.topIndex} onCreateFamily={this.onCreateFamily}/>
               </Route>
               <Route exact path="/families/details:id" render={({match}) => (
-                <FamilyDetail family={this.state.families.find( f =>  ':'+f.id.toString() == match.params.id ) 
-                  || new FamilyInfo({
-                    familyName: "defaultFam",
-                    id: -1
-                  }
-                )}/>
-              )}
-              />
+                <FamilyDetail family={this.state.families.find( f =>  ':'+f.id.toString() == match.params.id ) || this.defaultFam}/>
+              )} />
             </Route>
 
             <Route exact path="/calendars">

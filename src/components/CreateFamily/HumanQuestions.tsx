@@ -1,18 +1,65 @@
 import { IonButton, IonCol, IonGrid, IonInput, IonRow, IonSlide } from "@ionic/react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { HumanInfo } from "../../models/HumanInfo";
 import "./Questions.css";
 
 export interface HumanQuestionsProps {
-    toPetInfo: () => void,
+    toPetInfo: (human: HumanInfo | null) => void,
     toFamilyInfo: () => void,
-    anotherHuman: () => void
+    anotherHuman: (human: HumanInfo) => void
 }
 
 const HumanQuestions = (props: HumanQuestionsProps) => {
-    const { register, handleSubmit, formState: { errors } } = useForm({
+    const { register, handleSubmit, reset, formState: { errors } } = useForm({
         mode: "onTouched",
         reValidateMode: "onChange"
     });
+
+    const [index, setIndex] = useState(0);
+    const [humans, setHumans] = useState<Array<HumanInfo>>([])
+
+    const saveHuman = (data: any) => {
+        const newHuman = new HumanInfo(data);
+        if(humans.length > 0){
+            for(let human of humans ){
+                if(human.isEqualWithoutId(newHuman)){
+                    console.log('we already have this person');
+                    return null;
+                }
+            }
+        }
+        
+        newHuman.id = index;
+        console.log('new human created: ');
+        console.log(newHuman);
+        setIndex(index+1);
+
+        if(humans.length == 0){
+            setHumans([newHuman]);    
+        } else {
+            let localHumans = humans;
+            localHumans.push(newHuman);
+            setHumans(localHumans);
+        }
+        
+        return newHuman;
+    }
+
+    const saveHumanNoMove = (data: any) => {
+        console.log('saving human with no move');
+        const newHuman = saveHuman(data);
+        if(newHuman == null){
+            // already have this person,
+            // ToDo: should probably put a toast out there
+            return;
+        }
+        props.anotherHuman(newHuman);
+    }
+
+    const saveHumanMove = (data: any) => {
+        props.toPetInfo(saveHuman(data));
+    }
 
     const fakeSubmit = () => {
         console.log("human question submit");
@@ -34,15 +81,15 @@ const HumanQuestions = (props: HumanQuestionsProps) => {
                                 <IonGrid>
                                     <IonRow>
                                         <IonCol>
-                                            <IonButton expand="block" no-margin type="submit" onClick={handleSubmit(props.anotherHuman)}>Add Another</IonButton>
+                                            <IonButton expand="block" no-margin type="reset" onClick={handleSubmit(saveHumanNoMove)}>Add Another</IonButton>
                                         </IonCol>
                                     </IonRow>
                                     <IonRow>
                                         <IonCol no-padding>
-                                            <IonButton expand="block" no-margin type="submit" onClick={handleSubmit(props.toFamilyInfo)}> &lt;Fam</IonButton>
+                                            <IonButton expand="block" no-margin type="submit" onClick={props.toFamilyInfo}> &lt;Fam</IonButton>
                                         </IonCol>
                                         <IonCol no-padding>
-                                            <IonButton expand="block" no-margin type="submit" onClick={handleSubmit(props.toPetInfo)}>Pet &gt;</IonButton>
+                                            <IonButton expand="block" no-margin type="submit" onClick={handleSubmit(saveHumanMove)}>Pet &gt;</IonButton>
                                         </IonCol>
                                     </IonRow>
                                 </IonGrid>

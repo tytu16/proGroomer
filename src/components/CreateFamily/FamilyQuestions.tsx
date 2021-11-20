@@ -4,31 +4,25 @@ import { FamilyInfo } from "../../models/FamilyInfo";
 import "./Questions.css";
 
 export interface FamilyQuestionsProps {
-    toHumanInfo: (newFamily: FamilyInfo) => void
+    toHumanInfo: (newFamily: FamilyInfo) => void,
+    index: number
 }
 
 const FamilyQuestions = (props: FamilyQuestionsProps) => {
-    
+
     const { register, handleSubmit, formState: { errors } } = useForm({
         mode: "onTouched",
         reValidateMode: "onChange"
     });
 
-    const onSubmit = (data: any) => {
+    const fakeSubmit = (data: any) => {
         console.log('Family Question submit button');
-        // let newFamily = new FamilyInfo({
-        //     familiyName: data.familyName,
-        //     addrOne: data.addrOne,
-        //     addrTwo: data.addrTwo,
-        //     addrCity: data.addrCity,
-        //     addrState: data.addrState,
-        //     addrZip: data.addrZip
-        // })
-        // props.toHumanInfo(newFamily);
     };
 
-    const onWard = (data: any) => {
-        props.toHumanInfo(data);
+    const toHumans = (data: any) => {
+        const newFamily = new FamilyInfo(data);
+        newFamily.id = props.index;
+        props.toHumanInfo(newFamily);
     }
 
     return (
@@ -40,14 +34,14 @@ const FamilyQuestions = (props: FamilyQuestionsProps) => {
                         <IonCol size="10" className="slide-content">
                             <h1>Family Information</h1>
 
-                            <form onSubmit={handleSubmit(onSubmit)}>
+                            <form onSubmit={handleSubmit(fakeSubmit)}>
                                 <IonInput class="input-field" placeholder="Family Name" {...register("familyName", {required: true})} />
                                 <IonInput class="input-field" placeholder="123 Some st" {...register("addrOne", {required: true})} />
-                                <IonInput class="input-field" placeholder="Apt 321" {...register("addrTwo", {required: true})} />
+                                <IonInput class="input-field" placeholder="Apt 321" {...register("addrTwo", {required: false})} />
                                 <IonInput class="input-field" placeholder="City" {...register("addrCity", {required: true})} />
                                 <IonInput class="input-field" placeholder="State" {...register("addrState", {required: true})} />
                                 <IonInput class="input-field" placeholder="Zipcode" {...register("addrZip", {required: true})} />
-                                <IonButton type="submit" onClick={handleSubmit(onWard)}>Next</IonButton>
+                                <IonButton type="submit" onClick={handleSubmit(toHumans)}>Next</IonButton>
                             </form>
                         </IonCol>
                     </IonRow>

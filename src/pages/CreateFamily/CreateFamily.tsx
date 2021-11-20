@@ -1,16 +1,11 @@
-import { IonContent, IonGrid, IonRow, IonSlides } from "@ionic/react";
-import {useForm } from 'react-hook-form'
+import { IonContent, IonGrid, IonRow, IonSlides, IonText } from "@ionic/react";
 
 import './CreateFamily.css'; 
 import { FamilyInfo } from "../../models/FamilyInfo";
 import { HumanInfo } from "../../models/HumanInfo";
-import { useHistory } from "react-router";
 import { PetInfo } from "../../models/PetInfo";
-import { useRef, useState } from "react";
-import CreateFamilySlide from "../../components/CreateFamilySlide";
-import FamilyQuestions from "../../components/CreateFamily/FamilyQuestions";
-import HumanQuestions from "../../components/CreateFamily/HumanQuestions";
-import PetQuestions from "../../components/CreateFamily/PetQuestions";
+import React from "react";
+import FamilyQuestionSlides from "../../components/CreateFamily/FamilyQuestionSlides"
 
 export interface CreateFamilyProps {
     onCreateFamily: (family: FamilyInfo) => void,
@@ -18,101 +13,105 @@ export interface CreateFamilyProps {
 }
 
 export interface CreateFamilyState {
-    familyName: string,
-    humans: HumanInfo[],
-    pets: PetInfo[]
+    familyInProgress: FamilyInfo
 }
 
-const CreateFamily = (props: CreateFamilyProps) => {
-    const { onCreateFamily, index } = props;
-    const history = useHistory();
-    const { register, handleSubmit, formState: { errors } } = useForm({
-        mode: "onTouched",
-        reValidateMode: "onChange"
-    });
-
-    const sliderRef = useRef(document.createElement('ion-slides'));
-	const [ newFamily, setNewFamily ] = useState(new FamilyInfo({}));
-
-	const slideContent = [
-		{
-			title: "Family Info",
-			text: "Family Name, Address info, etc n shit"
-		},
-		{
-			title: "Human Info",
-			text: "Name, pronoun, email, phone num, etc n shit"
-		},
-		{
-			title: "Pet Info",
-			text: "Breed, age, sex, etc n shit"
-		}
-	];
-
-    const toFamilyInfo = () => {
-        console.log('in creat family, back family info');
-        sliderRef.current.slidePrev();
+export default class CreateFamily extends React.Component<CreateFamilyProps,CreateFamilyState> {
+    constructor(props: CreateFamilyProps){
+        super(props);
+        this.state ={
+            familyInProgress: new FamilyInfo({}) 
+        };
     }
 
-    const toHumanInfo = (newFamily: FamilyInfo) => {
-        console.log('in createFamily, to human info we go');
-        sliderRef.current.slideNext();
+    render() {
+
+        const addHuman = (newHuman: HumanInfo) => {
+            let newFamily = this.state.familyInProgress;
+            if(newFamily.humans.length == 0){
+                newFamily.humans = [newHuman];
+            } else {
+                newFamily.humans.push(newHuman);
+            }
+            
+            console.log('family has a new human');
+            console.log(newFamily);
+            
+            this.setState({familyInProgress: newFamily});
+        }
+
+        const addPet = (newPet: PetInfo): FamilyInfo => {
+            let newFamily = this.state.familyInProgress;
+            if(newFamily.pets.length == 0){
+                newFamily.pets = [newPet];
+            } else {
+                newFamily.pets.push(newPet);
+            }
+
+            console.log('family has a new pet');
+            console.log(newFamily);
+            this.setState({familyInProgress: newFamily});
+            return newFamily;
+        }
+
+
+        const saveFamilyInfo = (newFamily: FamilyInfo) => {
+            if(!this.state.familyInProgress.baseFamilyEqual(newFamily)){
+                newFamily.id = this.props.index;
+                this.setState({familyInProgress: newFamily});
+                console.log('added family info, now to humanInfo');
+                console.log(newFamily)
+            } else {
+                console.log('data is same, moving forward without saving');
+            }
+        }
+
+        const submitFamily = (newPet: PetInfo | null) => {
+            // this method is broken
+            if(newPet == null){
+                console.log('pet already exists, moving on with family as is');
+                this.props.onCreateFamily(this.state.familyInProgress);
+            } else {
+                this.props.onCreateFamily(addPet(newPet));
+            }
+        }
+
+        return (
+            <IonContent>
+                <IonGrid class="thing">
+                    <IonRow>
+                        <FamilyQuestionSlides index={this.state.familyInProgress.id} saveFamilyInfo={saveFamilyInfo} 
+                            addHuman={addHuman} addPet={addPet} submitFamily={submitFamily}/>
+                    </IonRow>
+                    <IonRow>
+                        { this.state?.familyInProgress?.familyName && 
+                            <IonText><p>{this.state.familyInProgress.familyName}<br/> 
+                                { this.state.familyInProgress.fullAddress} </p>
+                            </IonText>
+                        }
+                    </IonRow>
+                    <IonRow>
+                        { this.state?.familyInProgress?.humans.length > 0 &&
+                            this.state.familyInProgress.humans.map(h => {
+                                return (
+                                    <IonText><p> {h.firstName + " " + h.lastName + " - " + h.email}
+                                    </p></IonText>
+                                );
+                            }) 
+                        }<br/>
+                    </IonRow>
+                    <IonRow>
+                        { this.state?.familyInProgress?.pets.length > 0 &&
+                            this.state.familyInProgress.pets.map(p => {
+                                return (
+                                    <IonText><p> { p.name + " " + p.breed + " - " + p.sex}
+                                    </p></IonText>
+                                );
+                            }) 
+                        }<br/>
+                    </IonRow>
+                </IonGrid>
+            </IonContent>
+        );
     }
-
-    const anotherHuman = () => {
-        console.log("add a human");
-    }
-
-    const toPreviousSlide = () => {
-        console.log("to prev slide");
-        sliderRef.current.slidePrev();
-    }
-
-    const toNextSlide = () => {
-        console.log("to next slide");
-        sliderRef.current.slideNext();
-    }
-
-    const anotherPet = () => {
-        console.log("add a pet");
-    }
-
-
-
-    const onSubmit = (data: any) => {
-        console.log(data);
-        let newHuman: HumanInfo = new HumanInfo({
-            firstName: data.firstName,
-            lastName:  data.lastName,
-        });
-        let newFamily = new FamilyInfo({
-            familyName: data.familyName,
-            humans: [newHuman],
-            id: index+1,
-            addrOne: data.addrOne,
-            addrTwo: data.addrTwo,
-            addrCity: data.addrCity,
-            addrState: data.addrState,
-            addrZip: data.addrZip,
-        })
-        onCreateFamily(newFamily);
-        history.goBack();
-    }
-
-    return (
-        <IonContent>
-            <IonGrid class="thing">
-                <IonRow>
-                    <IonSlides pager={ true } ref={ sliderRef } id="slider" options={{ slidesPerView: "auto", zoom: true, grabCursor: true, allowTouchMove: false }}>
-                        <FamilyQuestions toHumanInfo={toHumanInfo} />
-                        <HumanQuestions toFamilyInfo={toPreviousSlide} anotherHuman={anotherHuman} toPetInfo={toNextSlide}/>
-                        <PetQuestions anotherPet={anotherPet} backToHumans={toPreviousSlide} submitFamily={onSubmit} />
-                    </IonSlides>
-                </IonRow>
-            </IonGrid>
-        </IonContent>
-
-    );
 }
-
-export default CreateFamily;

@@ -3,12 +3,13 @@ import { personAdd } from 'ionicons/icons';
 import React from 'react';
 import './FamilyList.css';
 
-import { FamiliesState, FamiliesProps } from '../../interfaces/FamilyInterface';
+import { FamiliesProps } from '../../interfaces/FamilyInterface';
 import FamilyRow from '../../components/FamilyRow/FamilyRow';
 import { FamilyInfo } from '../../models/FamilyInfo';
 import FamilyTabEmptyState from '../../components/FamilyTabEmptyState';
 
-export default class FamilyList extends React.Component<FamiliesProps,FamiliesState> {
+
+export default class FamilyList extends React.Component<FamiliesProps> {
   
   constructor(props: FamiliesProps) {
     super(props);
@@ -23,7 +24,7 @@ export default class FamilyList extends React.Component<FamiliesProps,FamiliesSt
     let familiesToDisplay = families.length > 0;
 
     return (
-      <IonPage>
+      <IonPage>iuo89uk
         <IonHeader>
           <IonToolbar>
             <IonTitle>Families</IonTitle>
@@ -43,8 +44,7 @@ export default class FamilyList extends React.Component<FamiliesProps,FamiliesSt
                         <FamilyRow key={family.id} family={family} text={familyText}/>
                     );
                 })
-                }
-              </>
+                }</>
             ) : (
               <>
                 <FamilyTabEmptyState />
