@@ -37,4 +37,10 @@ export class PetInfo{
     set sex(sex: string){
         this._sex = sex;
     }
+
+    isEqualWithoutId(other: PetInfo) {
+        return this._name == other.name &&
+            this.breed == other.breed &&
+            this.sex == other.sex
+    }
 }

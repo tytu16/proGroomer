@@ -15,8 +15,8 @@ export class FamilyInfo {
     constructor(data: any){
         this._id = data.id;
         this._familyName = data.familyName;
-        this._humans = data.humans;
-        this._pets = data.pets;
+        this._humans = data.humans ? data.humans : new Array<HumanInfo>() ;
+        this._pets = data.pets ? data.pets : new Array<PetInfo>();
         this._addrOne =  data.addrOne;
         this._addrTwo = data.addrTwo;
         this._addrCity = data.addrCity;
@@ -65,6 +65,13 @@ export class FamilyInfo {
         this._addrZip = addrZip; 
     }
 
+    get fullAddress(): string{
+        let fullAddress = this._addrOne;
+        fullAddress += (this._addrTwo != "") ? " - " + this._addrTwo + ", " : ", ";
+        fullAddress += this._addrCity + " " + this._addrState + ", " + this._addrZip;
+        return fullAddress;
+    }
+
     get id(): number{
         return this._id;
     }
@@ -91,5 +98,14 @@ export class FamilyInfo {
     }
     set pets(pets: PetInfo[]){
         this._pets = pets;
+    }
+
+    baseFamilyEqual(other: FamilyInfo){
+        return this._familyName == other.familyName &&
+                this.addrOne == other.addrOne &&
+                this.addrTwo == other.addrTwo &&
+                this.addrCity == other.addrCity &&
+                this.addrState == other.addrState &&
+                this.addrZip == other.addrZip
     }
 }
