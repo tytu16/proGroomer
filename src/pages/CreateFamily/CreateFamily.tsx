@@ -57,7 +57,7 @@ export default class CreateFamily extends React.Component<CreateFamilyProps,Crea
 
         const saveFamilyInfo = (newFamily: FamilyInfo) => {
             if(!this.state.familyInProgress.baseFamilyEqual(newFamily)){
-                newFamily.id = this.props.index;
+                newFamily.id = this.props.index.toString();
                 this.setState({familyInProgress: newFamily});
                 console.log('added family info, now to humanInfo');
                 console.log(newFamily)

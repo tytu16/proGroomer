@@ -88,4 +88,11 @@ export const familyResponse = [
     }
 ]
 
+export const groomerResponse = {
+    id: 1,
+    firstName: "Lenn",
+    lastName: "MacAnnaly",
+    clients: familyResponse
+}
+
 export const emptyFamily = []
