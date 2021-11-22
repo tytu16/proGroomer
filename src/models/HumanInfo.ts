@@ -1,20 +1,22 @@
 export class HumanInfo {
-    private _id: number;
+    private _id: string;
     private _firstName: string;
     private _lastName: string;
     private _email: string;
+    private _phoneNumbers: Array<string>;
 
     constructor(data: any){
         this._id = data.id;
         this._firstName = data.firstName;
         this._lastName  = data.lastName;
         this._email = data.email;
+        this._phoneNumbers = (data.phoneNumbers == null || data.phoneNumbers.length == 0) ? new Array<string>() : data.phoneNumbers;
     }
 
-    get id(): number{
+    get id(): string{
         return this._id;
     }
-    set id(id: number){
+    set id(id: string){
         this._id = id;
     }
 
@@ -44,9 +46,22 @@ export class HumanInfo {
         this._email = email;
     }
 
+    get phoneNumbers(): Array<string>{
+        return this._phoneNumbers;
+    }
+
+    set phoneNumbers(phoneNumbers: Array<string>){
+        this._phoneNumbers = phoneNumbers;
+    }
+
+    addPhoneNumber(phoneNumber: string){
+        this._phoneNumbers.push(phoneNumber);
+    }
+
     isEqualWithoutId (other: HumanInfo) {
         return (this._firstName == other.firstName &&
                 this._lastName == other.lastName &&
-                this._email == other.email);
+                this._email == other.email &&
+                this._phoneNumbers == other.phoneNumbers);
     }
 }

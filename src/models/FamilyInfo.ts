@@ -2,7 +2,7 @@ import { HumanInfo } from "./HumanInfo";
 import { PetInfo } from "./PetInfo";
 
 export class FamilyInfo {
-    private _id: number;
+    private _id: string;
     private _familyName: string;
     private _addrOne: string;
     private _addrTwo: string;
@@ -72,10 +72,10 @@ export class FamilyInfo {
         return fullAddress;
     }
 
-    get id(): number{
+    get id(): string{
         return this._id;
     }
-    set id(id: number){
+    set id(id: string){
         this._id = id;
     }
 

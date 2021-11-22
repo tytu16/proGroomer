@@ -1,5 +1,5 @@
 export default class BaseFamily {
-    private _id: number = 0;
+    private _id: string = "0";
     private _familyName: string = "";
 
     constructor(data: any){
@@ -7,11 +7,11 @@ export default class BaseFamily {
         this.familyName = data?.familyName;
     }
 
-    get id(): number{
+    get id(): string{
         return this._id;
     }
 
-    set id(id: number) {
+    set id(id: string) {
         this._id = id;
     }
 

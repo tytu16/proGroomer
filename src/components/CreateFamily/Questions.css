@@ -1,5 +1,49 @@
 .input-field{
-    background-color: white;
+    background-color: lightgray;
     margin-top: 2%;
     margin-bottom: 2%;
+    color: black;
+    border-radius: 2%;
+}
+
+.input-item{
+    text-align: center;
+}
+
+.input-toggle{
+    background-color: white;
+    color: black;
+    --padding-bottom: 0px;
+    --padding-end: 0px;
+    --padding-start: 0px;
+    --padding-top: 0px;
+}
+    
+
+#male-female-toggle{
+    height: 100%;
+    width: 100%;
+}
+
+.activeSex{
+    background-color: var(--ion-color-primary);
+    color: black;
+    border-width: 2px;
+    border-color: black;
+    border-style: solid;
+}
+
+#male{
+    background-color: white;
+    color: lightgray;
+}
+
+#female{
+    background-color: white;
+    color: lightgray;
+}
+
+.input{
+    text-align:center;
+
 }

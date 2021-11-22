@@ -9,7 +9,7 @@ import HumanQuestions from "./HumanQuestions";
 import PetQuestions from "./PetQuestions";
 
 export interface FamilyQuestionProps {
-    index: number,
+    index: string,
     saveFamilyInfo: (newFamily: FamilyInfo) => void,
     addHuman: (newHuman: HumanInfo) => void,
     addPet: (newPet: PetInfo) => void,

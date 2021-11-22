@@ -1,11 +1,11 @@
-import { IonButton, IonCol, IonGrid, IonInput, IonRow, IonSlide } from "@ionic/react";
+import { IonButton, IonCol, IonGrid, IonInput, IonItem, IonList, IonRow, IonSlide } from "@ionic/react";
 import { useForm } from "react-hook-form";
 import { FamilyInfo } from "../../models/FamilyInfo";
 import "./Questions.css";
 
 export interface FamilyQuestionsProps {
     toHumanInfo: (newFamily: FamilyInfo) => void,
-    index: number
+    index: string
 }
 
 const FamilyQuestions = (props: FamilyQuestionsProps) => {
@@ -35,12 +35,26 @@ const FamilyQuestions = (props: FamilyQuestionsProps) => {
                             <h1>Family Information</h1>
 
                             <form onSubmit={handleSubmit(fakeSubmit)}>
-                                <IonInput class="input-field" placeholder="Family Name" {...register("familyName", {required: true})} />
-                                <IonInput class="input-field" placeholder="123 Some st" {...register("addrOne", {required: true})} />
-                                <IonInput class="input-field" placeholder="Apt 321" {...register("addrTwo", {required: false})} />
-                                <IonInput class="input-field" placeholder="City" {...register("addrCity", {required: true})} />
-                                <IonInput class="input-field" placeholder="State" {...register("addrState", {required: true})} />
-                                <IonInput class="input-field" placeholder="Zipcode" {...register("addrZip", {required: true})} />
+                                <IonList>
+                                    <IonItem class="input-item ion-no-padding">
+                                        <IonInput class="input-field" placeholder="Family Name" {...register("familyName", {required: true})} />        
+                                    </IonItem>
+                                    <IonItem class="input-item ion-no-padding">
+                                        <IonInput class="input-field" placeholder="123 Some st" {...register("addrOne", {required: true})} />
+                                    </IonItem>
+                                    <IonItem class="input-item ion-no-padding">
+                                        <IonInput class="input-field" placeholder="Apt 321" {...register("addrTwo", {required: false})} />
+                                    </IonItem>
+                                    <IonItem class="input-item ion-no-padding">
+                                        <IonInput class="input-field" placeholder="City" {...register("addrCity", {required: true})} />
+                                    </IonItem>
+                                    <IonItem class="input-item ion-no-padding">
+                                        <IonInput class="input-field" placeholder="State" {...register("addrState", {required: true})} />
+                                    </IonItem>
+                                    <IonItem class="input-item ion-no-padding">
+                                        <IonInput class="input-field" placeholder="Zipcode" {...register("addrZip", {required: true})} />
+                                    </IonItem>
+                                </IonList>
                                 <IonButton type="submit" onClick={handleSubmit(toHumans)}>Next</IonButton>
                             </form>
                         </IonCol>

@@ -1,4 +1,4 @@
-import { IonButton, IonCol, IonGrid, IonInput, IonRow, IonSlide } from "@ionic/react";
+import { IonButton, IonCol, IonGrid, IonInput, IonItem, IonList, IonRow, IonSlide } from "@ionic/react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { HumanInfo } from "../../models/HumanInfo";
@@ -30,7 +30,7 @@ const HumanQuestions = (props: HumanQuestionsProps) => {
             }
         }
         
-        newHuman.id = index;
+        newHuman.id = index.toString();
         console.log('new human created: ');
         console.log(newHuman);
         setIndex(index+1);
@@ -75,9 +75,17 @@ const HumanQuestions = (props: HumanQuestionsProps) => {
                             <h1>Human Information</h1>
 
                             <form onSubmit={handleSubmit(fakeSubmit)}>
-                                <IonInput class="input-field" placeholder="First name" {...register("firstName", {required: true})} />
-                                <IonInput class="input-field" placeholder="Last name" {...register("lastName", {required: true})} />
-                                <IonInput class="input-field" placeholder="email" {...register("email", {required: true})} />
+                                <IonList>
+                                    <IonItem class="input-item ion-no-padding">
+                                        <IonInput class="input-field" placeholder="First name" {...register("firstName", {required: true})} />
+                                    </IonItem>
+                                    <IonItem class="input-item ion-no-padding">
+                                        <IonInput class="input-field" placeholder="Last name" {...register("lastName", {required: true})} />
+                                    </IonItem>
+                                    <IonItem class="input-item ion-no-padding">
+                                        <IonInput class="input-field" placeholder="email" {...register("email", {required: true})} />
+                                    </IonItem>
+                                </IonList>
                                 <IonGrid>
                                     <IonRow>
                                         <IonCol>

@@ -1,4 +1,4 @@
-import { IonButton, IonCol, IonGrid, IonInput, IonRow, IonSlide } from "@ionic/react";
+import { IonButton, IonCol, IonGrid, IonInput, IonItem, IonLabel, IonList, IonRow, IonSlide, IonToggle } from "@ionic/react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { PetInfo } from "../../models/PetInfo";
@@ -60,20 +60,54 @@ const PetQuestions = (props: PetQuestionsProps) => {
     return (
 
         <IonSlide>
-            <IonGrid class="ion-justify-content-center ion-align-items-center ion-align-self-center">
+            <IonGrid class="ion-justify-content-center ion-align-items-center ion-align-self-center ion-text-center">
                 <IonRow class="spacer"></IonRow>
                     <IonRow>
                         <IonCol size="10" className="slide-content">
                             <h1>Pet Information</h1>
 
                             <form onSubmit={handleSubmit(()=>{})}>
-                                <IonInput class="input-field" placeholder="Name" {...register("name", {required: true})} />
-                                <IonInput class="input-field" placeholder="Breed" {...register("breed", {required: true})} />
-                                <IonInput class="input-field" placeholder="Male or Female" {...register("sex", {required: true})} />
+                                <IonList>
+                                    <IonItem class="input-item ion-no-padding">
+                                        <IonInput class="input-field" placeholder="Name" {...register("name", {required: true})} />
+                                    </IonItem>
+                                    <IonItem class="input-item ion-no-padding">
+                                        <IonInput class="input-field" placeholder="Breed" {...register("breed", {required: true})} />  
+                                    </IonItem>
+                                    <IonItem class="input-item ion-no-padding">
+                                        <IonGrid>
+                                            <IonRow>
+                                                <IonCol class="activeSex">
+                                                    Male
+                                                </IonCol>
+                                                <IonCol>
+                                                    Female
+                                                </IonCol>
+                                            </IonRow>
+                                        </IonGrid>
+                                    </IonItem>
+                                </IonList>
+                                
+                                
+                                {/* <IonInput class="input-toggle">
+                                   <IonRow no-padding id="male-female-toggle">
+                                        <IonCol id="male" class="activeSex" size="6">
+                                            Male
+                                        </IonCol>
+                                        <IonCol id="female" size="6">
+                                            Female                                           
+                                        </IonCol>
+                                    </IonRow> 
+                                    <IonRow>
+                                        <IonToggle>
+                                        
+                                        </IonToggle>
+                                    </IonRow>
+                                </IonInput> */}
                                 <IonGrid>
                                     <IonRow>
                                         <IonCol>
-                                            <IonButton expand="block" no-margin type="submit" onClick={handleSubmit(createAndSavePet)}>Add Another</IonButton>
+                                            <IonButton expand="block" no-margin type="reset" onClick={handleSubmit(createAndSavePet)}>Add Another</IonButton>
                                         </IonCol>
                                     </IonRow>
                                     <IonRow>
