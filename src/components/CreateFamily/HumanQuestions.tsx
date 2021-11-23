@@ -1,4 +1,5 @@
-import { IonButton, IonCol, IonGrid, IonInput, IonItem, IonList, IonRow, IonSlide } from "@ionic/react";
+import { IonButton, IonCol, IonGrid, IonIcon, IonInput, IonItem, IonList, IonRow, IonSlide } from "@ionic/react";
+import { add } from "ionicons/icons";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { HumanInfo } from "../../models/HumanInfo";
@@ -11,12 +12,13 @@ export interface HumanQuestionsProps {
 }
 
 const HumanQuestions = (props: HumanQuestionsProps) => {
-    const { register, handleSubmit, reset, formState: { errors } } = useForm({
+    const { register, handleSubmit, reset, resetField, formState: { errors } } = useForm({
         mode: "onTouched",
         reValidateMode: "onChange"
     });
 
     const [index, setIndex] = useState(0);
+    const [extraPhones, setExtraPhones] = useState<number>(0);
     const [humans, setHumans] = useState<Array<HumanInfo>>([])
 
     const saveHuman = (data: any) => {
@@ -55,6 +57,7 @@ const HumanQuestions = (props: HumanQuestionsProps) => {
             return;
         }
         props.anotherHuman(newHuman);
+        setExtraPhones(0);
     }
 
     const saveHumanMove = (data: any) => {
@@ -63,6 +66,12 @@ const HumanQuestions = (props: HumanQuestionsProps) => {
 
     const fakeSubmit = () => {
         console.log("human question submit");
+    }
+
+    const addPhone = () => {
+        const numPhones = extraPhones+1;
+        setExtraPhones(numPhones);
+        resetField("phoneNumber"+{numPhones});
     }
 
     return (
@@ -81,10 +90,26 @@ const HumanQuestions = (props: HumanQuestionsProps) => {
                                     </IonItem>
                                     <IonItem class="input-item ion-no-padding">
                                         <IonInput class="input-field" placeholder="Last name" {...register("lastName", {required: true})} />
-                                    </IonItem>
+                                    </IonItem>                                                          
                                     <IonItem class="input-item ion-no-padding">
                                         <IonInput class="input-field" placeholder="email" {...register("email", {required: true})} />
                                     </IonItem>
+                                    <IonItem class="input-item ion-no-padding">
+                                        <IonInput class="input-field" type="number" placeholder="XXX-XXX-XXXX" {...register("phoneNumber-0", {required: true})} />
+                                        <IonButton onClick={addPhone}>
+                                            <IonIcon class="morePhonesButton" icon={add}></IonIcon>    
+                                        </IonButton>                                        
+                                    </IonItem>
+                                    {/* ToDo: Third phone number icomes prepopulated with second */}
+                                    {
+                                        Array(extraPhones).fill(1).map( (_, i) => {
+                                            return (
+                                                <IonItem key={i} class="input-item ion-no-padding">
+                                                    <IonInput class="input-field" type="number" placeholder="XXX-XXX-XXXX" {...register("phoneNumber-"+{i}, {required: true})} />                                  
+                                                </IonItem>
+                                            );                                        
+                                        })                                        
+                                    }
                                 </IonList>
                                 <IonGrid>
                                     <IonRow>

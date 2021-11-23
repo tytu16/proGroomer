@@ -6,6 +6,11 @@
     border-radius: 2%;
 }
 
+#state-list{
+    width: 100%;
+    background-color: lightgray;
+}
+
 .input-item{
     text-align: center;
 }

@@ -1,7 +1,8 @@
-import { IonButton, IonCol, IonGrid, IonInput, IonItem, IonList, IonRow, IonSlide } from "@ionic/react";
+import { IonButton, IonCol, IonGrid, IonInput, IonItem, IonList, IonRow, IonSelect, IonSelectOption, IonSlide } from "@ionic/react";
 import { useForm } from "react-hook-form";
 import { FamilyInfo } from "../../models/FamilyInfo";
 import "./Questions.css";
+import { State, StateList } from "../../models/Enums/States";
 
 export interface FamilyQuestionsProps {
     toHumanInfo: (newFamily: FamilyInfo) => void,
@@ -20,6 +21,8 @@ const FamilyQuestions = (props: FamilyQuestionsProps) => {
     };
 
     const toHumans = (data: any) => {
+        console.log('to humans');
+        console.log(data);
         const newFamily = new FamilyInfo(data);
         newFamily.id = props.index;
         props.toHumanInfo(newFamily);
@@ -49,7 +52,16 @@ const FamilyQuestions = (props: FamilyQuestionsProps) => {
                                         <IonInput class="input-field" placeholder="City" {...register("addrCity", {required: true})} />
                                     </IonItem>
                                     <IonItem class="input-item ion-no-padding">
-                                        <IonInput class="input-field" placeholder="State" {...register("addrState", {required: true})} />
+                                            <IonSelect id="state-list" placeholder="State" {...register("addrState")}>
+                                                {
+                                                    //ToDo: Needs to have empty state
+                                                    Object(StateList).map((s:State) => {
+                                                        return (
+                                                            <IonSelectOption key={s.code} value={s.name}>{s.name}</IonSelectOption>
+                                                        );
+                                                    })
+                                                }
+                                            </IonSelect>
                                     </IonItem>
                                     <IonItem class="input-item ion-no-padding">
                                         <IonInput class="input-field" placeholder="Zipcode" {...register("addrZip", {required: true})} />
