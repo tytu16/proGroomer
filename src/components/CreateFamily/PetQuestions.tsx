@@ -18,6 +18,7 @@ const PetQuestions = (props: PetQuestionsProps) => {
 
     const [index, setIndex] = useState(0);
     const [pets, setPets] = useState<Array<PetInfo>>([]);
+    const [sex, setSex] = useState<string>("");
 
     const createPet = (data: any) => {
         const newPet = new PetInfo(data);
@@ -57,6 +58,15 @@ const PetQuestions = (props: PetQuestionsProps) => {
         props.submitFamily(createPet(data));
     }
 
+    const assignSex = (s: string) => {
+        console.log('setting sex: ' + s);
+        if(s == 'male'){
+            setSex('male');
+        } else {
+            setSex('female');
+        }
+    }
+
     return (
 
         <IonSlide>
@@ -77,33 +87,16 @@ const PetQuestions = (props: PetQuestionsProps) => {
                                     <IonItem class="input-item ion-no-padding">
                                         <IonGrid>
                                             <IonRow>
-                                                <IonCol class="activeSex">
+                                                <IonCol onClick={() => {assignSex("male");}} className={sex == "male" ? 'active-sex' : '' }>
                                                     Male
                                                 </IonCol>
-                                                <IonCol>
+                                                <IonCol onClick={() => {assignSex("female");}} className={sex == "female" ? 'active-sex' : '' }>
                                                     Female
                                                 </IonCol>
                                             </IonRow>
                                         </IonGrid>
                                     </IonItem>
                                 </IonList>
-                                
-                                
-                                {/* <IonInput class="input-toggle">
-                                   <IonRow no-padding id="male-female-toggle">
-                                        <IonCol id="male" class="activeSex" size="6">
-                                            Male
-                                        </IonCol>
-                                        <IonCol id="female" size="6">
-                                            Female                                           
-                                        </IonCol>
-                                    </IonRow> 
-                                    <IonRow>
-                                        <IonToggle>
-                                        
-                                        </IonToggle>
-                                    </IonRow>
-                                </IonInput> */}
                                 <IonGrid>
                                     <IonRow>
                                         <IonCol>
@@ -112,7 +105,7 @@ const PetQuestions = (props: PetQuestionsProps) => {
                                     </IonRow>
                                     <IonRow>
                                         <IonCol no-padding>
-                                            <IonButton expand="block" no-margin type="submit" onClick={handleSubmit(props.backToHumans)}>&lt; Humans</IonButton>
+                                            <IonButton expand="block" no-margin type="submit" onClick={props.backToHumans}>&lt; Humans</IonButton>
                                         </IonCol>
                                         <IonCol no-padding>
                                             <IonButton expand="block" no-margin type="submit" onClick={handleSubmit(submitPetInfo)}>Finish</IonButton>
