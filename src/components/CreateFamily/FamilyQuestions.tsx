@@ -2,7 +2,9 @@ import { IonButton, IonCol, IonGrid, IonInput, IonItem, IonList, IonRow, IonSele
 import { useForm } from "react-hook-form";
 import { FamilyInfo } from "../../models/FamilyInfo";
 import "./Questions.css";
-import { State, StateList } from "../../models/Enums/States";
+import { MyTextInput } from "../InputFields/MyTextInput";
+import { MySelectList } from "../InputFields/MySelectList";
+import { StateList } from "../../models/Enums/States";
 
 export interface FamilyQuestionsProps {
     toHumanInfo: (newFamily: FamilyInfo) => void,
@@ -31,7 +33,7 @@ const FamilyQuestions = (props: FamilyQuestionsProps) => {
     return (
 
         <IonSlide>
-            <IonGrid class="ion-justify-content-center ion-align-items-center ion-align-self-center">
+            <IonGrid class="ion-justify-content-center ion-align-items-center ion-align-self-center ion-no-padding">
                 <IonRow class="spacer"></IonRow>
                     <IonRow>
                         <IonCol size="10" className="slide-content">
@@ -40,31 +42,22 @@ const FamilyQuestions = (props: FamilyQuestionsProps) => {
                             <form onSubmit={handleSubmit(fakeSubmit)}>
                                 <IonList>
                                     <IonItem class="input-item ion-no-padding">
-                                        <IonInput class="input-field" placeholder="Family Name" {...register("familyName", {required: true})} />        
+                                        <MyTextInput label="Family Name" placeholder="Family Name" name="familyName" register={register} required={false} />        
                                     </IonItem>
                                     <IonItem class="input-item ion-no-padding">
-                                        <IonInput class="input-field" placeholder="123 Some st" {...register("addrOne", {required: true})} />
+                                        <MyTextInput placeholder="123 Some St" label="Address One" name="addrOne" register={register} required={false} />
                                     </IonItem>
                                     <IonItem class="input-item ion-no-padding">
-                                        <IonInput class="input-field" placeholder="Apt 321" {...register("addrTwo", {required: false})} />
+                                        <MyTextInput placeholder="Apt 321" label="Address Two" name="addrTwo" register={register} required={false} />
                                     </IonItem>
                                     <IonItem class="input-item ion-no-padding">
-                                        <IonInput class="input-field" placeholder="City" {...register("addrCity", {required: true})} />
+                                        <MyTextInput placeholder="City" label="City" name="addrCity" register={register} required={false} />
                                     </IonItem>
                                     <IonItem class="input-item ion-no-padding">
-                                            <IonSelect id="state-list" placeholder="State" {...register("addrState")}>
-                                                {
-                                                    //ToDo: Needs to have empty state
-                                                    Object(StateList).map((s:State) => {
-                                                        return (
-                                                            <IonSelectOption key={s.code} value={s.name}>{s.name}</IonSelectOption>
-                                                        );
-                                                    })
-                                                }
-                                            </IonSelect>
+                                        <MySelectList placeholder="State" label="State" name="addrState" register={register} required={false} valueList={StateList} />
                                     </IonItem>
                                     <IonItem class="input-item ion-no-padding">
-                                        <IonInput class="input-field" placeholder="Zipcode" {...register("addrZip", {required: true})} />
+                                        <MyTextInput placeholder="Zipcode" label="Zipcode"name="addrZip" register={register} required={false} />
                                     </IonItem>
                                 </IonList>
                                 <IonButton type="submit" onClick={handleSubmit(toHumans)}>Next</IonButton>

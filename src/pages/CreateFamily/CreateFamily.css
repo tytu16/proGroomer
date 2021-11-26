@@ -12,6 +12,7 @@
 
 .thing{
 	height: 100%;
+	width: 100%;
 }
 
 ion-slides {
@@ -50,12 +51,11 @@ ion-slides {
 	/* color: white; */
 	border: 2px solid rgb(228, 228, 228);
 	border-radius: 15px;
-	padding: 3rem;
+	padding: 2%;
 	/* padding-left: 3rem; */
 	/* padding-right: 3rem; */
 }
 
 .slide-content p {
-
 	color: rgb(161, 161, 161);
 }

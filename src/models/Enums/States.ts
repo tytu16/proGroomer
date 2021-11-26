@@ -1,4 +1,4 @@
-export interface State{
+export interface ListValue{
    code: string,
    name: string
 }
