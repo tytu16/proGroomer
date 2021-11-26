@@ -1,7 +1,7 @@
 import { IonButton, IonCol, IonGrid, IonIcon, IonInput, IonItem, IonList, IonRow, IonSlide } from "@ionic/react";
-import { add } from "ionicons/icons";
-import { useState } from "react";
-import { Controller, useForm } from "react-hook-form";
+import { addCircleOutline } from "ionicons/icons";
+import { useRef, useState } from "react";
+import { Controller, useForm, useFieldArray } from "react-hook-form";
 import { HumanInfo } from "../../models/HumanInfo";
 import "./Questions.css";
 import {MyTextInput} from "../InputFields/MyTextInput";
@@ -14,13 +14,20 @@ export interface HumanQuestionsProps {
 }
 
 const HumanQuestions = (props: HumanQuestionsProps) => {
-    const { register, handleSubmit, control ,formState: { errors } } = useForm({
+    const { register, handleSubmit, control, formState: { errors } } = useForm({
         mode: "onTouched",
-        reValidateMode: "onChange"
+        reValidateMode: "onChange",
+        defaultValues:{"phoneNum": [{value: ""}]}
     });
+    const {fields, remove, append} = useFieldArray({
+        name: "phoneNum",
+        control,
+        keyName: "key"
+    })
+    const ref = useRef();
     const [index, setIndex] = useState(0);
-    const [extraPhones, setExtraPhones] = useState<string[]>([""]);
     const [humans, setHumans] = useState<Array<HumanInfo>>([])
+
 
     const saveHuman = (data: any) => {
         const newHuman = new HumanInfo(data);
@@ -58,8 +65,7 @@ const HumanQuestions = (props: HumanQuestionsProps) => {
             return;
         }
         props.anotherHuman(newHuman);
-        setExtraPhones([""]);
-    }
+   }
 
     const saveHumanMove = (data: any) => {
         props.toPetInfo(saveHuman(data));
@@ -69,43 +75,19 @@ const HumanQuestions = (props: HumanQuestionsProps) => {
         console.log("human question submit");
     }
 
-    const addPhone = () => {
-        console.log('adding phone');
-        let localPhones = extraPhones.slice();
-        console.log('phones before: ');
-        console.log(localPhones);
-        localPhones.push("");
-        setExtraPhones(localPhones);
-        console.log('phoneAfter');
-    }
-
-    const removePhone = (i:number) => {
-        console.log('adding phone');
-        let localPhones = extraPhones.slice();
-        if(i+1 == localPhones.length){
-            localPhones.pop();
-        } else {
-            localPhones = localPhones.slice(0,i).concat(localPhones.slice(i))
-        }
-        console.log('phones before: ');
-        console.log(localPhones);
-        setExtraPhones(localPhones);
-        console.log('phoneAfter');
-    }
-
     const formatPhone = (i:number) => {
-        console.log(`formattingPhone ${i}`);
-        let localPhones = extraPhones;
-        let editNum = localPhones[i];
-        console.log('numBefore: ');
-        console.log(editNum);
+        // console.log(`formattingPhone ${i}`);
+        // let localPhones = phoneNumbers;
+        // let editNum = localPhones[i];
+        // console.log('numBefore: ');
+        // console.log(editNum);
         
-        //normalize string and remove all unnecessary characters
-        editNum = editNum.replace(/[^\d]/g, "");
-        editNum = editNum.replace(/(\d{3})(\d{3})(\d{4})/, "($1) $2-$3");
+        // //normalize string and remove all unnecessary characters
+        // editNum = editNum.replace(/[^\d]/g, "");
+        // editNum = editNum.replace(/(\d{3})(\d{3})(\d{4})/, "($1) $2-$3");
     
-        localPhones[i] = editNum;
-        setExtraPhones(localPhones);
+        // localPhones[i] = editNum;
+        // setPhoneNumbers(localPhones);
         
     }
 
@@ -129,9 +111,21 @@ const HumanQuestions = (props: HumanQuestionsProps) => {
                                     <IonItem class="input-item ion-no-padding">
                                         <MyTextInput placeholder="email@domain.com" label="Email" register={register} required={false} />
                                     </IonItem>
-                                    <IonItem class="input-item ion-no-padding">
-                                        <IonButton onClick={addPhone}><IonIcon icon={add}></IonIcon></IonButton>
-                                        <Controller
+                                    {
+                                        fields.map((field, index) => (
+                                            // <input key={field.key} {...register(`phoneNum.${index}.value`)}></input>
+                                            index == 0 ? (
+                                                <PhoneFieldInput field={field} key={field.key} i={index} addPhoneInput={() => {
+                                                    append({value: ""});
+                                                }} register={register} required={true} />
+                                            ) : (
+                                                <PhoneFieldInput field={field} key={field.key} i={index} removePhoneInput={() => {
+                                                    remove(index);
+                                                }} register={register} required={false} />
+                                            )
+                                        ))
+                                    }
+                                        {/* <Controller
                                         name="test"
                                         control={control}
                                         render={({
@@ -139,20 +133,11 @@ const HumanQuestions = (props: HumanQuestionsProps) => {
                                             fieldState: { invalid, isTouched, isDirty, error },
                                             formState,
                                           }) => {
-                                            return (<MyTextInput label={"Phone Number"} placeholder="PhoneNumber" register={register} required={true}/>);
                                         }}
-                                        />
+                                        /> */}
                                                                        
-                                    </IonItem>
-                                    {
-                                        extraPhones.slice(1).map( (phone, i) => {
-                                            return (
-                                                <PhoneFieldInput removePhoneInput={() => {
-
-                                                }} i={i+1} register={register} required={false} />
-                                            );                                        
-                                        })                                        
-                                    }
+                                    
+                                    
                                 </IonList>
                                 <IonGrid>
                                     <IonRow>

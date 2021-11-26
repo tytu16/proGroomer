@@ -108,7 +108,7 @@ const PetQuestions = (props: PetQuestionsProps) => {
                                             <IonButton expand="block" no-margin type="submit" onClick={props.backToHumans}>&lt; Humans</IonButton>
                                         </IonCol>
                                         <IonCol no-padding>
-                                            <IonButton expand="block" no-margin type="submit" onClick={handleSubmit(submitPetInfo)}>Finish</IonButton>
+                                            <IonButton expand="block" no-margin type="submit" onClick={handleSubmit(submitPetInfo)}>Finish &gt;</IonButton>
                                         </IonCol>
                                     </IonRow>
                                 </IonGrid>

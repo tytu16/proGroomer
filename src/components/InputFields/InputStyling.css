@@ -11,7 +11,17 @@
     background-color: lightgray;
 }
 
+#removePhoneButton{
+    --background: var(--ion-color-danger);
+    border-radius: 5%;
+    margin-left: 2%;
+}
+
+#addPhoneButton{
+    margin-left: 2%;
+}
+
 ion-select{
     width: 100%;
     max-width: 100%;
-  }
+}

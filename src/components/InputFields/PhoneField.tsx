@@ -1,21 +1,29 @@
 import { IonButton, IonIcon, IonInput, IonItem } from "@ionic/react";
-import { removeCircleOutline } from "ionicons/icons";
+import { removeCircleOutline, addCircleOutline } from "ionicons/icons";
 import "./InputStyling.css";
 
 export interface PhoneFieldProps {
-  i: number,
   register: any, // register method passed down from react-hook-forms
+  field: any,
   required: boolean,
-  removePhoneInput: () => void
+  i: number,
+  removePhoneInput?: () => void | null,
+  addPhoneInput?: () => void | null
 }
 
 export const PhoneFieldInput = (props: PhoneFieldProps) => {
-  const {register, i, required, removePhoneInput} = props;
+  const {register, required, i, field, removePhoneInput, addPhoneInput} = props;
   return(
-    <IonItem key={i} class="input-item ion-no-padding">
+    <IonItem class="input-item ion-no-padding">
         <label>phone-{i+1}:</label>&nbsp;
-        <IonInput class="input-field" inputmode="tel" type="tel" placeholder="XXX-XXX-XXXX" {...register("phoneNumber-"+{i}, {required})} />                                  
-        <IonButton onClick={removePhoneInput}><IonIcon icon={removeCircleOutline}></IonIcon></IonButton>
+        <IonInput ref={register(`phoneNum.${i}.value` as const)} key={field.key} class="input-field" inputmode="tel" type="tel" placeholder="(XXX) XXX-XXXX" required={required} />                                  
+        {
+          removePhoneInput == null ? (
+            <IonButton id="addPhoneButton" onClick={addPhoneInput}><IonIcon icon={addCircleOutline}></IonIcon></IonButton>
+          ) : (
+            <IonButton id="removePhoneButton" onClick={removePhoneInput}><IonIcon icon={removeCircleOutline}></IonIcon></IonButton>
+           )
+        }
     </IonItem>
   );
 }
