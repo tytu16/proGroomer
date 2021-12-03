@@ -60,7 +60,7 @@ const FamilyQuestions = (props: FamilyQuestionsProps) => {
                                         <MyTextInput placeholder="Zipcode" label="Zipcode"name="addrZip" register={register} required={false} />
                                     </IonItem>
                                 </IonList>
-                                <IonButton type="submit" onClick={handleSubmit(toHumans)}>Next</IonButton>
+                                <IonButton class="top-button" type="submit" onClick={handleSubmit(toHumans)}>Next</IonButton>
                             </form>
                         </IonCol>
                     </IonRow>

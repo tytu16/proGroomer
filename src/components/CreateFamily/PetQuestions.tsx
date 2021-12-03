@@ -100,7 +100,7 @@ const PetQuestions = (props: PetQuestionsProps) => {
                                 <IonGrid>
                                     <IonRow>
                                         <IonCol>
-                                            <IonButton expand="block" no-margin type="reset" onClick={handleSubmit(createAndSavePet)}>Add Another</IonButton>
+                                            <IonButton class="top-button" expand="block" no-margin type="reset" onClick={handleSubmit(createAndSavePet)}>Add Another</IonButton>
                                         </IonCol>
                                     </IonRow>
                                     <IonRow>

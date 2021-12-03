@@ -21,7 +21,8 @@ const HumanQuestions = (props: HumanQuestionsProps) => {
             "phoneNum": [{value: ""}],
             "firstName": "",
             "lastName": "",
-            "email": ""
+            "email": "",
+            "test": ""
             }
     });
     const {fields, remove, append} = useFieldArray({
@@ -29,7 +30,6 @@ const HumanQuestions = (props: HumanQuestionsProps) => {
         control,
         keyName: "key"
     })
-    const ref = useRef();
     const [index, setIndex] = useState(0);
     const [humans, setHumans] = useState<Array<HumanInfo>>([])
 
@@ -132,7 +132,7 @@ const HumanQuestions = (props: HumanQuestionsProps) => {
                                 <IonGrid>
                                     <IonRow>
                                         <IonCol>
-                                            <IonButton expand="block" no-margin type="reset" onClick={handleSubmit(saveHumanNoMove)}>Add Another</IonButton>
+                                            <IonButton class="top-button" expand="block" no-margin type="reset" onClick={handleSubmit(saveHumanNoMove)}>Add Another</IonButton>
                                         </IonCol>
                                     </IonRow>
                                     <IonRow>
