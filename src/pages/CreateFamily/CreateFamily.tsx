@@ -92,9 +92,9 @@ export default class CreateFamily extends React.Component<CreateFamilyProps,Crea
                     </IonRow>
                     <IonRow>
                         { this.state?.familyInProgress?.humans.length > 0 &&
-                            this.state.familyInProgress.humans.map(h => {
+                            this.state.familyInProgress.humans.map((h,i) => {
                                 return (
-                                    <IonText><p> {h.firstName + " " + h.lastName + " - " + h.email}
+                                    <IonText key={i}><p> {h.firstName + " " + h.lastName + " - " + h.email}
                                     </p></IonText>
                                 );
                             }) 
