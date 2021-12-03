@@ -43,19 +43,21 @@ ion-slides {
 }
 
 .slide-content {
-	
+	max-width: 50%;
 	margin: 0 auto;
-	/* margin-top: 5rem; */
 	color: var(--ion-color-primary);
-	/* background-color: var(--ion-color-primary); */
-	/* color: white; */
 	border: 2px solid rgb(228, 228, 228);
 	border-radius: 15px;
 	padding: 2%;
-	/* padding-left: 3rem; */
-	/* padding-right: 3rem; */
 }
 
 .slide-content p {
 	color: rgb(161, 161, 161);
 }
+
+
+@media only screen and (min-width: 600px) {
+    .slide-grid{
+		max-width: 60%;
+	}
+  }

@@ -11,7 +11,7 @@ const getStarted = () => {
 }
 
 	return (
-        <IonGrid class="ion-justify-content-center ion-align-items-center ion-align-self-center">
+        <IonGrid class="slide-grid ion-justify-content-center ion-align-items-center ion-align-self-center">
             <IonRow class="spacer"></IonRow>
                 <IonRow>
                     <IonCol size="10" className="slide-content">

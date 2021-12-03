@@ -23,7 +23,11 @@
     --padding-start: 0px;
     --padding-top: 0px;
 }
-    
+
+.question-list{
+    border-radius: 2%;
+    padding-left: 4%;
+}
 
 #male-female-toggle{
     height: 100%;

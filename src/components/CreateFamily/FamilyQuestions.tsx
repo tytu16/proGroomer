@@ -15,7 +15,7 @@ const FamilyQuestions = (props: FamilyQuestionsProps) => {
 
     const { register, handleSubmit, formState: { errors } } = useForm({
         mode: "onTouched",
-        reValidateMode: "onChange"
+        reValidateMode: "onSubmit"
     });
 
     const fakeSubmit = (data: any) => {
@@ -33,14 +33,14 @@ const FamilyQuestions = (props: FamilyQuestionsProps) => {
     return (
 
         <IonSlide>
-            <IonGrid class="ion-justify-content-center ion-align-items-center ion-align-self-center ion-no-padding">
+            <IonGrid class="slide-grid ion-justify-content-center ion-align-items-center ion-align-self-center ion-no-padding">
                 <IonRow class="spacer"></IonRow>
                     <IonRow>
                         <IonCol size="10" className="slide-content">
                             <h1>Family Information</h1>
 
                             <form onSubmit={handleSubmit(fakeSubmit)}>
-                                <IonList>
+                                <IonList class="question-list">
                                     <IonItem class="input-item ion-no-padding">
                                         <MyTextInput label="Family Name" placeholder="Family Name" name="familyName" register={register} required={false} />        
                                     </IonItem>

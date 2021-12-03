@@ -16,8 +16,13 @@ export interface HumanQuestionsProps {
 const HumanQuestions = (props: HumanQuestionsProps) => {
     const { register, handleSubmit, control, formState: { errors } } = useForm({
         mode: "onTouched",
-        reValidateMode: "onChange",
-        defaultValues:{"phoneNum": [{value: ""}]}
+        reValidateMode: "onSubmit",
+        defaultValues:{
+            "phoneNum": [{value: ""}],
+            "firstName": "",
+            "lastName": "",
+            "email": ""
+            }
     });
     const {fields, remove, append} = useFieldArray({
         name: "phoneNum",
@@ -92,16 +97,15 @@ const HumanQuestions = (props: HumanQuestionsProps) => {
     }
 
     return (
-
         <IonSlide>
-            <IonGrid class="ion-justify-content-center ion-align-items-center ion-align-self-center">
+            <IonGrid class="slide-grid ion-justify-content-center ion-align-items-center ion-align-self-center">
                 <IonRow class="spacer"></IonRow>
                     <IonRow>
                         <IonCol size="10" className="slide-content">
                             <h1>Human Information</h1>
 
                             <form onSubmit={handleSubmit(fakeSubmit)}>
-                                <IonList>
+                                <IonList class="question-list">
                                     <IonItem class="input-item ion-no-padding">
                                         <MyTextInput placeholder="First Name" label="First Name" name="firstName" register={register} required={false} />
                                     </IonItem>
@@ -109,11 +113,10 @@ const HumanQuestions = (props: HumanQuestionsProps) => {
                                         <MyTextInput placeholder="Last Name" label="Last Name" name="lastName" register={register} required={false} />
                                     </IonItem>                                                          
                                     <IonItem class="input-item ion-no-padding">
-                                        <MyTextInput placeholder="email@domain.com" label="Email" register={register} required={false} />
+                                        <MyTextInput placeholder="email@domain.com" label="Email" name="email" register={register} required={false} />
                                     </IonItem>
                                     {
                                         fields.map((field, index) => (
-                                            // <input key={field.key} {...register(`phoneNum.${index}.value`)}></input>
                                             index == 0 ? (
                                                 <PhoneFieldInput field={field} key={field.key} i={index} addPhoneInput={() => {
                                                     append({value: ""});
@@ -125,19 +128,6 @@ const HumanQuestions = (props: HumanQuestionsProps) => {
                                             )
                                         ))
                                     }
-                                        {/* <Controller
-                                        name="test"
-                                        control={control}
-                                        render={({
-                                            field: { onChange, onBlur, value, name, ref },
-                                            fieldState: { invalid, isTouched, isDirty, error },
-                                            formState,
-                                          }) => {
-                                        }}
-                                        /> */}
-                                                                       
-                                    
-                                    
                                 </IonList>
                                 <IonGrid>
                                     <IonRow>

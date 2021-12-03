@@ -13,7 +13,7 @@ export interface PetQuestionsProps{
 const PetQuestions = (props: PetQuestionsProps) => {
     const { register, handleSubmit, formState: { errors } } = useForm({
         mode: "onTouched",
-        reValidateMode: "onChange"
+        reValidateMode: "onSubmit"
     });
 
     const [index, setIndex] = useState(0);
@@ -70,14 +70,14 @@ const PetQuestions = (props: PetQuestionsProps) => {
     return (
 
         <IonSlide>
-            <IonGrid class="ion-justify-content-center ion-align-items-center ion-align-self-center ion-text-center">
+            <IonGrid class="slide-grid ion-justify-content-center ion-align-items-center ion-align-self-center ion-text-center">
                 <IonRow class="spacer"></IonRow>
                     <IonRow>
                         <IonCol size="10" className="slide-content">
                             <h1>Pet Information</h1>
 
                             <form onSubmit={handleSubmit(()=>{})}>
-                                <IonList>
+                                <IonList class="question-list">
                                     <IonItem class="input-item ion-no-padding">
                                         <IonInput class="input-field" placeholder="Name" {...register("name", {required: true})} />
                                     </IonItem>

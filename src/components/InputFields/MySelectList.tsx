@@ -1,6 +1,6 @@
 import { IonCol, IonGrid, IonRow, IonSelect, IonSelectOption } from "@ionic/react";
 import { ListValue } from "../../models/Enums/States";
-import React from "react";
+import "./InputStyling.css";
 
 export interface MySelectListProps {
     label: string,
