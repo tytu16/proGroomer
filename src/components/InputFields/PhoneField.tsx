@@ -16,7 +16,14 @@ export const PhoneFieldInput = (props: PhoneFieldProps) => {
   return(
     <IonItem class="input-item ion-no-padding">
         <label>phone-{i+1}:</label>&nbsp;
-        <IonInput ref={register(`phoneNum.${i}.value` as const)} key={field.key} class="input-field" inputmode="tel" type="tel" placeholder="(XXX) XXX-XXXX" required={required} />                                  
+        <IonInput ref={register(`phoneNum.${i}.value` as const)} key={field.key} class="input-field" 
+        inputmode="tel" type="tel" placeholder="(XXX) XXX-XXXX" required={required}
+        onChange={(value) => {
+          console.log('le change');
+          console.log(value);
+          field.onChange(value);
+          
+        }} />                                  
         {
           removePhoneInput == null ? (
             <IonButton id="addPhoneButton" onClick={addPhoneInput}><IonIcon icon={addCircleOutline}></IonIcon></IonButton>

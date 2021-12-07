@@ -21,8 +21,7 @@ const HumanQuestions = (props: HumanQuestionsProps) => {
             "phoneNum": [{value: ""}],
             "firstName": "",
             "lastName": "",
-            "email": "",
-            "test": ""
+            "email": ""
             }
     });
     const {fields, remove, append} = useFieldArray({
@@ -35,6 +34,8 @@ const HumanQuestions = (props: HumanQuestionsProps) => {
 
 
     const saveHuman = (data: any) => {
+        console.log('raw human form data');
+        console.log(data);
         const newHuman = new HumanInfo(data);
         if(humans.length > 0){
             for(let human of humans ){
