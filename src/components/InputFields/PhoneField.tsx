@@ -1,5 +1,6 @@
 import { IonButton, IonIcon, IonInput, IonItem } from "@ionic/react";
 import { removeCircleOutline, addCircleOutline } from "ionicons/icons";
+import { useState } from "react";
 import "./InputStyling.css";
 
 export interface PhoneFieldProps {
@@ -13,17 +14,49 @@ export interface PhoneFieldProps {
 
 export const PhoneFieldInput = (props: PhoneFieldProps) => {
   const {register, required, i, field, removePhoneInput, addPhoneInput} = props;
+
+  const [phoneNum, setPhoneNum] = useState<string>("");
+
+  const normalizeInput = (value: string, previousValue:string): string => {
+    if (!value) return value;
+    console.log(`string val: ${value}`)
+    const currentValue = value.replace(/[^\d]/g, '');
+    console.log(`digit val: ${currentValue}`);
+    console.log(`prev val: ${previousValue}`);
+    const cvLength = currentValue.length;
+    let output = ""
+    
+    if (!previousValue || value.length > previousValue.length) {
+      if (cvLength < 4){
+        console.log('length less than 4');
+        output = currentValue;
+      }
+      else if (cvLength < 7){
+        console.log('length less than 7')
+        output = `(${currentValue.slice(0, 3)}) ${currentValue.slice(3)}`;
+      }
+      else{
+        console.log('greater than 7')
+        output = `(${currentValue.slice(0, 3)}) ${currentValue.slice(3, 6)}-${currentValue.slice(6, 10)}`;
+      }
+    }
+    console.log(`output: ${output}`)
+    return output;
+  };
+
   return(
     <IonItem class="input-item ion-no-padding">
         <label>phone-{i+1}:</label>&nbsp;
         <IonInput ref={register(`phoneNum.${i}.value` as const)} key={field.key} class="input-field" 
-        inputmode="tel" type="tel" placeholder="(XXX) XXX-XXXX" required={required}
-        onChange={(value) => {
-          console.log('le change');
-          console.log(value);
-          field.onChange(value);
-          
-        }} />                                  
+          inputmode="tel" type="tel" placeholder="(XXX) XXX-XXXX" required={required} 
+          value={phoneNum} onIonChange={(e) => {
+            if(e.detail.value != phoneNum) {
+              setPhoneNum(normalizeInput(e.detail.value!, phoneNum))
+            } else {
+              console.log('same shit');
+            }
+          }}
+        />                                  
         {
           removePhoneInput == null ? (
             <IonButton id="addPhoneButton" onClick={addPhoneInput}><IonIcon icon={addCircleOutline}></IonIcon></IonButton>
