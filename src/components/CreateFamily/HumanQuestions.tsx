@@ -54,7 +54,7 @@ const HumanQuestions = (props: HumanQuestionsProps) => {
         if(humans.length == 0){
             setHumans([newHuman]);    
         } else {
-            let localHumans = humans;
+            let localHumans = humans.slice();
             localHumans.push(newHuman);
             setHumans(localHumans);
         }

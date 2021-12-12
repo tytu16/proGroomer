@@ -59,9 +59,11 @@ export class HumanInfo {
     }
 
     isEqualWithoutId (other: HumanInfo) {
+        const diff = other._phoneNumbers.filter(v => !this._phoneNumbers.includes(v))
+        
         return (this._firstName == other.firstName &&
                 this._lastName == other.lastName &&
-                this._email == other.email &&
-                this._phoneNumbers == other.phoneNumbers);
+                this._email == other.email && 
+                diff.length == 0);
     }
 }
