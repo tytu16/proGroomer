@@ -17,16 +17,17 @@ export const PhoneFieldInput = (props: PhoneFieldProps) => {
 
   const [phoneNum, setPhoneNum] = useState<string>("");
 
-  const normalizeInput = (value: string, previousValue:string): string => {
+  const formatPhone = (value: string, preValue:string): string => {
     if (!value) return value;
     console.log(`string val: ${value}`)
     const currentValue = value.replace(/[^\d]/g, '');
+    const previousValue = preValue.replace(/[^\d]/g, '');
     console.log(`digit val: ${currentValue}`);
     console.log(`prev val: ${previousValue}`);
     const cvLength = currentValue.length;
     let output = ""
     
-    if (!previousValue || value.length > previousValue.length) {
+    if (!previousValue || value.length != previousValue.length) {
       if (cvLength < 4){
         console.log('length less than 4');
         output = currentValue;
@@ -51,9 +52,7 @@ export const PhoneFieldInput = (props: PhoneFieldProps) => {
           inputmode="tel" type="tel" placeholder="(XXX) XXX-XXXX" required={required} 
           value={phoneNum} onIonChange={(e) => {
             if(e.detail.value != phoneNum) {
-              setPhoneNum(normalizeInput(e.detail.value!, phoneNum))
-            } else {
-              console.log('same shit');
+              setPhoneNum(formatPhone(e.detail.value!, phoneNum))
             }
           }}
         />                                  
