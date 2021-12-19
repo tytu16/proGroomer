@@ -1,3 +1,7 @@
+interface PhoneNumberFieldInterface{
+    value: string
+}
+
 export class HumanInfo {
     private _id: string;
     private _firstName: string;
@@ -10,7 +14,15 @@ export class HumanInfo {
         this._firstName = data.firstName;
         this._lastName  = data.lastName;
         this._email = data.email;
-        this._phoneNumbers = (data.phoneNumbers == null || data.phoneNumbers.length == 0) ? new Array<string>() : data.phoneNumbers;
+        this._phoneNumbers = new Array<string>();
+        console.log('le data')
+        console.log(data);
+
+        if(data.phoneNumbers != null && data.phoneNumbers.length > 0){
+            for(let pn of data.phoneNumbers){
+                this._phoneNumbers.push(pn.value);
+            }
+        }
     }
 
     get id(): string{
