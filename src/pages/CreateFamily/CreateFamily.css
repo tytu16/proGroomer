@@ -55,6 +55,10 @@ ion-slides {
 	color: rgb(161, 161, 161);
 }
 
+.human-row{
+	margin-top: 3%;
+	margin-bottom: 3%;
+}
 
 @media only screen and (min-width: 600px) {
     .slide-grid{

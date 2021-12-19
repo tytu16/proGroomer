@@ -60,7 +60,7 @@ export default class CreateFamily extends React.Component<CreateFamilyProps,Crea
                 newFamily.id = this.props.index.toString();
                 this.setState({familyInProgress: newFamily});
                 console.log('added family info, now to humanInfo');
-                console.log(newFamily)
+                console.log(newFamily);
             } else {
                 console.log('data is same, moving forward without saving');
             }
@@ -90,16 +90,14 @@ export default class CreateFamily extends React.Component<CreateFamilyProps,Crea
                             </IonText>
                         }
                     </IonRow>
-                    <IonRow>
                         { this.state?.familyInProgress?.humans.length > 0 &&
                             this.state.familyInProgress.humans.map((h,i) => {
                                 return (
-                                    <IonText key={i}><p> {h.firstName + " " + h.lastName + " - " + h.email}
-                                    </p></IonText>
+                                    <IonRow key={i} class="human-row"><IonText> {h.firstName + " " + h.lastName + " - " + h.email}
+                                    </IonText></IonRow>
                                 );
                             }) 
                         }<br/>
-                    </IonRow>
                     <IonRow>
                         { this.state?.familyInProgress?.pets.length > 0 &&
                             this.state.familyInProgress.pets.map(p => {
