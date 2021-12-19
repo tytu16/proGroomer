@@ -18,14 +18,14 @@ const HumanQuestions = (props: HumanQuestionsProps) => {
         mode: "onTouched",
         reValidateMode: "onSubmit",
         defaultValues:{
-            "phoneNum": [{value: ""}],
+            "phoneNumbers": [{value: "(111)-111-1111"}],
             "firstName": "",
             "lastName": "",
             "email": ""
             }
     });
     const {fields, remove, append} = useFieldArray({
-        name: "phoneNum",
+        name: "phoneNumbers",
         control,
         keyName: "key"
     })

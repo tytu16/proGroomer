@@ -17,44 +17,38 @@ export const PhoneFieldInput = (props: PhoneFieldProps) => {
 
   const [phoneNum, setPhoneNum] = useState<string>("");
 
-  const formatPhone = (value: string, preValue:string): string => {
+  const formatPhone = (value: string, preValue:string) => {
     if (!value) return value;
-    console.log(`string val: ${value}`)
+    // clear non-numeric characters
     const currentValue = value.replace(/[^\d]/g, '');
     const previousValue = preValue.replace(/[^\d]/g, '');
-    console.log(`digit val: ${currentValue}`);
-    console.log(`prev val: ${previousValue}`);
     const cvLength = currentValue.length;
     let output = ""
     
     if (!previousValue || value.length != previousValue.length) {
       if (cvLength < 4){
-        console.log('length less than 4');
         output = currentValue;
       }
       else if (cvLength < 7){
-        console.log('length less than 7')
         output = `(${currentValue.slice(0, 3)}) ${currentValue.slice(3)}`;
       }
       else{
-        console.log('greater than 7')
         output = `(${currentValue.slice(0, 3)}) ${currentValue.slice(3, 6)}-${currentValue.slice(6, 10)}`;
       }
     }
-    console.log(`output: ${output}`)
-    return output;
+    setPhoneNum(output);
   };
 
   return(
     <IonItem class="input-item ion-no-padding">
         <label>phone-{i+1}:</label>&nbsp;
-        <IonInput ref={register(`phoneNum.${i}.value` as const)} key={field.key} class="input-field" 
-          inputmode="tel" type="tel" placeholder="(XXX) XXX-XXXX" required={required} 
+        <IonInput ref={register(`phoneNumbers.${i}.value` as const)} key={field.key} class="input-field" 
+          inputmode="tel" type="tel" placeholder="(XXX) XXX-XXXX" maxlength={14} required={required} 
           value={phoneNum} onIonChange={(e) => {
             if(e.detail.value != phoneNum) {
-              setPhoneNum(formatPhone(e.detail.value!, phoneNum))
+              formatPhone(e.detail.value!, phoneNum);
             }
-          }}
+          }} onSubmit={() => console.log('test submit is a go!')}
         />                                  
         {
           removePhoneInput == null ? (
