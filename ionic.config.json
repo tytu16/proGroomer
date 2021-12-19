@@ -1,5 +1,7 @@
 {
   "name": "proGroomer",
-  "integrations": {},
+  "integrations": {
+    "capacitor": {}
+  },
   "type": "react"
 }
