@@ -74,10 +74,7 @@ const FamilyQuestionSlides = (props: FamilyQuestionProps) => {
           slidesPerView={1}
           scrollbar={true}
           zoom={true}
-          onSwiper={(s) => {
-            console.log("initialize swiper", s);
-            setSwiper(s);
-          }}
+          onSwiper={setSwiper}
           onSlideChange={() => console.log('slide change')}
         >
             <SwiperSlide>
