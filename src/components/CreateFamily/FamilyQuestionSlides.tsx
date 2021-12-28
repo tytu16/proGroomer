@@ -1,5 +1,4 @@
-import { IonSlides } from "@ionic/react";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { useHistory } from "react-router";
 import { FamilyInfo } from "../../models/FamilyInfo";
 import { HumanInfo } from "../../models/HumanInfo";
@@ -8,6 +7,15 @@ import FamilyQuestions from "./FamilyQuestions";
 import HumanQuestions from "./HumanQuestions";
 import PetQuestions from "./PetQuestions";
 
+import { Swiper, SwiperSlide } from 'swiper/react/swiper-react.js';
+import { Keyboard, Pagination, Navigation, Scrollbar, Zoom, A11y } from 'swiper';
+
+import 'swiper/modules/keyboard/keyboard.min.css';
+import 'swiper/modules/navigation/navigation.min.css';
+import 'swiper/modules/pagination/pagination.min.css';
+import 'swiper/modules/scrollbar/scrollbar.min.css';
+import 'swiper/modules/zoom/zoom.min.css';
+import '@ionic/react/css/ionic-swiper.css';
 export interface FamilyQuestionProps {
     index: string,
     saveFamilyInfo: (newFamily: FamilyInfo) => void,
@@ -19,6 +27,8 @@ export interface FamilyQuestionProps {
 const FamilyQuestionSlides = (props: FamilyQuestionProps) => {
 
     const history = useHistory();
+    const [swiper, setSwiper] = useState<any>(null);
+
 
     const sliderRef = useRef(document.createElement('ion-slides'));
 
@@ -37,12 +47,17 @@ const FamilyQuestionSlides = (props: FamilyQuestionProps) => {
 
     const toPreviousSlide = () => {
         console.log("to prev slide");
-        sliderRef.current.slidePrev();
+        if(swiper){
+            swiper.slidePrev();
+        }
     }
 
     const toNextSlide = () => {
         console.log("to next slide");
-        sliderRef.current.slideNext();
+        if(swiper){
+            swiper.slideNext();
+        }
+    
     }
 
     const SubmitFamilyAndBackToList = (petInfo: PetInfo | null) => {
@@ -51,11 +66,30 @@ const FamilyQuestionSlides = (props: FamilyQuestionProps) => {
     }
 
     return(
-        <IonSlides pager={ true } ref={sliderRef} id="slider" options={{ slidesPerView: "1", zoom: true, grabCursor: true, allowTouchMove: false }}>
-            <FamilyQuestions index={props.index} toHumanInfo={saveFamilyToHuman} />
-            <HumanQuestions toFamilyInfo={toPreviousSlide} anotherHuman={props.addHuman} toPetInfo={saveHumanToPet}/>
-            <PetQuestions anotherPet={props.addPet} backToHumans={toPreviousSlide} submitFamily={SubmitFamilyAndBackToList} />
-        </IonSlides>
+        <Swiper
+        className="swiper-no-swiping" 
+        modules={[Navigation, Keyboard, Pagination, Scrollbar, Zoom, A11y]}
+          keyboard={true}
+          pagination={true}
+          slidesPerView={1}
+          scrollbar={true}
+          zoom={true}
+          onSwiper={(s) => {
+            console.log("initialize swiper", s);
+            setSwiper(s);
+          }}
+          onSlideChange={() => console.log('slide change')}
+        >
+            <SwiperSlide>
+                <FamilyQuestions index={props.index} toHumanInfo={saveFamilyToHuman} />
+            </SwiperSlide>
+            <SwiperSlide>
+                <HumanQuestions toFamilyInfo={toPreviousSlide} anotherHuman={props.addHuman} toPetInfo={saveHumanToPet}/>
+            </SwiperSlide>
+            <SwiperSlide>
+                <PetQuestions anotherPet={props.addPet} backToHumans={toPreviousSlide} submitFamily={SubmitFamilyAndBackToList} />
+            </SwiperSlide>
+        </Swiper>
     );
 }
 
