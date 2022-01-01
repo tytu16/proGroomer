@@ -89,48 +89,6 @@ const HumanQuestions = (props: HumanQuestionsProps) => {
                 <IonRow>
                     <IonCol size="10" className="slide-content">
                         <h1>Human Information</h1>
-
-                        <form onSubmit={handleSubmit(fakeSubmit)}>
-                            <IonList class="question-list">
-                                <IonItem class="input-item ion-no-padding">
-                                    <MyTextInput placeholder="First Name" label="First Name" name="firstName" register={register} required={false} />
-                                </IonItem>
-                                <IonItem class="input-item ion-no-padding">
-                                    <MyTextInput placeholder="Last Name" label="Last Name" name="lastName" register={register} required={false} />
-                                </IonItem>                                                          
-                                <IonItem class="input-item ion-no-padding">
-                                    <MyTextInput placeholder="email@domain.com" label="Email" name="email" register={register} required={false} />
-                                </IonItem>
-                                {
-                                    fields.map((field, index) => (
-                                        index == 0 ? (
-                                            <PhoneFieldInput field={field} key={field.key} i={index} addPhoneInput={() => {
-                                                append({value: ""});
-                                            }} register={register} required={true} />
-                                        ) : (
-                                            <PhoneFieldInput field={field} key={field.key} i={index} removePhoneInput={() => {
-                                                remove(index);
-                                            }} register={register} required={false} />
-                                        )
-                                    ))
-                                }
-                            </IonList>
-                            <IonGrid>
-                                <IonRow>
-                                    <IonCol>
-                                        <IonButton class="top-button" expand="block" no-margin type="reset" onClick={handleSubmit(saveHumanNoMove)}>Add Another</IonButton>
-                                    </IonCol>
-                                </IonRow>
-                                <IonRow>
-                                    <IonCol no-padding>
-                                        <IonButton expand="block" no-margin type="submit" onClick={props.toFamilyInfo}> &lt;Fam</IonButton>
-                                    </IonCol>
-                                    <IonCol no-padding>
-                                        <IonButton expand="block" no-margin type="submit" onClick={handleSubmit(saveHumanMove)}>Pet &gt;</IonButton>
-                                    </IonCol>
-                                </IonRow>
-                            </IonGrid>
-                        </form>
                     </IonCol>
                 </IonRow>
             <IonRow class="spacer"></IonRow>

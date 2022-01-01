@@ -16,9 +16,14 @@ import 'swiper/modules/pagination/pagination.min.css';
 import 'swiper/modules/scrollbar/scrollbar.min.css';
 import 'swiper/modules/zoom/zoom.min.css';
 import '@ionic/react/css/ionic-swiper.css';
+import { Controller } from "react-hook-form";
+
 export interface FamilyQuestionProps {
-    index: string,
+    index: number,
     saveFamilyInfo: (newFamily: FamilyInfo) => void,
+    control: any, // form controller
+    register: any, // form register function
+
     addHuman: (newHuman: HumanInfo) => void,
     addPet: (newPet: PetInfo) => void,
     submitFamily: (newPet: PetInfo | null) => void
@@ -28,9 +33,6 @@ const FamilyQuestionSlides = (props: FamilyQuestionProps) => {
 
     const history = useHistory();
     const [swiper, setSwiper] = useState<any>(null);
-
-
-    const sliderRef = useRef(document.createElement('ion-slides'));
 
     const saveFamilyToHuman = (newFamily: FamilyInfo) => {
         props.saveFamilyInfo(newFamily);
@@ -71,6 +73,7 @@ const FamilyQuestionSlides = (props: FamilyQuestionProps) => {
         modules={[Navigation, Keyboard, Pagination, Scrollbar, Zoom, A11y]}
           keyboard={true}
           pagination={true}
+          navigation
           slidesPerView={1}
           scrollbar={true}
           zoom={true}
@@ -78,7 +81,7 @@ const FamilyQuestionSlides = (props: FamilyQuestionProps) => {
           onSlideChange={() => console.log('slide change')}
         >
             <SwiperSlide>
-                <FamilyQuestions index={props.index} toHumanInfo={saveFamilyToHuman} />
+                <FamilyQuestions control={props.control} register={props.register} index={props.index} toHumanInfo={saveFamilyToHuman} />
             </SwiperSlide>
             <SwiperSlide>
                 <HumanQuestions toFamilyInfo={toPreviousSlide} anotherHuman={props.addHuman} toPetInfo={saveHumanToPet}/>

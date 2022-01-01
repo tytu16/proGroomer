@@ -40,11 +40,11 @@ export default class FamilyList extends React.Component<FamiliesProps> {
             familiesToDisplay ? (
               <>{
                 families.map(( family: FamilyInfo ) => {
-                    return (
-                        <FamilyRow key={family.id} family={family} text={familyText}/>
-                    );
-                })
-                }</>
+                  return (
+                      <FamilyRow key={family.id} family={family} text={familyText}/>
+                  );}
+                )
+              }</>
             ) : (
               <>
                 <FamilyTabEmptyState />

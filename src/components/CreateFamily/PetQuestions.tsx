@@ -73,44 +73,6 @@ const PetQuestions = (props: PetQuestionsProps) => {
                 <IonRow>
                     <IonCol size="10" className="slide-content">
                         <h1>Pet Information</h1>
-
-                        <form onSubmit={handleSubmit(()=>{})}>
-                            <IonList class="question-list">
-                                <IonItem class="input-item ion-no-padding">
-                                    <IonInput class="input-field" placeholder="Name" {...register("name", {required: true})} />
-                                </IonItem>
-                                <IonItem class="input-item ion-no-padding">
-                                    <IonInput class="input-field" placeholder="Breed" {...register("breed", {required: true})} />  
-                                </IonItem>
-                                <IonItem class="input-item ion-no-padding">
-                                    <IonGrid>
-                                        <IonRow>
-                                            <IonCol onClick={() => {assignSex("male");}} className={sex == "male" ? 'active-sex' : '' }>
-                                                Male
-                                            </IonCol>
-                                            <IonCol onClick={() => {assignSex("female");}} className={sex == "female" ? 'active-sex' : '' }>
-                                                Female
-                                            </IonCol>
-                                        </IonRow>
-                                    </IonGrid>
-                                </IonItem>
-                            </IonList>
-                            <IonGrid>
-                                <IonRow>
-                                    <IonCol>
-                                        <IonButton class="top-button" expand="block" no-margin type="reset" onClick={handleSubmit(createAndSavePet)}>Add Another</IonButton>
-                                    </IonCol>
-                                </IonRow>
-                                <IonRow>
-                                    <IonCol no-padding>
-                                        <IonButton expand="block" no-margin type="submit" onClick={props.backToHumans}>&lt; Humans</IonButton>
-                                    </IonCol>
-                                    <IonCol no-padding>
-                                        <IonButton expand="block" no-margin type="submit" onClick={handleSubmit(submitPetInfo)}>Finish &gt;</IonButton>
-                                    </IonCol>
-                                </IonRow>
-                            </IonGrid>
-                        </form>
                     </IonCol>
                 </IonRow>
             <IonRow class="spacer"></IonRow>
