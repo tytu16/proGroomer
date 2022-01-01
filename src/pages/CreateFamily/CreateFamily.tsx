@@ -1,12 +1,11 @@
-import { IonCol, IonContent, IonGrid, IonRow, IonSlides, IonText } from "@ionic/react";
+import { IonCol, IonContent, IonGrid, IonRow } from "@ionic/react";
 
 import './CreateFamily.css'; 
 import { FamilyInfo } from "../../models/FamilyInfo";
 import { HumanInfo } from "../../models/HumanInfo";
 import { PetInfo } from "../../models/PetInfo";
-import React from "react";
 import FamilyQuestionSlides from "../../components/CreateFamily/FamilyQuestionSlides"
-import { Controller, useFieldArray, useForm } from "react-hook-form";
+import { useFieldArray, useForm, FormProvider, useFormContext } from "react-hook-form";
 
 export interface CreateFamilyProps {
     onCreateFamily: (family: FamilyInfo) => void,
@@ -70,18 +69,20 @@ const CreateFamily = (props: CreateFamilyProps) => {
       // }
   }
 
-  const { register, control, handleSubmit, reset, trigger, setError } = useForm({
+  const methods = useForm({
     // defaultValues: {}; you can populate the fields by this attribute 
   });
+  const control = methods.control;
   const { fields, append, remove} = useFieldArray({
     control,
-    name: "test",
+    name: "family",
   });
 
   return (
       <IonContent>
           <IonGrid class="thing">
-              <form onSubmit={handleSubmit(data => console.log(data))}>
+            <FormProvider {...methods}>
+              <form onSubmit={methods.handleSubmit(data => console.log(data))}>
                 <ol>
                   {fields.map((item, index) => (
                     <IonGrid key={item.id} class="slide-grid ion-justify-content-center ion-align-items-center ion-align-self-center">
@@ -89,7 +90,7 @@ const CreateFamily = (props: CreateFamilyProps) => {
                         <IonCol>
                           <li key={item.id}>
                           <IonRow>
-                              <FamilyQuestionSlides index={index} control={control} register={register} saveFamilyInfo={saveFamilyInfo} 
+                              <FamilyQuestionSlides index={index} saveFamilyInfo={saveFamilyInfo}
                                   addHuman={addHuman} addPet={addPet} submitFamily={submitFamily}/>
                           </IonRow>
                             <button type="button" onClick={() => remove(index)}>Delete</button>
@@ -107,6 +108,7 @@ const CreateFamily = (props: CreateFamilyProps) => {
                 </button>
                 <input type="submit" />
               </form>
+            </FormProvider>
           </IonGrid>
       </IonContent>
   );

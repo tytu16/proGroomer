@@ -1,5 +1,5 @@
 import { IonButton, IonCol, IonGrid, IonItem, IonList, IonRow  } from "@ionic/react";
-import { Controller, useForm } from "react-hook-form";
+import { Controller, useForm, useFormContext } from "react-hook-form";
 import { FamilyInfo } from "../../models/FamilyInfo";
 import "./Questions.css"
 import { MyTextInput } from "../InputFields/MyTextInput";
@@ -8,12 +8,12 @@ import { StateList } from "../../models/Enums/States";
 
 export interface FamilyQuestionsProps {
     toHumanInfo: (newFamily: FamilyInfo) => void,
-    control: any, // form controller
-    register: any, // form register
     index: number
 }
 
 const FamilyQuestions = (props: FamilyQuestionsProps) => {
+
+    const {handleSubmit} = useFormContext();
 
     const fakeSubmit = (data: any) => {
         console.log('Family Question submit button');
@@ -33,14 +33,15 @@ const FamilyQuestions = (props: FamilyQuestionsProps) => {
                 <IonRow>
                     <IonCol size="10" className="slide-content">
                         <h1>Family Information</h1>
-                        <MyTextInput index={props.index} register={props.register} 
+                        <MyTextInput index={props.index}
                             placeholder="First Name" label={"First Name"} 
-                            objectType={"test"} fieldName={"firstName"} required={true}/>
+                            objectType={"family"} fieldName={"firstName"} required={true}/>
 
-                        <MyTextInput index={props.index} register={props.register} 
+                        <MyTextInput index={props.index}
                             placeholder="Last Name" label={"Last Name"} 
-                            objectType={"test"} fieldName={"lastName"} required={true}/>
+                            objectType={"family"} fieldName={"lastName"} required={true}/>
                     </IonCol>
+                    <IonButton class="top-button" type="submit" onClick={handleSubmit(toHumans)}>Next</IonButton>
                 </IonRow>
             <IonRow class="spacer"></IonRow>
         </IonGrid>

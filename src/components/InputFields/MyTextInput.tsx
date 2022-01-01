@@ -1,4 +1,5 @@
 import { IonGrid, IonInput, IonRow } from "@ionic/react";
+import { useFormContext } from "react-hook-form";
 import "./InputStyling.css";
 
 export interface MyTextInputProps {
@@ -7,12 +8,13 @@ export interface MyTextInputProps {
   objectType: string,
   fieldName: string,
   placeholder: string,
-  register: any, // register method passed down from react-hook-forms
   required: boolean
 }
 
 export const MyTextInput = (props: MyTextInputProps) => {
-  const {label, placeholder, register, objectType, index, fieldName} = props;
+  const {label, placeholder, objectType, index, fieldName} = props;
+  
+  const {register} = useFormContext();
   return(
     <IonGrid>
       <IonRow>
