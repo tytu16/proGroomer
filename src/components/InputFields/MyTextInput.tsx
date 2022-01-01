@@ -1,24 +1,26 @@
-import { IonCol, IonGrid, IonInput, IonRow } from "@ionic/react";
+import { IonGrid, IonInput, IonRow } from "@ionic/react";
 import "./InputStyling.css";
 
 export interface MyTextInputProps {
+  index: number,
   label: string,
+  objectType: string,
+  fieldName: string,
   placeholder: string,
-  name?: string | null,
   register: any, // register method passed down from react-hook-forms
   required: boolean
 }
 
 export const MyTextInput = (props: MyTextInputProps) => {
-  const {label, name, placeholder, register, required} = props;
-  let registerName = (name != null) ? name : label;
+  const {label, placeholder, register, objectType, index, fieldName} = props;
   return(
     <IonGrid>
       <IonRow>
         <label>{label}</label>
       </IonRow>
       <IonRow>
-        <IonInput class="input-field" placeholder={placeholder} {...register(registerName, { required })}/>
+        <IonInput {...register(`${objectType}.${index}.${fieldName}`)} 
+          class="input-field" placeholder={placeholder}/>
       </IonRow>
     </IonGrid>
   );

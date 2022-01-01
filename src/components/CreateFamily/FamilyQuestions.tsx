@@ -33,12 +33,13 @@ const FamilyQuestions = (props: FamilyQuestionsProps) => {
                 <IonRow>
                     <IonCol size="10" className="slide-content">
                         <h1>Family Information</h1>
-                        <input {...props.register(`test.${props.index}.firstName`)} />
-                            <Controller
-                              render={({ field }) => <input {...field} />}
-                              name={`test.${props.index}.lastName`}
-                              control={props.control}
-                            />
+                        <MyTextInput index={props.index} register={props.register} 
+                            placeholder="First Name" label={"First Name"} 
+                            objectType={"test"} fieldName={"firstName"} required={true}/>
+
+                        <MyTextInput index={props.index} register={props.register} 
+                            placeholder="Last Name" label={"Last Name"} 
+                            objectType={"test"} fieldName={"lastName"} required={true}/>
                     </IonCol>
                 </IonRow>
             <IonRow class="spacer"></IonRow>
