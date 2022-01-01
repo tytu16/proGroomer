@@ -7,6 +7,8 @@ import { PetInfo } from "../../models/PetInfo";
 import FamilyQuestionSlides from "../../components/CreateFamily/FamilyQuestionSlides"
 import { useFieldArray, useForm, FormProvider, useFormContext } from "react-hook-form";
 
+import { InitFamilyQuestionState } from "../../components/CreateFamily/QuestionProps/InputProperties";
+
 export interface CreateFamilyProps {
     onCreateFamily: (family: FamilyInfo) => void,
     index: number
@@ -102,7 +104,7 @@ const CreateFamily = (props: CreateFamilyProps) => {
                 </ol>
                 <button
                   type="button"
-                  onClick={() => append({ firstName: "", lastName: "" })}
+                  onClick={() => append(InitFamilyQuestionState)}
                 >
                   append
                 </button>

@@ -5,6 +5,7 @@ import "./Questions.css"
 import { MyTextInput } from "../InputFields/MyTextInput";
 import { MySelectList } from "../InputFields/MySelectList";
 import { StateList } from "../../models/Enums/States";
+import {FamilyQuestionFields, TextFieldPropInterface} from "./QuestionProps/InputProperties"
 
 export interface FamilyQuestionsProps {
     toHumanInfo: (newFamily: FamilyInfo) => void,
@@ -33,13 +34,21 @@ const FamilyQuestions = (props: FamilyQuestionsProps) => {
                 <IonRow>
                     <IonCol size="10" className="slide-content">
                         <h1>Family Information</h1>
-                        <MyTextInput index={props.index}
-                            placeholder="First Name" label={"First Name"} 
-                            objectType={"family"} fieldName={"firstName"} required={true}/>
+                        {
+                            FamilyQuestionFields.map((field: TextFieldPropInterface, index) => {
 
-                        <MyTextInput index={props.index}
-                            placeholder="Last Name" label={"Last Name"} 
-                            objectType={"family"} fieldName={"lastName"} required={true}/>
+                                return (field.fieldName != 'addressState') ? (
+                                    <MyTextInput index={props.index}
+                                        placeholder={field.placeholder} label={field.label} 
+                                        objectType={field.objectType} fieldName={field.fieldName} required={field.required}
+                                    />
+                                ) : (
+                                    <MySelectList index={props.index} valueList={StateList}
+                                        placeholder={field.placeholder} label={field.label} 
+                                        objectType={field.objectType} fieldName={field.fieldName} required={field.required}/>
+                                );
+                            })
+                        }
                     </IonCol>
                     <IonButton class="top-button" type="submit" onClick={handleSubmit(toHumans)}>Next</IonButton>
                 </IonRow>
