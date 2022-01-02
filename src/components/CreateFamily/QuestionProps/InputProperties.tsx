@@ -12,6 +12,15 @@ export const InitFamilyQuestionState = {
     addressTwo: "",
     addressCity: "",
     addressZip: "",
+    human: [{
+        firstName: "",
+        lastName: ""
+    }]
+  }
+
+export const InitHumanQuestionState = {
+    firstName: "",
+    lastName: ""
 }
 
 export const FamilyQuestionFields = [
@@ -57,4 +66,21 @@ export const FamilyQuestionFields = [
         fieldName: "addressZip",
         required: true
     },
+]
+
+export const HumanQuestionFields = [
+    {
+        placeholder: "First Name",
+        label: "First Name", 
+        objectType: "human",
+        fieldName: "firstName",
+        required: true
+    },
+    {
+        placeholder: "Last Name",
+        label: "Last Name", 
+        objectType: "human",
+        fieldName: "lastName",
+        required: true
+    }
 ]

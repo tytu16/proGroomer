@@ -1,5 +1,5 @@
 import { IonButton, IonCol, IonGrid, IonItem, IonList, IonRow  } from "@ionic/react";
-import { Controller, useForm, useFormContext } from "react-hook-form";
+import { useFormContext } from "react-hook-form";
 import { FamilyInfo } from "../../models/FamilyInfo";
 import "./Questions.css"
 import { MyTextInput } from "../InputFields/MyTextInput";
@@ -16,10 +16,6 @@ const FamilyQuestions = (props: FamilyQuestionsProps) => {
 
     const {handleSubmit} = useFormContext();
 
-    const fakeSubmit = (data: any) => {
-        console.log('Family Question submit button');
-    };
-
     const toHumans = (data: any) => {
         console.log('to humans');
         console.log(data);
@@ -29,28 +25,37 @@ const FamilyQuestions = (props: FamilyQuestionsProps) => {
     }
 
     return (
-        <IonGrid class="slide-grid ion-justify-content-center ion-align-items-center ion-align-self-center ion-no-padding">
+        <IonGrid class="ion-justify-content-center ion-align-items-center ion-align-self-center">
             <IonRow class="spacer"></IonRow>
                 <IonRow>
                     <IonCol size="10" className="slide-content">
                         <h1>Family Information</h1>
+                        <IonList>
                         {
                             FamilyQuestionFields.map((field: TextFieldPropInterface, index) => {
 
                                 return (field.fieldName != 'addressState') ? (
-                                    <MyTextInput index={props.index}
+                                    <IonItem key={index}><MyTextInput index={props.index}
                                         placeholder={field.placeholder} label={field.label} 
                                         objectType={field.objectType} fieldName={field.fieldName} required={field.required}
-                                    />
+                                    /></IonItem>                               
                                 ) : (
-                                    <MySelectList index={props.index} valueList={StateList}
+                                    <IonItem key={index}><MySelectList index={props.index} valueList={StateList}
                                         placeholder={field.placeholder} label={field.label} 
-                                        objectType={field.objectType} fieldName={field.fieldName} required={field.required}/>
+                                        objectType={field.objectType} fieldName={field.fieldName} required={field.required}
+                                    /></IonItem>
                                 );
                             })
                         }
+                        </IonList>
+                        <IonRow>
+                    <IonCol size="1"></IonCol>
+                    <IonCol>
+                        <IonButton class="top-button" expand="block" type="submit" onClick={handleSubmit(toHumans)}>Humans &gt;</IonButton>
                     </IonCol>
-                    <IonButton class="top-button" type="submit" onClick={handleSubmit(toHumans)}>Next</IonButton>
+                    <IonCol size="1"></IonCol>
+                </IonRow>                       
+                    </IonCol>
                 </IonRow>
             <IonRow class="spacer"></IonRow>
         </IonGrid>

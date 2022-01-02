@@ -7,7 +7,8 @@ import { PetInfo } from "../../models/PetInfo";
 import FamilyQuestionSlides from "../../components/CreateFamily/FamilyQuestionSlides"
 import { useFieldArray, useForm, FormProvider, useFormContext } from "react-hook-form";
 
-import { InitFamilyQuestionState } from "../../components/CreateFamily/QuestionProps/InputProperties";
+import { InitFamilyQuestionState, InitHumanQuestionState } from "../../components/CreateFamily/QuestionProps/InputProperties";
+import { familyResponse } from "../../testData";
 
 export interface CreateFamilyProps {
     onCreateFamily: (family: FamilyInfo) => void,
@@ -21,17 +22,7 @@ export interface CreateFamilyState {
 const CreateFamily = (props: CreateFamilyProps) => {
 
   const addHuman = (newHuman: HumanInfo) => {
-      // let newFamily = this.state.familyInProgress;
-      // if(newFamily.humans.length == 0){
-      //     newFamily.humans = [newHuman];
-      // } else {
-      //     newFamily.humans.push(newHuman);
-      // }
       
-      // console.log('family has a new human');
-      // console.log(newFamily);
-      
-      // this.setState({familyInProgress: newFamily});
   }
 
   const addPet = (newPet: PetInfo): FamilyInfo => {
@@ -72,7 +63,7 @@ const CreateFamily = (props: CreateFamilyProps) => {
   }
 
   const methods = useForm({
-    // defaultValues: {}; you can populate the fields by this attribute 
+    defaultValues: {family: [InitFamilyQuestionState]}
   });
   const control = methods.control;
   const { fields, append, remove} = useFieldArray({
@@ -85,23 +76,19 @@ const CreateFamily = (props: CreateFamilyProps) => {
           <IonGrid class="thing">
             <FormProvider {...methods}>
               <form onSubmit={methods.handleSubmit(data => console.log(data))}>
-                <ol>
-                  {fields.map((item, index) => (
-                    <IonGrid key={item.id} class="slide-grid ion-justify-content-center ion-align-items-center ion-align-self-center">
-                      <IonRow>
-                        <IonCol>
-                          <li key={item.id}>
-                          <IonRow>
-                              <FamilyQuestionSlides index={index} saveFamilyInfo={saveFamilyInfo}
-                                  addHuman={addHuman} addPet={addPet} submitFamily={submitFamily}/>
-                          </IonRow>
-                            <button type="button" onClick={() => remove(index)}>Delete</button>
-                          </li> 
-                        </IonCol>
-                      </IonRow>
-                    </IonGrid>
-                  ))}
-                </ol>
+                {fields.map((item, index) => (
+                  <IonGrid key={item.id} class="slide-grid ion-justify-content-center ion-align-items-center ion-align-self-center">
+                    <IonRow>
+                      <IonCol>
+                        <IonRow>
+                            <FamilyQuestionSlides index={index} saveFamilyInfo={saveFamilyInfo}
+                                addHuman={addHuman} addPet={addPet} submitFamily={submitFamily}/>
+                        </IonRow>
+                          <button type="button" onClick={() => remove(index)}>Delete</button>
+                      </IonCol>
+                    </IonRow>
+                  </IonGrid>
+                ))}
                 <button
                   type="button"
                   onClick={() => append(InitFamilyQuestionState)}

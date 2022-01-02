@@ -1,9 +1,14 @@
+.item-label{
+    --padding-start: 20px;
+}
+
 .input-field{
     background-color: lightgray;
     margin-top: 2%;
     margin-bottom: 2%;
     color: black;
     border-radius: 2%;
+    --padding-start: 20px;
 }
 
 #my-list{

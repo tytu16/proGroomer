@@ -73,13 +73,12 @@ const FamilyQuestionSlides = (props: FamilyQuestionProps) => {
           scrollbar={true}
           zoom={true}
           onSwiper={setSwiper}
-          onSlideChange={() => console.log('slide change')}
         >
             <SwiperSlide>
                 <FamilyQuestions index={props.index} toHumanInfo={saveFamilyToHuman} />
             </SwiperSlide>
             <SwiperSlide>
-                <HumanQuestions toFamilyInfo={toPreviousSlide} anotherHuman={props.addHuman} toPetInfo={saveHumanToPet}/>
+                <HumanQuestions index={props.index} toFamilyInfo={toPreviousSlide} anotherHuman={props.addHuman} toPetInfo={toNextSlide}/>
             </SwiperSlide>
             <SwiperSlide>
                 <PetQuestions anotherPet={props.addPet} backToHumans={toPreviousSlide} submitFamily={SubmitFamilyAndBackToList} />

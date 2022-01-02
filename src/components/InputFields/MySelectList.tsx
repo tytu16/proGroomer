@@ -1,6 +1,6 @@
 import { IonCol, IonGrid, IonRow, IonSelect, IonSelectOption } from "@ionic/react";
 import { useFormContext } from "react-hook-form";
-import { ListValue } from "../../models/Enums/States";
+import { ListValueInterface } from "../../models/Enums/States";
 import "./InputStyling.css";
 
 export interface MySelectListProps {
@@ -10,7 +10,7 @@ export interface MySelectListProps {
     fieldName: string,
     objectType: string,
     required: boolean,
-    valueList: Array<ListValue>
+    valueList: Array<ListValueInterface>
   }
 
 export const MySelectList = (props: MySelectListProps) => {
@@ -26,10 +26,9 @@ export const MySelectList = (props: MySelectListProps) => {
             <IonRow>
                 <IonSelect id="my-list" placeholder={placeholder}{...register(`${objectType}.${index}.${fieldName}`)}>
                 {
-                    //ToDo: Needs to have empty state
-                    Object(valueList).map((v:ListValue) => {
+                    Object(valueList).map((v:ListValueInterface) => {
                         return (
-                            <IonSelectOption key={v.code} value={v.name}>{v.name}</IonSelectOption>
+                            <IonSelectOption key={v.label} value={v.value}>{v.label}</IonSelectOption>
                         );
                     })
                 }
