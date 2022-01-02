@@ -1,4 +1,4 @@
-import { IonButton, IonCol, IonGrid, IonItem, IonList, IonRow } from "@ionic/react";
+import { IonButton, IonCol, IonGrid, IonItem, IonList, IonRow, IonLabel, IonAccordionGroup, IonAccordion } from "@ionic/react";
 import { useState } from "react";
 import { useForm, useFieldArray, useFormContext } from "react-hook-form";
 import { HumanInfo } from "../../models/HumanInfo";
@@ -42,19 +42,28 @@ const HumanQuestions = (props: HumanQuestionsProps) => {
                     <IonCol size="10" className="slide-content">
                         <h1>Human Information</h1>
                         <IonList>
-                        {fields.map((item, fieldArrayIndex) => (
-                            <div className="human-content"> {
-                                HumanQuestionFields.map((field: TextFieldPropInterface, questionIndex) => {
+                            {fields.map((item, fieldArrayIndex) => (
+                                <IonAccordionGroup key={fieldArrayIndex}>
+                                <IonAccordion>
+                                    <IonItem slot="header">
+                                        <IonLabel>Human {fieldArrayIndex}</IonLabel>
+                                    </IonItem>
+                                    <IonList slot="content">
+                                        <div className="human-content"> {
+                                            HumanQuestionFields.map((field: TextFieldPropInterface, questionIndex) => {
 
-                                    return (
-                                        <IonItem key={questionIndex}><MyTextInput index={fieldArrayIndex}
-                                            placeholder={field.placeholder} label={field.label} 
-                                            objectType={objectType} fieldName={field.fieldName} required={field.required}
-                                        /></IonItem>                               
-                                    );
-                                })
-                            }</div>
-                        ))}
+                                                return (
+                                                    <IonItem key={questionIndex}><MyTextInput index={fieldArrayIndex}
+                                                        placeholder={field.placeholder} label={field.label} 
+                                                        objectType={objectType} fieldName={field.fieldName} required={field.required}
+                                                    /></IonItem>                               
+                                                );
+                                            })
+                                        }</div>
+                                    </IonList>
+                                </IonAccordion>
+                                </IonAccordionGroup>
+                            ))}
                         </IonList>   
                         <IonRow>
                             <IonCol><IonButton expand="block" onClick={handleSubmit(addAnother)}>
