@@ -1,5 +1,6 @@
 import { Redirect, Route } from 'react-router-dom';
 import {
+  setupIonicReact,
   IonApp,
   IonIcon,
   IonLabel,
@@ -41,6 +42,8 @@ interface AppState {
   families: Array<FamilyInfo>,
   topIndex: number
 }
+
+setupIonicReact();
 
 export default class App extends React.Component<any,AppState> {
 
