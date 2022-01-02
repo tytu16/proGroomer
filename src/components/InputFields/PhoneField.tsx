@@ -1,21 +1,26 @@
-import { IonButton, IonIcon, IonInput, IonItem } from "@ionic/react";
+import { IonButton, IonCol, IonGrid, IonIcon, IonInput, IonItem, IonList, IonRow } from "@ionic/react";
 import { removeCircleOutline, addCircleOutline } from "ionicons/icons";
 import { useState } from "react";
+import { useFieldArray, useFormContext } from "react-hook-form";
 import "./InputStyling.css";
 
 export interface PhoneFieldProps {
-  register: any, // register method passed down from react-hook-forms
-  field: any,
-  required: boolean,
-  i: number,
-  removePhoneInput?: () => void | null,
-  addPhoneInput?: () => void | null
+  index: number,
+  placeholder: string,
+  label: string,
+  objectType: string,
+  fieldName: string,
 }
 
 export const PhoneFieldInput = (props: PhoneFieldProps) => {
-  const {register, required, i, field, removePhoneInput, addPhoneInput} = props;
+  const {index, placeholder, fieldName, objectType} = props;
 
-  const [phoneNum, setPhoneNum] = useState<string>("");
+  const {control, register, handleSubmit} = useFormContext();
+  const longObjectType = objectType + `.${index}` + '.phone';
+  const { fields, append, remove} = useFieldArray({
+      control,
+      name: longObjectType,
+  });
 
   const formatPhone = (value: string, preValue:string) => {
     if (!value) return value;
@@ -36,27 +41,40 @@ export const PhoneFieldInput = (props: PhoneFieldProps) => {
         output = `(${currentValue.slice(0, 3)}) ${currentValue.slice(3, 6)}-${currentValue.slice(6, 10)}`;
       }
     }
-    setPhoneNum(output);
+    // setPhoneNum(output);
   };
 
+  const addPhoneInput = (data: any) => {
+    console.log('adding another phone');
+    console.log(data);
+    append({phoneNumber: ""});
+  };
+  
+  const removePhoneInput = (index: number) => {
+    remove(index);
+  }
+
   return(
-    <IonItem class="input-item ion-no-padding">
-        <label>phone-{i+1}:</label>&nbsp;
-        <IonInput ref={register(`phoneNumbers.${i}.value` as const)} key={field.key} class="input-field" 
-          inputmode="tel" type="tel" placeholder="(XXX) XXX-XXXX" maxlength={14} required={required} 
-          value={phoneNum} onIonChange={(e) => {
-            if(e.detail.value != phoneNum) {
-              formatPhone(e.detail.value!, phoneNum);
-            }
-          }} onSubmit={() => console.log('test submit is a go!')}
-        />                                  
-        {
-          removePhoneInput == null ? (
-            <IonButton id="addPhoneButton" onClick={addPhoneInput}><IonIcon icon={addCircleOutline}></IonIcon></IonButton>
-          ) : (
-            <IonButton id="removePhoneButton" onClick={removePhoneInput}><IonIcon icon={removeCircleOutline}></IonIcon></IonButton>
-           )
-        }
-    </IonItem>
+    <IonGrid>
+        <IonRow><IonCol>
+          <label key={0}>{props.label}:</label>&nbsp;
+        </IonCol></IonRow>
+        {fields.map((item, fieldArrayIndex) => (
+          <IonRow key={fieldArrayIndex}>
+            <IonCol>
+              <IonInput {...register(`${longObjectType}.${fieldArrayIndex}.${fieldName}`)} class="input-field" 
+                inputmode="tel" type="tel" placeholder={placeholder} maxlength={14} required={true}
+              />
+            </IonCol>
+            <IonCol size="3">{
+              (fieldArrayIndex == 0) ? (
+                <IonButton id="addPhoneButton" onClick={addPhoneInput}><IonIcon icon={addCircleOutline}></IonIcon></IonButton>
+              ) : (
+                <IonButton id="removePhoneButton" onClick={() => removePhoneInput(fieldArrayIndex)}><IonIcon icon={removeCircleOutline}></IonIcon></IonButton>
+              )
+            }</IonCol>
+          </IonRow>
+        ))}
+    </IonGrid>
   );
 }

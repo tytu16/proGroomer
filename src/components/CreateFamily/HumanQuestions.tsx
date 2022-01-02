@@ -4,7 +4,7 @@ import { useForm, useFieldArray, useFormContext } from "react-hook-form";
 import { HumanInfo } from "../../models/HumanInfo";
 import "./Questions.css";
 import {MyTextInput} from "../InputFields/MyTextInput";
-import { HumanQuestionFields, TextFieldPropInterface } from "./QuestionProps/InputProperties";
+import { HumanQuestionFields, InitHumanQuestionState, TextFieldPropInterface } from "./QuestionProps/InputProperties";
 import {PhoneFieldInput} from "../InputFields/PhoneField"
 
 import 'swiper/swiper.min.css';
@@ -24,15 +24,12 @@ const HumanQuestions = (props: HumanQuestionsProps) => {
     const { fields, append, remove} = useFieldArray({
         control,
         name: objectType,
-      });
-    const [index, setIndex] = useState(0);
-    const [humans, setHumans] = useState<Array<HumanInfo>>([])
-
+    });
 
    const addAnother = (data: any) => {
        console.log('new fam data:');
        console.log(data);
-       append({firstName: '', lastName: ''});
+       append(InitHumanQuestionState);
    }
 
     return (
@@ -46,17 +43,24 @@ const HumanQuestions = (props: HumanQuestionsProps) => {
                                 <IonAccordionGroup key={fieldArrayIndex}>
                                 <IonAccordion>
                                     <IonItem slot="header">
-                                        <IonLabel>Human {fieldArrayIndex}</IonLabel>
+                                        <IonLabel>Human {fieldArrayIndex+1}</IonLabel>
                                     </IonItem>
                                     <IonList slot="content">
                                         <div className="human-content"> {
                                             HumanQuestionFields.map((field: TextFieldPropInterface, questionIndex) => {
 
-                                                return (
+                                                return (field.fieldName != 'phoneNumber') ? (
                                                     <IonItem key={questionIndex}><MyTextInput index={fieldArrayIndex}
                                                         placeholder={field.placeholder} label={field.label} 
                                                         objectType={objectType} fieldName={field.fieldName} required={field.required}
                                                     /></IonItem>                               
+                                                ) : (
+                                                    <IonItem key={questionIndex}>
+                                                        <PhoneFieldInput index={fieldArrayIndex}
+                                                            placeholder={field.placeholder} label={field.label} 
+                                                            objectType={objectType} fieldName={field.fieldName}
+                                                        />
+                                                    </IonItem>
                                                 );
                                             })
                                         }</div>

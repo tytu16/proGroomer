@@ -6,24 +6,25 @@ export interface TextFieldPropInterface {
     required: boolean
 }
 
+export const InitHumanPhoneNumbers = {
+    phoneNumber: ""
+}
+
+export const InitHumanQuestionState = {
+    firstName: "",
+    lastName: "",
+    email: "",
+    phone: [InitHumanPhoneNumbers]
+}
+
 export const InitFamilyQuestionState = {
     familyName: "",
     addressOne: "",
     addressTwo: "",
     addressCity: "",
     addressZip: "",
-    human: [{
-        firstName: "",
-        lastName: "",
-        email: ""
-    }]
+    human: [InitHumanQuestionState]
   }
-
-export const InitHumanQuestionState = {
-    firstName: "",
-    lastName: "",
-    email: ""
-}
 
 export const FamilyQuestionFields = [
     {
@@ -74,7 +75,7 @@ export const HumanQuestionFields = [
     {
         placeholder: "First Name",
         label: "First Name", 
-        objectType: "human",
+        objectType: "family.0.human",
         fieldName: "firstName",
         required: true
     },
@@ -92,4 +93,11 @@ export const HumanQuestionFields = [
         fieldName: "email",
         required: true
     },
+    {
+        placeholder: "(XXX) XXX-XXXX",
+        label: "Phone Numbers",
+        objectType: "family.0.human.0.phone",
+        fieldName: "phoneNumber",
+        required: true
+    }
 ]
