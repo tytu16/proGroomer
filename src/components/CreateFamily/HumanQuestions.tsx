@@ -39,14 +39,15 @@ const HumanQuestions = (props: HumanQuestionsProps) => {
                     <IonCol size="10" className="slide-content">
                         <h1>Human Information</h1>
                         <IonList>
+                        <IonAccordionGroup multiple={false} value="human0" >
                             {fields.map((item, fieldArrayIndex) => (
-                                <IonAccordionGroup key={fieldArrayIndex}>
-                                <IonAccordion>
+                                <IonAccordion class="accordion-expanded" key={fieldArrayIndex} value={`human${fieldArrayIndex}`} >
                                     <IonItem slot="header">
                                         <IonLabel>Human {fieldArrayIndex+1}</IonLabel>
                                     </IonItem>
                                     <IonList slot="content">
-                                        <div className="human-content"> {
+                                        <div className="human-content"> 
+                                        {
                                             HumanQuestionFields.map((field: TextFieldPropInterface, questionIndex) => {
 
                                                 return (field.fieldName != 'phoneNumber') ? (
@@ -66,9 +67,9 @@ const HumanQuestions = (props: HumanQuestionsProps) => {
                                         }</div>
                                     </IonList>
                                 </IonAccordion>
-                                </IonAccordionGroup>
                             ))}
-                        </IonList>   
+                        </IonAccordionGroup>
+                        </IonList>  
                         <IonRow>
                             <IonCol><IonButton expand="block" onClick={handleSubmit(addAnother)}>
                                 Add Another

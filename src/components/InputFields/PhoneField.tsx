@@ -63,7 +63,7 @@ export const PhoneFieldInput = (props: PhoneFieldProps) => {
           <IonRow key={fieldArrayIndex}>
             <IonCol>
               <IonInput {...register(`${longObjectType}.${fieldArrayIndex}.${fieldName}`)} class="input-field" 
-                inputmode="tel" type="tel" placeholder={placeholder} maxlength={14} required={true}
+                inputmode="tel" type="tel" placeholder={placeholder} maxlength={14}
               />
             </IonCol>
             <IonCol size="3">{
