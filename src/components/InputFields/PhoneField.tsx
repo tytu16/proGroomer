@@ -18,10 +18,10 @@ export const PhoneFieldInput = (props: PhoneFieldProps) => {
   const {index, placeholder, fieldName, objectType} = props;
 
   const {control, register, handleSubmit} = useFormContext();
-  const longObjectType = objectType + `.${index}` + '.phone';
+  const formPrefix = objectType + `.${index}` + '.phone';
   const { fields, append, remove} = useFieldArray({
       control,
-      name: longObjectType,
+      name: formPrefix,
   });
 
   const addPhoneInput = (data: any) => {
@@ -40,23 +40,24 @@ export const PhoneFieldInput = (props: PhoneFieldProps) => {
           <label key={0}>{props.label}:</label>&nbsp;
         </IonCol></IonRow>
         {fields.map((item, fieldArrayIndex) => (
-          <IonRow key={fieldArrayIndex}>
-            <IonCol>
-            <Controller
-              control={control}
-              name={`${longObjectType}.${fieldArrayIndex}.${fieldName}`}
-              render={({ field: { onChange, name, value } }) => (
-                <NumberFormat className="input-field"
-                  placeholder={placeholder} 
-                  format="(###) ###-####"
-                  name={name}
-                  value={value}
-                  onChange={onChange}
-                />
-              )}
-            />
+          <IonRow class="nowrap" key={fieldArrayIndex}>
+            <IonCol size="8">
+              <Controller
+                control={control}
+                name={`${formPrefix}.${fieldArrayIndex}.${fieldName}`}
+                render={({ field: { onChange, name, value } }) => (
+                  <NumberFormat className="phone-field"
+                    placeholder={placeholder}
+                    type={"tel"}
+                    format="(###) ###-####"
+                    name={name}
+                    value={value}
+                    onChange={onChange}
+                  />
+                )}
+              />
             </IonCol>
-            <IonCol size="3">{
+            <IonCol>{
               (fieldArrayIndex == 0) ? (
                 <IonButton id="addPhoneButton" onClick={addPhoneInput}><IonIcon icon={addCircleOutline}></IonIcon></IonButton>
               ) : (

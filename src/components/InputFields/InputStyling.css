@@ -11,6 +11,12 @@
     --padding-start: 20px;
 }
 
+.phone-field{
+    padding: 4%;
+    width: 100%;
+    margin-left: -1%;
+}
+
 #my-list{
     width: 100%;
     background-color: lightgray;
@@ -20,11 +26,11 @@
 #removePhoneButton{
     --background: var(--ion-color-danger);
     border-radius: 5%;
-    margin-left: 2%;
+    /* margin-left: 2%; */
 }
 
 #addPhoneButton{
-    margin-left: 2%;
+    /* margin-left: 2%; */
 }
 
 ion-select{
