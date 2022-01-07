@@ -10,9 +10,18 @@ export const InitHumanPhoneNumbers = {
     phoneNumber: ""
 }
 
-export const InitHumanQuestionState = {
+export const InitPrimaryHumanQuestionState = {
     id: 0,
     isPrimary: true,
+    firstName: "",
+    lastName: "",
+    email: "",
+    phone: [InitHumanPhoneNumbers]
+}
+
+export const InitHumanQuestionState = {
+    id: 0,
+    isPrimary: false,
     firstName: "",
     lastName: "",
     email: "",
@@ -26,7 +35,7 @@ export const InitFamilyQuestionState = {
     addressTwo: "",
     addressCity: "",
     addressZip: "",
-    human: [InitHumanQuestionState]
+    human: [InitPrimaryHumanQuestionState]
   }
 
 export const FamilyQuestionFields = [

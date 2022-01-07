@@ -18,6 +18,7 @@ export interface HumanQuestionsProps {
     anotherHuman: (human: HumanInfo) => void
 }
 
+// Use checked state to allow only one primary checkbox at a time
 const HumanQuestions = (props: HumanQuestionsProps) => {
 
     const {control, handleSubmit, register} = useFormContext();
@@ -83,7 +84,7 @@ const HumanQuestions = (props: HumanQuestionsProps) => {
                 <IonRow>
                     <IonCol size="10" className="slide-content">
                         <h1>Human Information</h1>
-                        <IonAccordionGroup multiple={false} value={`human_${fieldNumber}`} ref={accordionGroupRef}>
+                        <IonAccordionGroup multiple={false} value={'human_0'} ref={accordionGroupRef}>
                             {fields.map((item, fieldArrayIndex) => (
                                 <IonAccordion class="accordion-expanded" key={fieldArrayIndex} value={`human_${fieldArrayIndex}`} >
                                     <IonItem slot="header">
