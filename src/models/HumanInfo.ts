@@ -4,23 +4,25 @@ interface PhoneNumberFieldInterface{
 
 export class HumanInfo {
     private _id: string;
+    private _isPrimary: boolean;
     private _firstName: string;
     private _lastName: string;
     private _email: string;
-    private _phoneNumbers: Array<string>;
+    private _phone: Array<string>;
 
-    constructor(data: any){
-        this._id = data.id;
+    constructor(data: any, id=0){
+        this._id = data.id ? data.id : id;
+        this._isPrimary = data.isPrimary;
         this._firstName = data.firstName;
         this._lastName  = data.lastName;
         this._email = data.email;
-        this._phoneNumbers = new Array<string>();
+        this._phone = new Array<string>();
         console.log('le data')
         console.log(data);
 
-        if(data.phoneNumbers != null && data.phoneNumbers.length > 0){
-            for(let pn of data.phoneNumbers){
-                this._phoneNumbers.push(pn.value);
+        if(data.phone != null && data.phone.length > 0){
+            for(let pn of data.phone){
+                this._phone.push(pn.phoneNumber);
             }
         }
     }
@@ -58,20 +60,28 @@ export class HumanInfo {
         this._email = email;
     }
 
-    get phoneNumbers(): Array<string>{
-        return this._phoneNumbers;
+    get phones(): Array<string>{
+        return this._phone;
     }
 
-    set phoneNumbers(phoneNumbers: Array<string>){
-        this._phoneNumbers = phoneNumbers;
+    set phones(phoneNumbers: Array<string>){
+        this._phone = phoneNumbers;
+    }
+
+    get isPrimary(){
+        return true;
+    }
+
+    set isPrimary(value: boolean){
+        this._isPrimary = value;
     }
 
     addPhoneNumber(phoneNumber: string){
-        this._phoneNumbers.push(phoneNumber);
+        this._phone.push(phoneNumber);
     }
 
     isEqualWithoutId (other: HumanInfo) {
-        const diff = other._phoneNumbers.filter(v => !this._phoneNumbers.includes(v))
+        const diff = other._phone.filter(v => !this._phone.includes(v))
         
         return (this._firstName == other.firstName &&
                 this._lastName == other.lastName &&
@@ -79,3 +89,12 @@ export class HumanInfo {
                 diff.length == 0);
     }
 }
+
+export const InitHumanInfo = new HumanInfo({
+    id: 0,
+    isPrimary: false,
+    firstName: "",
+    lastName: "",
+    email: "",
+    phone: [""]
+});

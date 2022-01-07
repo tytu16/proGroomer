@@ -78,6 +78,7 @@ const FamilyQuestionSlides = (props: FamilyQuestionProps) => {
                 <FamilyQuestions index={props.index} toHumanInfo={saveFamilyToHuman} />
             </SwiperSlide>
             <SwiperSlide>
+                
                 <HumanQuestions index={props.index} toFamilyInfo={toPreviousSlide} anotherHuman={props.addHuman} toPetInfo={toNextSlide}/>
             </SwiperSlide>
             <SwiperSlide>

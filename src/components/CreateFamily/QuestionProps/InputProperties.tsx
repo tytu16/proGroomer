@@ -11,6 +11,8 @@ export const InitHumanPhoneNumbers = {
 }
 
 export const InitHumanQuestionState = {
+    id: 0,
+    isPrimary: true,
     firstName: "",
     lastName: "",
     email: "",
@@ -18,6 +20,7 @@ export const InitHumanQuestionState = {
 }
 
 export const InitFamilyQuestionState = {
+    id: 0,
     familyName: "",
     addressOne: "",
     addressTwo: "",
@@ -73,6 +76,13 @@ export const FamilyQuestionFields = [
 
 export const HumanQuestionFields = [
     {
+        placeholder: "",
+        label: "Primary Contact?", 
+        objectType: "family.0.human",
+        fieldName: "isPrimary",
+        required: true
+    },
+    {
         placeholder: "First Name",
         label: "First Name", 
         objectType: "family.0.human",
@@ -99,5 +109,5 @@ export const HumanQuestionFields = [
         objectType: "family.0.human.0.phone",
         fieldName: "phoneNumber",
         required: true
-    }
+    },
 ]
