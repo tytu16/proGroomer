@@ -1,62 +1,42 @@
-import { IonButton, IonCol, IonGrid, IonInput, IonItem, IonList, IonRow } from "@ionic/react";
-import { useState } from "react";
-import { useForm } from "react-hook-form";
+import { IonAccordion, IonAccordionGroup, IonButton, IonCol, IonGrid, IonInput, IonItem, IonLabel, IonList, IonRow } from "@ionic/react";
+import { useRef, useState } from "react";
+import { useFieldArray, useFormContext, useWatch } from "react-hook-form";
 import { PetInfo } from "../../models/PetInfo";
+import { MyTextInput } from "../InputFields/MyTextInput";
+import { InitPetQuestionState, PetQuestionFields, TextFieldPropInterface } from "./QuestionProps/InputProperties";
 import "./Questions.css";
 
 export interface PetQuestionsProps{
-    anotherPet: (petInfo: PetInfo) => void,
+    index: number,
     backToHumans: () => void,
-    submitFamily: (petInfo: PetInfo | null) => void,
+    submitFamily: () => void,
+}
+
+function PetHeader({ control, name, index }: { control: any, name: string, index: number }) {
+    const nameBreed = useWatch({
+        control,
+        name: [`${name}.name`,`${name}.breed`],
+      });
+    
+      return (nameBreed[0] != '' || nameBreed[1] != '') ? (
+          <IonLabel>{nameBreed[0]} {nameBreed[1]}</IonLabel>
+      ) : (
+          <IonLabel>Pet {index+1}</IonLabel>
+      )
 }
 
 const PetQuestions = (props: PetQuestionsProps) => {
-    const { register, handleSubmit, formState: { errors } } = useForm({
-        mode: "onTouched",
-        reValidateMode: "onSubmit"
+    const {control, handleSubmit, register, watch} = useFormContext();
+    const objectType = `family.${props.index}.pet`;
+    const { fields, append, remove} = useFieldArray({
+        control,
+        name: objectType,
     });
 
+    const accordionGroupRef = useRef<any>(null);
     const [index, setIndex] = useState(0);
     const [pets, setPets] = useState<Array<PetInfo>>([]);
     const [sex, setSex] = useState<string>("");
-
-    const createPet = (data: any) => {
-        const newPet = new PetInfo(data);
-        if(pets.length > 0){
-            for(let pet of pets) {
-                if(newPet.isEqualWithoutId(pet)){
-                    console.log('already have this pet');
-                    return null;
-                }
-            }
-        } 
-        newPet.id = index;
-        setIndex(index+1);
-
-        if(pets.length == 0){
-            setPets([newPet])
-        } else {
-            let localPets = pets;
-            localPets.push(newPet);
-            setPets(localPets);
-        }
-        return newPet;
-        
-    }
-
-    const createAndSavePet = (data: any) => {
-
-        let newPet = createPet(data);
-        if(newPet == null){
-            // toast, we already have this pet
-            return;
-        }
-        props.anotherPet(newPet);
-    }
-
-    const submitPetInfo = (data: any) => {
-        props.submitFamily(createPet(data));
-    }
 
     const assignSex = (s: string) => {
         console.log('setting sex: ' + s);
@@ -67,14 +47,72 @@ const PetQuestions = (props: PetQuestionsProps) => {
         }
     }
 
+    const addAnother = (data: any) => {
+        append(InitPetQuestionState);
+    }
+
+    const finishFamily = (data: any) => {
+        props.submitFamily();
+    }
+
     return (
-        <IonGrid class="slide-grid ion-justify-content-center ion-align-items-center ion-align-self-center ion-text-center">
+        <IonGrid class="slide-grid ion-justify-content-center ion-align-items-center ion-align-self-center">
             <IonRow class="spacer"></IonRow>
                 <IonRow>
                     <IonCol size="10" className="slide-content">
-                        <h1>Pet Information</h1>
+                        <h1>Human Information</h1>
+                        <IonAccordionGroup multiple={false} value={'pet_0'} ref={accordionGroupRef}>
+                            {fields.map((item, fieldArrayIndex) => (
+                                <IonAccordion class="accordion-expanded" key={fieldArrayIndex} value={`human_${fieldArrayIndex}`} >
+                                    <IonItem slot="header">
+                                        {
+                                            <PetHeader control={control} name={`${objectType}.${fieldArrayIndex}`} index={fieldArrayIndex}/>
+                                        }
+                                    </IonItem>
+                                    <IonList slot="content">
+                                        <div className="human-content">{
+                                            PetQuestionFields.map((field: TextFieldPropInterface, questionIndex) => {
+                                                return (field.fieldName != 'sex') ? (
+                                                    <IonItem key={questionIndex}>
+                                                        <MyTextInput index={fieldArrayIndex}
+                                                            placeholder={field.placeholder} label={field.label}
+                                                            objectType={objectType} fieldName={field.fieldName} required={field.required}
+                                                        />
+                                                    </IonItem>   
+                                                ) : (
+                                                    <IonGrid>
+                                                        <IonRow>
+                                                            <IonCol onClick={() => {assignSex("male");}} className={sex == "male" ? 'active-sex' : '' }>
+                                                                Male
+                                                            </IonCol>
+                                                            <IonCol onClick={() => {assignSex("female");}} className={sex == "female" ? 'active-sex' : '' }>
+                                                                Female
+                                                            </IonCol>
+                                                        </IonRow>
+                                                    </IonGrid>
+                                                )
+                                            })
+                                        }</div>
+                                    </IonList>
+                                </IonAccordion>
+                            ))}
+                        </IonAccordionGroup>
+                        <IonRow>
+                            <IonCol><IonButton expand="block" onClick={handleSubmit(addAnother)}>
+                                Add Another
+                            </IonButton></IonCol>
+                        </IonRow>
+                        <IonRow>
+                            <IonCol>
+                                <IonButton expand="block" onClick={handleSubmit(props.backToHumans)}>&lt; Humans</IonButton>
+                            </IonCol>
+                            <IonCol>
+                                <IonButton expand="block" onClick={handleSubmit(props.submitFamily)}>Submit &gt;</IonButton>
+                            </IonCol>
+                        </IonRow>2
                     </IonCol>
                 </IonRow>
+     
             <IonRow class="spacer"></IonRow>
         </IonGrid>
     );

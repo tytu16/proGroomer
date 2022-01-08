@@ -1,9 +1,17 @@
 export interface TextFieldPropInterface {
-    placeholder: string,
+    placeholder: any,
     label: string,
     objectType: string,
     fieldName: string,
     required: boolean
+}
+
+export const InitPetQuestionState = {
+    id: 0,
+    name: "",
+    breed: "",
+    sex: "",
+    age: "-1"
 }
 
 export const InitHumanPhoneNumbers = {
@@ -35,7 +43,8 @@ export const InitFamilyQuestionState = {
     addressTwo: "",
     addressCity: "",
     addressZip: "",
-    human: [InitPrimaryHumanQuestionState]
+    human: [InitPrimaryHumanQuestionState],
+    pet: [InitPetQuestionState]
   }
 
 export const FamilyQuestionFields = [
@@ -120,3 +129,34 @@ export const HumanQuestionFields = [
         required: true
     },
 ]
+
+export const PetQuestionFields = [
+    {
+        placeholder: "",
+        label: "Name", 
+        objectType: "family.0.pet",
+        fieldName: "name",
+        required: true
+    },
+    {
+        placeholder: "Breed",
+        label: "Breed",
+        objectType: "family.0.pet",
+        fieldName: "breed",
+        required: false
+    },
+    {
+        placeholder: "",
+        label: "sex",
+        objectType: "family.0.pet",
+        fieldName: "sex",
+        required: false
+    },
+    {
+        placeholder: "Age",
+        label: "age",
+        objectType: "family.0.pet",
+        fieldName: "age",
+        required: false
+    },
+] 

@@ -1,4 +1,4 @@
-import { IonButton, IonCol, IonGrid, IonItem, IonList, IonRow, IonLabel, IonAccordionGroup, IonAccordion, IonCheckbox } from "@ionic/react";
+import { IonButton, IonCol, IonGrid, IonItem, IonList, IonRow, IonLabel, IonAccordionGroup, IonAccordion, IonCheckbox, IonItemSliding, IonItemOption, IonItemOptions } from "@ionic/react";
 import { useRef, useState } from "react";
 import { useFieldArray, useFormContext, useWatch } from "react-hook-form";
 import "./Questions.css";
@@ -24,11 +24,11 @@ function HumanHeader({ control, name, index }: { control: any, name: string, ind
     });
   
     return (firstLastName[0] != '' || firstLastName[1] != '') ? (
-            <IonLabel>{firstLastName[0]} {firstLastName[1]}</IonLabel>
-        ) : (
-            <IonLabel>Person {index+1}</IonLabel>
-        )
-  }
+        <IonLabel>{firstLastName[0]} {firstLastName[1]}</IonLabel>
+    ) : (
+        <IonLabel>Person {index+1}</IonLabel>
+    )
+}
 
 // Use checked state to allow only one primary checkbox at a time
 const HumanQuestions = (props: HumanQuestionsProps) => {
@@ -95,23 +95,38 @@ const HumanQuestions = (props: HumanQuestionsProps) => {
                     <IonCol size="10" className="slide-content">
                         <h1>Human Information</h1>
                         <IonAccordionGroup multiple={false} value={'human_0'} ref={accordionGroupRef}>
-                            {fields.map((item, fieldArrayIndex) => (
-                                <IonAccordion class="accordion-expanded" key={fieldArrayIndex} value={`human_${fieldArrayIndex}`} >
-                                    <IonItem slot="header">
-                                        {
-                                            <HumanHeader control={control} name={`${objectType}.${fieldArrayIndex}`} index={fieldArrayIndex}/>
-                                        }
-                                    </IonItem>
-                                    <IonList slot="content">
-                                        <div className="human-content">{
-                                            HumanQuestionFields.map((field: TextFieldPropInterface, questionIndex) => {
-                                                return renderField(field, questionIndex, fieldArrayIndex);
-                                            })
-                                        }</div>
-                                    </IonList>
-                                </IonAccordion>
-                            ))}
+                            <IonList>
+                                {fields.map((item, fieldArrayIndex) => (
+                                    <IonItemSliding>
+                                        <IonItemOptions side="start"><IonItemOption onClick={() => {remove(fieldArrayIndex)}} color="danger" expandable>
+                                            Delete
+                                        </IonItemOption></IonItemOptions>
+                                        <IonItem>
+                                            <IonAccordion class="accordion-expanded" key={fieldArrayIndex} value={`human_${fieldArrayIndex}`} >
+                                                <IonItem slot="header">
+                                                    {
+                                                        <HumanHeader control={control} name={`${objectType}.${fieldArrayIndex}`} index={fieldArrayIndex}/>
+                                                    }
+                                                </IonItem>
+                                                <IonList slot="content">
+                                                    <div className="human-content">{
+                                                        HumanQuestionFields.map((field: TextFieldPropInterface, questionIndex) => {
+                                                            return renderField(field, questionIndex, fieldArrayIndex);
+                                                        })
+                                                    }</div>
+                                                </IonList>
+                                            </IonAccordion>
+                                        </IonItem>
+                                        <IonItemOptions side="end"><IonItemOption onClick={() => {remove(fieldArrayIndex)}} color="danger" expandable>
+                                            Delete
+                                        </IonItemOption></IonItemOptions>
+                                    </IonItemSliding>
+                                ))}
+                            </IonList>
+                            
                         </IonAccordionGroup>
+
+
                         <IonRow>
                             <IonCol><IonButton expand="block" onClick={handleSubmit(addAnother)}>
                                 Add Another

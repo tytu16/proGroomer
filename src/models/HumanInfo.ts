@@ -11,6 +11,16 @@ export class HumanInfo {
     private _phone: Array<string>;
 
     constructor(data: any, id=0){
+        if(data === {}){
+            this._id = InitHumanInfo.id;
+            this._isPrimary = InitHumanInfo.isPrimary;
+            this._firstName = InitHumanInfo.firstName;
+            this._lastName = InitHumanInfo.lastName;
+            this._email = InitHumanInfo.email;
+            this._phone = InitHumanInfo.phones;
+            return;
+        }
+        
         this._id = data.id ? data.id : id;
         this._isPrimary = data.isPrimary;
         this._firstName = data.firstName;

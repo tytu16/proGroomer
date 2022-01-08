@@ -58,8 +58,8 @@ const FamilyQuestionSlides = (props: FamilyQuestionProps) => {
     
     }
 
-    const SubmitFamilyAndBackToList = (petInfo: PetInfo | null) => {
-        props.submitFamily(petInfo);
+    const SubmitFamilyAndBackToList = () => {
+        // props.submitFamily(petInfo);
         history.goBack();
     }
 
@@ -78,11 +78,10 @@ const FamilyQuestionSlides = (props: FamilyQuestionProps) => {
                 <FamilyQuestions index={props.index} toHumanInfo={saveFamilyToHuman} />
             </SwiperSlide>
             <SwiperSlide>
-                
-                <HumanQuestions index={props.index} toFamilyInfo={toPreviousSlide} anotherHuman={props.addHuman} toPetInfo={toNextSlide}/>
+                <HumanQuestions index={props.index} toFamilyInfo={toPreviousSlide} toPetInfo={toNextSlide}/>
             </SwiperSlide>
             <SwiperSlide>
-                <PetQuestions anotherPet={props.addPet} backToHumans={toPreviousSlide} submitFamily={SubmitFamilyAndBackToList} />
+                <PetQuestions index={props.index} backToHumans={toPreviousSlide} submitFamily={SubmitFamilyAndBackToList} />
             </SwiperSlide>
         </Swiper>
     );
