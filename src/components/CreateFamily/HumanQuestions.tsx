@@ -1,7 +1,6 @@
 import { IonButton, IonCol, IonGrid, IonItem, IonList, IonRow, IonLabel, IonAccordionGroup, IonAccordion, IonCheckbox } from "@ionic/react";
-import React, { useRef, useState } from "react";
-import { useForm, useFieldArray, useFormContext } from "react-hook-form";
-import { HumanInfo } from "../../models/HumanInfo";
+import { useRef, useState } from "react";
+import { useFieldArray, useFormContext, useWatch } from "react-hook-form";
 import "./Questions.css";
 import {MyTextInput} from "../InputFields/MyTextInput";
 import { HumanQuestionFields, InitHumanQuestionState, TextFieldPropInterface } from "./QuestionProps/InputProperties";
@@ -10,33 +9,44 @@ import {MyCheckBox} from "../InputFields/MyCheckBox";
 
 import 'swiper/swiper.min.css';
 import '@ionic/react/css/ionic-swiper.css';
+import { HumanInfo } from "../../models/HumanInfo";
 
 export interface HumanQuestionsProps {
     index: number,
-    toPetInfo: (human: HumanInfo | null) => void,
-    toFamilyInfo: () => void,
-    anotherHuman: (human: HumanInfo) => void
+    toPetInfo: () => void,
+    toFamilyInfo: () => void
 }
+
+function HumanHeader({ control, name, index }: { control: any, name: string, index: number }) {
+    const firstLastName = useWatch({
+      control,
+      name: [`${name}.firstName`,`${name}.lastName`],
+    });
+  
+    return (firstLastName[0] != '' || firstLastName[1] != '') ? (
+            <IonLabel>{firstLastName[0]} {firstLastName[1]}</IonLabel>
+        ) : (
+            <IonLabel>Person {index+1}</IonLabel>
+        )
+  }
 
 // Use checked state to allow only one primary checkbox at a time
 const HumanQuestions = (props: HumanQuestionsProps) => {
 
-    const {control, handleSubmit, register} = useFormContext();
+    const {control, handleSubmit, register, watch} = useFormContext();
     const objectType = `family.${props.index}.human`;
     const { fields, append, remove} = useFieldArray({
         control,
         name: objectType,
     });
 
-    const accordionGroupRef = useRef<any>(null);
     const [fieldNumber, setFieldNumber] = useState<number>(0);
+    const [humans, setHumans] = useState<Array<HumanInfo>>([new HumanInfo({})]);
+    const [primaryIndex, setPrimaryIndex] = useState<number>(0);
 
-    const switchAccordions = (index:number) => {
-        console.log(`switching to accordion ${index}`);
-        // accordionGroupRef.current.value = undefined;
-    }
+    const accordionGroupRef = useRef<any>(null);
     
-    const renderField = (field: any,questionIndex:number,fieldArrayIndex:number) => {
+    const renderField = (field: any, questionIndex:number, fieldArrayIndex:number) => {
         switch(field.fieldName){
             case 'phoneNumber':
                 return (
@@ -50,32 +60,32 @@ const HumanQuestions = (props: HumanQuestionsProps) => {
 
             case 'isPrimary':
                 return (
-                    <MyCheckBox key={questionIndex} index={fieldArrayIndex}
-                    label={field.label} objectType={objectType}
-                    fieldName={field.fieldName} required={field.required} />
+                    <MyCheckBox key={questionIndex} index={fieldArrayIndex} 
+                        label={field.label} objectType={objectType}
+                        fieldName={field.fieldName} required={field.required} />
                 );
 
             default:
                 return  (
                     <IonItem key={questionIndex}>
                         <MyTextInput index={fieldArrayIndex}
-                        placeholder={field.placeholder} label={field.label} 
-                        objectType={objectType} fieldName={field.fieldName} required={field.required}
-                    /></IonItem>                               
+                            placeholder={field.placeholder} label={field.label}
+                            objectType={objectType} fieldName={field.fieldName} required={field.required}
+                        />
+                    </IonItem>                               
                 );
         }
     }
 
-
    const addAnother = (data: any) => {
-       console.log('new fam data:');
-       console.log(data);
        append(InitHumanQuestionState);
-       console.log(`fieldNumber: ${fieldNumber}`);
-       const newFieldNumber = fieldNumber+1; 
-       console.log(`newFieldNumber: ${newFieldNumber}`);
-       setFieldNumber(newFieldNumber);
-    //    switchAccordions(newFieldNumber);
+       setFieldNumber(fieldNumber+1);
+   }
+
+   const moveToPets = (data: any) => {
+       console.log("moving to pets");
+       console.log(data);
+       props.toPetInfo();
    }
 
     return (
@@ -88,7 +98,9 @@ const HumanQuestions = (props: HumanQuestionsProps) => {
                             {fields.map((item, fieldArrayIndex) => (
                                 <IonAccordion class="accordion-expanded" key={fieldArrayIndex} value={`human_${fieldArrayIndex}`} >
                                     <IonItem slot="header">
-                                        <IonLabel>Human {fieldArrayIndex+1}</IonLabel>
+                                        {
+                                            <HumanHeader control={control} name={`${objectType}.${fieldArrayIndex}`} index={fieldArrayIndex}/>
+                                        }
                                     </IonItem>
                                     <IonList slot="content">
                                         <div className="human-content">{
@@ -110,7 +122,7 @@ const HumanQuestions = (props: HumanQuestionsProps) => {
                                 <IonButton expand="block" onClick={props.toFamilyInfo}>&lt; Family</IonButton>
                             </IonCol>
                             <IonCol>
-                                <IonButton expand="block" >Pets &gt;</IonButton>
+                                <IonButton expand="block" onClick={handleSubmit(moveToPets)}>Pets &gt;</IonButton>
                             </IonCol>
                         </IonRow>    
                     </IonCol>
