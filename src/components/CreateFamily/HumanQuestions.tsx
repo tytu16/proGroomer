@@ -1,6 +1,6 @@
 import { IonButton, IonCol, IonGrid, IonItem, IonList, IonRow, IonLabel, IonAccordionGroup, IonAccordion, IonCheckbox, IonItemSliding, IonItemOption, IonItemOptions } from "@ionic/react";
 import { useRef, useState } from "react";
-import { useFieldArray, useFormContext, useWatch } from "react-hook-form";
+import { useFieldArray, useFormContext } from "react-hook-form";
 import "./Questions.css";
 import {MyTextInput} from "../InputFields/MyTextInput";
 import { HumanQuestionFields, InitHumanQuestionState, TextFieldPropInterface } from "./QuestionProps/InputProperties";
@@ -17,17 +17,10 @@ export interface HumanQuestionsProps {
     toFamilyInfo: () => void
 }
 
-function HumanHeader({ control, name, index }: { control: any, name: string, index: number }) {
-    const firstLastName = useWatch({
-      control,
-      name: [`${name}.firstName`,`${name}.lastName`],
-    });
-  
-    return (firstLastName[0] != '' || firstLastName[1] != '') ? (
-        <IonLabel>{firstLastName[0]} {firstLastName[1]}</IonLabel>
-    ) : (
-        <IonLabel>Person {index+1}</IonLabel>
-    )
+export interface WatchedFieldsInter {
+    firstName: string,
+    lastName: string,
+    isPrimary: boolean
 }
 
 // Use checked state to allow only one primary checkbox at a time
@@ -40,14 +33,15 @@ const HumanQuestions = (props: HumanQuestionsProps) => {
         name: objectType,
     });
 
-    const [fieldNumber, setFieldNumber] = useState<number>(0);
-    const [humans, setHumans] = useState<Array<HumanInfo>>([new HumanInfo({})]);
+    const [watchedFields, setWatchedFields] = useState<Array<WatchedFieldsInter>>([{
+        firstName: "", lastName: "", isPrimary: true
+    }]);
     const [primaryIndex, setPrimaryIndex] = useState<number>(0);
 
     const accordionGroupRef = useRef<any>(null);
     
     const renderField = (field: any, questionIndex:number, fieldArrayIndex:number) => {
-        switch(field.fieldName){
+        switch (field.fieldName){
             case 'phoneNumber':
                 return (
                     <IonItem key={questionIndex}>
@@ -68,7 +62,8 @@ const HumanQuestions = (props: HumanQuestionsProps) => {
             default:
                 return  (
                     <IonItem key={questionIndex}>
-                        <MyTextInput index={fieldArrayIndex}
+                        <MyTextInput index={fieldArrayIndex} 
+                            onChange={handleFieldChange} watched={field.watched}
                             placeholder={field.placeholder} label={field.label}
                             objectType={objectType} fieldName={field.fieldName} required={field.required}
                         />
@@ -77,9 +72,29 @@ const HumanQuestions = (props: HumanQuestionsProps) => {
         }
     }
 
+   const handleFieldChange = (data: string, name: string) => {
+        console.log(`HumansQuestions: ${name}: ${data}`);
+
+        // family.0.human.0.firstName
+        let newFields = watchedFields.slice();
+        const nameParse = name.split('.');
+        const index = Number.parseInt(nameParse[3]);
+        const fieldName = nameParse[4];
+        let thisField = watchedFields[index];
+        if(fieldName === 'firstName'){
+            thisField.firstName = data;
+        } else if (fieldName === 'lastName'){
+            thisField.lastName = data;
+        }
+        newFields[index] = thisField;
+        setWatchedFields(newFields);
+    }
+
    const addAnother = (data: any) => {
+       let newHuman = InitHumanQuestionState;
+       newHuman.id = watchedFields.length+1;
        append(InitHumanQuestionState);
-       setFieldNumber(fieldNumber+1);
+       setWatchedFields(watchedFields.concat({firstName:"", lastName:"",isPrimary:false}));
    }
 
    const moveToPets = (data: any) => {
@@ -94,18 +109,25 @@ const HumanQuestions = (props: HumanQuestionsProps) => {
                 <IonRow>
                     <IonCol size="10" className="slide-content">
                         <h1>Human Information</h1>
-                        <IonAccordionGroup multiple={false} value={'human_0'} ref={accordionGroupRef}>
+                        <IonAccordionGroup multiple={false} ref={accordionGroupRef}>
                             <IonList>
                                 {fields.map((item, fieldArrayIndex) => (
-                                    <IonItemSliding>
+                                    <IonItemSliding key={fieldArrayIndex}>
                                         <IonItemOptions side="start"><IonItemOption onClick={() => {remove(fieldArrayIndex)}} color="danger" expandable>
                                             Delete
                                         </IonItemOption></IonItemOptions>
                                         <IonItem>
-                                            <IonAccordion class="accordion-expanded" key={fieldArrayIndex} value={`human_${fieldArrayIndex}`} >
+                                            <IonAccordion class="accordion-expanded" value={`human_${fieldArrayIndex}`} >
                                                 <IonItem slot="header">
                                                     {
-                                                        <HumanHeader control={control} name={`${objectType}.${fieldArrayIndex}`} index={fieldArrayIndex}/>
+                                                        <IonLabel>
+                                                            { (fieldArrayIndex < watchedFields.length && 
+                                                                (watchedFields[fieldArrayIndex].firstName != '' || watchedFields[fieldArrayIndex].lastName != '')) ? (
+                                                                watchedFields[fieldArrayIndex].firstName + ' ' + watchedFields[fieldArrayIndex].lastName
+                                                            ) : (
+                                                                'Person ' + (fieldArrayIndex+1)
+                                                            )}
+                                                        </IonLabel>
                                                     }
                                                 </IonItem>
                                                 <IonList slot="content">

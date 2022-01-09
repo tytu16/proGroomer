@@ -47,6 +47,10 @@ const PetQuestions = (props: PetQuestionsProps) => {
         }
     }
 
+    const handleFieldChange = (data: string, name: string) => {
+        console.log(`PetQuestions: ${name}: ${data}`);
+    }
+
     const addAnother = (data: any) => {
         append(InitPetQuestionState);
     }
@@ -74,13 +78,14 @@ const PetQuestions = (props: PetQuestionsProps) => {
                                             PetQuestionFields.map((field: TextFieldPropInterface, questionIndex) => {
                                                 return (field.fieldName != 'sex') ? (
                                                     <IonItem key={questionIndex}>
-                                                        <MyTextInput index={fieldArrayIndex}
+                                                        <MyTextInput index={fieldArrayIndex} 
+                                                            onChange={handleFieldChange} watched={field.watched}
                                                             placeholder={field.placeholder} label={field.label}
                                                             objectType={objectType} fieldName={field.fieldName} required={field.required}
                                                         />
-                                                    </IonItem>   
+                                                    </IonItem>
                                                 ) : (
-                                                    <IonGrid>
+                                                    <IonGrid key={questionIndex}>
                                                         <IonRow>
                                                             <IonCol onClick={() => {assignSex("male");}} className={sex == "male" ? 'active-sex' : '' }>
                                                                 Male

@@ -24,6 +24,10 @@ const FamilyQuestions = (props: FamilyQuestionsProps) => {
         props.toHumanInfo(newFamily);
     }
 
+    const handleFieldChange = (data: string, name: string) => {
+        console.log(`FamilyQuestions: ${name}: ${data}`);
+    }
+
     return (
         <IonGrid class="ion-justify-content-center ion-align-items-center ion-align-self-center">
             <IonRow class="spacer"></IonRow>
@@ -37,6 +41,7 @@ const FamilyQuestions = (props: FamilyQuestionsProps) => {
                                 return (field.fieldName != 'addressState') ? (
                                     <IonItem key={index}><MyTextInput index={props.index}
                                         placeholder={field.placeholder} label={field.label} 
+                                        onChange={handleFieldChange} watched={field.watched}
                                         objectType={field.objectType} fieldName={field.fieldName} required={field.required}
                                     /></IonItem>                               
                                 ) : (

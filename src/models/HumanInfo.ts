@@ -27,8 +27,6 @@ export class HumanInfo {
         this._lastName  = data.lastName;
         this._email = data.email;
         this._phone = new Array<string>();
-        console.log('le data')
-        console.log(data);
 
         if(data.phone != null && data.phone.length > 0){
             for(let pn of data.phone){
