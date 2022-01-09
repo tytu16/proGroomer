@@ -7,13 +7,21 @@ export interface MyCheckBoxInputProps {
   label: string,
   objectType: string,
   fieldName: string,
-  required: boolean
+  required: boolean,
+  onChange: (data:boolean, index:number) => void,
+  watched: boolean
 }
 
 export const MyCheckBox = (props: MyCheckBoxInputProps) => {
-  const {label, objectType, index, fieldName} = props;
+  const {label, objectType, index, fieldName, onChange,watched} = props;
   
   const {control} = useFormContext();
+  const handleChange = (checked: boolean) => {
+    if(watched){
+      onChange(checked, index);
+    }
+  };
+
   return(
     <IonGrid>
       <IonRow>
@@ -27,7 +35,15 @@ export const MyCheckBox = (props: MyCheckBoxInputProps) => {
                 render={({ field: { value, onChange } }) => (
                     <IonCheckbox
                       checked={value}
-                      onIonChange={({ detail: { checked } }) => onChange(checked)}
+                      disabled={value == true}
+                      onIonChange={({ detail: { checked } }) => {
+                        if(checked){
+                          onChange(checked);
+                          handleChange(checked);
+                        } else {
+                          value = checked;
+                        }
+                      }}
                     />
                   )}
               />

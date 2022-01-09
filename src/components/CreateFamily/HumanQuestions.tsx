@@ -9,7 +9,6 @@ import {MyCheckBox} from "../InputFields/MyCheckBox";
 
 import 'swiper/swiper.min.css';
 import '@ionic/react/css/ionic-swiper.css';
-import { HumanInfo } from "../../models/HumanInfo";
 
 export interface HumanQuestionsProps {
     index: number,
@@ -26,9 +25,9 @@ export interface WatchedFieldsInter {
 // Use checked state to allow only one primary checkbox at a time
 const HumanQuestions = (props: HumanQuestionsProps) => {
 
-    const {control, handleSubmit, register, watch} = useFormContext();
+    const {control, handleSubmit, register, watch, setValue} = useFormContext();
     const objectType = `family.${props.index}.human`;
-    const { fields, append, remove} = useFieldArray({
+    const { fields, append, remove, replace} = useFieldArray({
         control,
         name: objectType,
     });
@@ -37,8 +36,6 @@ const HumanQuestions = (props: HumanQuestionsProps) => {
         firstName: "", lastName: "", isPrimary: true
     }]);
     const [primaryIndex, setPrimaryIndex] = useState<number>(0);
-
-    const accordionGroupRef = useRef<any>(null);
     
     const renderField = (field: any, questionIndex:number, fieldArrayIndex:number) => {
         switch (field.fieldName){
@@ -54,7 +51,8 @@ const HumanQuestions = (props: HumanQuestionsProps) => {
 
             case 'isPrimary':
                 return (
-                    <MyCheckBox key={questionIndex} index={fieldArrayIndex} 
+                    <MyCheckBox key={questionIndex} index={fieldArrayIndex}
+                        onChange={handleCheckBoxChange} watched={field.watched}
                         label={field.label} objectType={objectType}
                         fieldName={field.fieldName} required={field.required} />
                 );
@@ -90,6 +88,17 @@ const HumanQuestions = (props: HumanQuestionsProps) => {
         setWatchedFields(newFields);
     }
 
+    const handleCheckBoxChange = (data: boolean, index: number) => {
+        console.log(index);
+        console.log(data);
+        for(let i=0; i<watchedFields.length; i++){
+            if(i != index){
+                setValue(`${objectType}.${i}.isPrimary`, false);
+            }
+        }
+        setPrimaryIndex(index);
+    }
+
    const addAnother = (data: any) => {
        let newHuman = InitHumanQuestionState;
        newHuman.id = watchedFields.length+1;
@@ -106,65 +115,57 @@ const HumanQuestions = (props: HumanQuestionsProps) => {
     return (
         <IonGrid class="slide-grid ion-justify-content-center ion-align-items-center ion-align-self-center">
             <IonRow class="spacer"></IonRow>
-                <IonRow>
-                    <IonCol size="10" className="slide-content">
-                        <h1>Human Information</h1>
-                        <IonAccordionGroup multiple={false} ref={accordionGroupRef}>
-                            <IonList>
-                                {fields.map((item, fieldArrayIndex) => (
-                                    <IonItemSliding key={fieldArrayIndex}>
-                                        <IonItemOptions side="start"><IonItemOption onClick={() => {remove(fieldArrayIndex)}} color="danger" expandable>
-                                            Delete
-                                        </IonItemOption></IonItemOptions>
-                                        <IonItem>
-                                            <IonAccordion class="accordion-expanded" value={`human_${fieldArrayIndex}`} >
-                                                <IonItem slot="header">
-                                                    {
-                                                        <IonLabel>
-                                                            { (fieldArrayIndex < watchedFields.length && 
-                                                                (watchedFields[fieldArrayIndex].firstName != '' || watchedFields[fieldArrayIndex].lastName != '')) ? (
-                                                                watchedFields[fieldArrayIndex].firstName + ' ' + watchedFields[fieldArrayIndex].lastName
-                                                            ) : (
-                                                                'Person ' + (fieldArrayIndex+1)
-                                                            )}
-                                                        </IonLabel>
-                                                    }
-                                                </IonItem>
-                                                <IonList slot="content">
-                                                    <div className="human-content">{
-                                                        HumanQuestionFields.map((field: TextFieldPropInterface, questionIndex) => {
-                                                            return renderField(field, questionIndex, fieldArrayIndex);
-                                                        })
-                                                    }</div>
-                                                </IonList>
-                                            </IonAccordion>
-                                        </IonItem>
-                                        <IonItemOptions side="end"><IonItemOption onClick={() => {remove(fieldArrayIndex)}} color="danger" expandable>
-                                            Delete
-                                        </IonItemOption></IonItemOptions>
-                                    </IonItemSliding>
-                                ))}
+            <IonRow>
+                <IonCol size="10" className="slide-content">
+                    <h1>Human Information</h1>
+                    {fields.map((item, fieldArrayIndex) => (
+                        <IonList key={fieldArrayIndex}>
+                            <IonRow>
+                                <IonItemSliding>
+                                    <IonItemOptions side="start"><IonItemOption onClick={() => {remove(fieldArrayIndex)}} color="danger" expandable>
+                                        Delete
+                                    </IonItemOption></IonItemOptions>
+                                    <IonItem slot="header">
+                                        {
+                                            <IonLabel  className={primaryIndex == fieldArrayIndex ? 'primary-person' : '' }>
+                                                { (fieldArrayIndex < watchedFields.length && 
+                                                    (watchedFields[fieldArrayIndex].firstName != '' || watchedFields[fieldArrayIndex].lastName != '')) ? (
+                                                    watchedFields[fieldArrayIndex].firstName + ' ' + watchedFields[fieldArrayIndex].lastName
+                                                ) : (
+                                                    'Person ' + (fieldArrayIndex+1)
+                                                )}
+                                            </IonLabel>
+                                        }
+                                    </IonItem>
+                                    <IonItemOptions side="end"><IonItemOption onClick={() => {remove(fieldArrayIndex)}} color="danger" expandable>
+                                        Delete
+                                    </IonItemOption></IonItemOptions>
+                                </IonItemSliding>
+                            </IonRow>
+                            <IonList slot="content">
+                                <div className="human-content">{
+                                    HumanQuestionFields.map((field: TextFieldPropInterface, questionIndex) => {
+                                        return renderField(field, questionIndex, fieldArrayIndex);
+                                    })
+                                }</div>
                             </IonList>
-                            
-                        </IonAccordionGroup>
-
-
-                        <IonRow>
-                            <IonCol><IonButton expand="block" onClick={handleSubmit(addAnother)}>
-                                Add Another
-                            </IonButton></IonCol>
-                        </IonRow>
-                        <IonRow>
-                            <IonCol>
-                                <IonButton expand="block" onClick={props.toFamilyInfo}>&lt; Family</IonButton>
-                            </IonCol>
-                            <IonCol>
-                                <IonButton expand="block" onClick={handleSubmit(moveToPets)}>Pets &gt;</IonButton>
-                            </IonCol>
-                        </IonRow>    
-                    </IonCol>
-                </IonRow>
-     
+                        </IonList>
+                    ))}
+                    <IonRow>
+                        <IonCol><IonButton expand="block" onClick={handleSubmit(addAnother)}>
+                            Add Another
+                        </IonButton></IonCol>
+                    </IonRow>
+                    <IonRow>
+                        <IonCol>
+                            <IonButton expand="block" onClick={props.toFamilyInfo}>&lt; Family</IonButton>
+                        </IonCol>
+                        <IonCol>
+                            <IonButton expand="block" onClick={handleSubmit(moveToPets)}>Pets &gt;</IonButton>
+                        </IonCol>
+                    </IonRow>    
+                </IonCol>
+            </IonRow>
             <IonRow class="spacer"></IonRow>
         </IonGrid>
     );

@@ -11,6 +11,12 @@
     margin-bottom: 3%;
 }
 
+
+.primary-person{
+    background-color: var(--ion-color-primary);
+    color: white;
+}
+
 .input-item{
     text-align: center;
 }
