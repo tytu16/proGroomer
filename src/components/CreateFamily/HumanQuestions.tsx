@@ -36,6 +36,7 @@ const HumanQuestions = (props: HumanQuestionsProps) => {
         firstName: "", lastName: "", isPrimary: true
     }]);
     const [primaryIndex, setPrimaryIndex] = useState<number>(0);
+    const [activeIndex, setActiveIndex] = useState<number>(0);
     
     const renderField = (field: any, questionIndex:number, fieldArrayIndex:number) => {
         switch (field.fieldName){
@@ -103,7 +104,16 @@ const HumanQuestions = (props: HumanQuestionsProps) => {
        let newHuman = InitHumanQuestionState;
        newHuman.id = watchedFields.length+1;
        append(InitHumanQuestionState);
+       setActiveIndex(watchedFields.length);
        setWatchedFields(watchedFields.concat({firstName:"", lastName:"",isPrimary:false}));
+   }
+
+   const handleAccordionChange = (index: number) => {
+       if(index == activeIndex){
+           setActiveIndex(-1);
+       } else {
+           setActiveIndex(index);
+       }
    }
 
    const moveToPets = (data: any) => {
@@ -119,8 +129,8 @@ const HumanQuestions = (props: HumanQuestionsProps) => {
                 <IonCol size="10" className="slide-content">
                     <h1>Human Information</h1>
                     {fields.map((item, fieldArrayIndex) => (
-                        <IonList key={fieldArrayIndex}>
-                            <IonRow>
+                        <IonList>
+                            <IonRow key={fieldArrayIndex} onClick={() => handleAccordionChange(fieldArrayIndex)}>
                                 <IonItemSliding>
                                     <IonItemOptions side="start"><IonItemOption onClick={() => {remove(fieldArrayIndex)}} color="danger" expandable>
                                         Delete
@@ -142,13 +152,15 @@ const HumanQuestions = (props: HumanQuestionsProps) => {
                                     </IonItemOption></IonItemOptions>
                                 </IonItemSliding>
                             </IonRow>
-                            <IonList slot="content">
-                                <div className="human-content">{
-                                    HumanQuestionFields.map((field: TextFieldPropInterface, questionIndex) => {
-                                        return renderField(field, questionIndex, fieldArrayIndex);
-                                    })
-                                }</div>
-                            </IonList>
+                            { (activeIndex == fieldArrayIndex && <>
+                                <IonList slot="content">
+                                    <div className="human-content">{
+                                        HumanQuestionFields.map((field: TextFieldPropInterface, questionIndex) => {
+                                            return renderField(field, questionIndex, fieldArrayIndex);
+                                        })
+                                    }</div>
+                                </IonList>
+                                </>)}
                         </IonList>
                     ))}
                     <IonRow>
