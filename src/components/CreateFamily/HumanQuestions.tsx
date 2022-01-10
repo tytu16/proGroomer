@@ -1,4 +1,4 @@
-import { IonButton, IonCol, IonGrid, IonItem, IonList, IonRow, IonLabel, IonAccordionGroup, IonAccordion, IonCheckbox, IonItemSliding, IonItemOption, IonItemOptions } from "@ionic/react";
+import { IonButton, IonCol, IonGrid, IonItem, IonList, IonRow, IonLabel, IonIcon, IonItemSliding, IonItemOption, IonItemOptions } from "@ionic/react";
 import { useRef, useState } from "react";
 import { useFieldArray, useFormContext } from "react-hook-form";
 import "./Questions.css";
@@ -6,6 +6,8 @@ import {MyTextInput} from "../InputFields/MyTextInput";
 import { HumanQuestionFields, InitHumanQuestionState, TextFieldPropInterface } from "./QuestionProps/InputProperties";
 import {PhoneFieldInput} from "../InputFields/PhoneField";
 import {MyCheckBox} from "../InputFields/MyCheckBox";
+
+import { arrowDownCircleOutline} from 'ionicons/icons';
 
 import 'swiper/swiper.min.css';
 import '@ionic/react/css/ionic-swiper.css';
@@ -72,8 +74,6 @@ const HumanQuestions = (props: HumanQuestionsProps) => {
     }
 
    const handleFieldChange = (data: string, name: string) => {
-        console.log(`HumansQuestions: ${name}: ${data}`);
-
         // family.0.human.0.firstName
         let newFields = watchedFields.slice();
         const nameParse = name.split('.');
@@ -90,8 +90,6 @@ const HumanQuestions = (props: HumanQuestionsProps) => {
     }
 
     const handleCheckBoxChange = (data: boolean, index: number) => {
-        console.log(index);
-        console.log(data);
         for(let i=0; i<watchedFields.length; i++){
             if(i != index){
                 setValue(`${objectType}.${i}.isPrimary`, false);
@@ -137,7 +135,7 @@ const HumanQuestions = (props: HumanQuestionsProps) => {
                                     </IonItemOption></IonItemOptions>
                                     <IonItem slot="header">
                                         {
-                                            <IonLabel  className={primaryIndex == fieldArrayIndex ? 'primary-person' : '' }>
+                                            <IonLabel className={primaryIndex == fieldArrayIndex ? 'primary-person' : '' }>
                                                 { (fieldArrayIndex < watchedFields.length && 
                                                     (watchedFields[fieldArrayIndex].firstName != '' || watchedFields[fieldArrayIndex].lastName != '')) ? (
                                                     watchedFields[fieldArrayIndex].firstName + ' ' + watchedFields[fieldArrayIndex].lastName
@@ -146,21 +144,21 @@ const HumanQuestions = (props: HumanQuestionsProps) => {
                                                 )}
                                             </IonLabel>
                                         }
+                                        <IonIcon className={activeIndex == fieldArrayIndex ? "active-icon float-right" : "inactive-icon float-right"} 
+                                            size="large"icon={arrowDownCircleOutline}></IonIcon>
                                     </IonItem>
                                     <IonItemOptions side="end"><IonItemOption onClick={() => {remove(fieldArrayIndex)}} color="danger" expandable>
                                         Delete
                                     </IonItemOption></IonItemOptions>
                                 </IonItemSliding>
                             </IonRow>
-                            { (activeIndex == fieldArrayIndex && <>
-                                <IonList slot="content">
-                                    <div className="human-content">{
-                                        HumanQuestionFields.map((field: TextFieldPropInterface, questionIndex) => {
-                                            return renderField(field, questionIndex, fieldArrayIndex);
-                                        })
-                                    }</div>
-                                </IonList>
-                                </>)}
+                            <IonList className={activeIndex == fieldArrayIndex ? "section" : "section collapsed"} slot="content">
+                                <div className="human-content">{
+                                    HumanQuestionFields.map((field: TextFieldPropInterface, questionIndex) => {
+                                        return renderField(field, questionIndex, fieldArrayIndex);
+                                    })
+                                }</div>
+                            </IonList>
                         </IonList>
                     ))}
                     <IonRow>

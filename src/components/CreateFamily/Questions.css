@@ -11,7 +11,6 @@
     margin-bottom: 3%;
 }
 
-
 .primary-person{
     background-color: var(--ion-color-primary);
     color: white;
@@ -65,3 +64,26 @@
 .top-button{
     margin-top: 5%;
 }
+
+.active-icon{
+    display:inline-block;
+    transform: rotate(180deg);
+    transition: transform 0.3s;
+}
+
+.inactive-icon{
+    display:inline-block;
+    transform: rotate(0deg);
+    transition: transform 0.3s;
+}
+
+
+.section {
+    overflow:hidden;
+    transition:max-height 0.3s ease-out;
+    height:auto;
+    max-height:600px;
+  }
+  .section.collapsed {
+    max-height:0;
+  }

@@ -23,7 +23,7 @@ export const MyTextInput = (props: MyTextInputProps) => {
    const myFieldName = `${objectType}.${index}.${fieldName}`;
 
   const handleChange = (e: any) => {
-    console.log(`handle change: ${myFieldName}`);
+    // console.log(`handle change: ${myFieldName}`);
     const newFieldValue = e.detail.value;
     setWatchField(newFieldValue);
     onChange(newFieldValue, myFieldName);
