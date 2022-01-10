@@ -77,7 +77,6 @@
     transition: transform 0.3s;
 }
 
-
 .accordion {
     overflow:hidden;
     transition:max-height 0.3s ease-in-out;
@@ -86,4 +85,10 @@
   }
   .accordion.collapsed {
     max-height:0;
+  }
+
+  .accordion-header{
+      border-style: solid;
+      border-color: gray;
+      border-radius: 5%;
   }

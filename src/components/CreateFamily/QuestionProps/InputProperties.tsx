@@ -7,45 +7,55 @@ export interface TextFieldPropInterface {
     watched: boolean
 }
 
-export const InitPetQuestionState = {
-    id: 0,
-    name: "",
-    breed: "",
-    sex: "",
-    age: "-1"
+export const InitPetQuestionState = () => {
+    return({
+        id: 0,
+        name: "",
+        breed: "",
+        sex: "",
+        ageYr: "0",
+        ageMn: "0"
+    })
 }
 
-export const InitHumanPhoneNumbers = {
-    phoneNumber: ""
+export const InitHumanPhoneNumbers = () => {
+    return {phoneNumber: ""};
 }
 
-export const InitPrimaryHumanQuestionState = {
-    id: 0,
-    isPrimary: true,
-    firstName: "",
-    lastName: "",
-    email: "",
-    phone: [InitHumanPhoneNumbers]
+export const InitPrimaryHumanQuestionState = () => {
+    return ({
+        id: 0,
+        isPrimary: true,
+        firstName: "",
+        lastName: "",
+        email: "",
+        phone: [InitHumanPhoneNumbers()]
+    })
 }
 
-export const InitHumanQuestionState = {
-    id: 0,
-    isPrimary: false,
-    firstName: "",
-    lastName: "",
-    email: "",
-    phone: [InitHumanPhoneNumbers]
+export const InitHumanQuestionState = () => {
+    return ({
+        id: 0,
+        isPrimary: false,
+        firstName: "",
+        lastName: "",
+        email: "",
+        phone: [InitHumanPhoneNumbers()]
+    });
 }
 
-export const InitFamilyQuestionState = {
-    id: 0,
-    familyName: "",
-    addressOne: "",
-    addressTwo: "",
-    addressCity: "",
-    addressZip: "",
-    human: [InitPrimaryHumanQuestionState],
-    pet: [InitPetQuestionState]
+export const InitFamilyQuestionState = () => {
+    return ({
+        id: 0,
+        familyName: "",
+        addressOne: "",
+        addressTwo: "",
+        addressCity: "",
+        addressZip: "",
+        garageCd: "",
+        human: [InitPrimaryHumanQuestionState()],
+        pet: [InitPetQuestionState()]
+    });
   }
 
 export const FamilyQuestionFields = [
@@ -97,6 +107,14 @@ export const FamilyQuestionFields = [
         required: true,
         watched: false
     },
+    {
+        placeholder: "*1234",
+        label: "Garage Code", 
+        objectType: "family",
+        fieldName: "garageCd",
+        required: true,
+        watched: false
+    }
 ]
 
 export const HumanQuestionFields = [
@@ -168,11 +186,19 @@ export const PetQuestionFields = [
         watched: false
     },
     {
-        placeholder: "Age",
-        label: "age",
+        placeholder: "AgeYr",
+        label: "Years",
         objectType: "family.0.pet",
-        fieldName: "age",
+        fieldName: "ageYr",
         required: false,
         watched: false
     },
+    {
+        placeholder: "AgeMn",
+        label: "Months",
+        objectType: "family.0.pet",
+        fieldName: "ageMn",
+        required: false,
+        watched: false
+    }
 ] 

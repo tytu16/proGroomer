@@ -63,7 +63,7 @@ const CreateFamily = (props: CreateFamilyProps) => {
   }
 
   const methods = useForm({
-    defaultValues: {family: [InitFamilyQuestionState]}
+    defaultValues: {family: [InitFamilyQuestionState()]}
   });
   const control = methods.control;
   const { fields, append, remove} = useFieldArray({
@@ -91,7 +91,7 @@ const CreateFamily = (props: CreateFamilyProps) => {
                 ))}
                 <button
                   type="button"
-                  onClick={() => append(InitFamilyQuestionState)}
+                  onClick={() => append(InitFamilyQuestionState())}
                 >
                   append
                 </button>

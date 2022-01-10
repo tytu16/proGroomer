@@ -1,6 +1,5 @@
-import { IonButton, IonCol, IonGrid, IonIcon, IonInput, IonItem, IonList, IonRow } from "@ionic/react";
+import { IonButton, IonCol, IonGrid, IonIcon,  IonRow } from "@ionic/react";
 import { removeCircleOutline, addCircleOutline } from "ionicons/icons";
-import { useState } from "react";
 import { Controller, useFieldArray, useFormContext } from "react-hook-form";
 import NumberFormat from "react-number-format";
 
@@ -17,7 +16,7 @@ export interface PhoneFieldProps {
 export const PhoneFieldInput = (props: PhoneFieldProps) => {
   const {index, placeholder, fieldName, objectType} = props;
 
-  const {control, register, handleSubmit} = useFormContext();
+  const {control} = useFormContext();
   const formPrefix = objectType + `.${index}` + '.phone';
   const { fields, append, remove} = useFieldArray({
       control,
@@ -25,8 +24,6 @@ export const PhoneFieldInput = (props: PhoneFieldProps) => {
   });
 
   const addPhoneInput = (data: any) => {
-    console.log('adding another phone');
-    console.log(data);
     append({phoneNumber: ""});
   };
   

@@ -9,6 +9,7 @@ export class FamilyInfo {
     private _addrCity: string;
     private _addrState: string;
     private _addrZip: string;
+    private _garageCd: string;
     private _humans: HumanInfo[];
     private _pets: PetInfo[];
 
@@ -22,6 +23,7 @@ export class FamilyInfo {
         this._addrCity = data.addrCity;
         this._addrState = data.addrState;
         this._addrZip = data.addrZip;
+        this._garageCd = data.garageCd
     }
 
     get addrOne(){
@@ -70,6 +72,14 @@ export class FamilyInfo {
         fullAddress += (this._addrTwo != "") ? " - " + this._addrTwo + ", " : ", ";
         fullAddress += this._addrCity + " " + this._addrState + ", " + this._addrZip;
         return fullAddress;
+    }
+
+    get garageCd(): string{
+        return this._garageCd;
+    }
+
+    set garageCd(code: string){
+        this._garageCd = code;
     }
 
     get id(): string{
