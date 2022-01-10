@@ -78,12 +78,12 @@
 }
 
 
-.section {
+.accordion {
     overflow:hidden;
-    transition:max-height 0.3s ease-out;
+    transition:max-height 0.3s ease-in-out;
     height:auto;
     max-height:600px;
   }
-  .section.collapsed {
+  .accordion.collapsed {
     max-height:0;
   }

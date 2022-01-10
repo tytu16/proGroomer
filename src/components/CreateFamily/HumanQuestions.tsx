@@ -152,7 +152,7 @@ const HumanQuestions = (props: HumanQuestionsProps) => {
                                     </IonItemOption></IonItemOptions>
                                 </IonItemSliding>
                             </IonRow>
-                            <IonList className={activeIndex == fieldArrayIndex ? "section" : "section collapsed"} slot="content">
+                            <IonList className={activeIndex == fieldArrayIndex ? "accordion" : "accordion collapsed"} slot="content">
                                 <div className="human-content">{
                                     HumanQuestionFields.map((field: TextFieldPropInterface, questionIndex) => {
                                         return renderField(field, questionIndex, fieldArrayIndex);
