@@ -20,29 +20,32 @@ export interface HumanQuestionsProps {
 
 export interface WatchedFieldsInter {
     firstName: string,
-    lastName: string,
-    isPrimary: boolean
+    lastName: string
 }
 
-// Use checked state to allow only one primary checkbox at a time
 const HumanQuestions = (props: HumanQuestionsProps) => {
+// ----HOOKS---- //
 
-    const {control, handleSubmit, setValue} = useFormContext();
+// form hooks
     const objectType = `family.${props.index}.human`;
+    const {control, handleSubmit, setValue} = useFormContext();
     const { fields, append, remove, replace} = useFieldArray({
         control,
         name: objectType,
     });
-
-    const IonListRef = useRef<any>(null);
-
     const [watchedFields, setWatchedFields] = useState<Array<WatchedFieldsInter>>([{
-        firstName: "", lastName: "", isPrimary: true
+        firstName: "", lastName: ""
     }]);
-    const [numPeople, setNumPeople] = useState<number>(1);
+
+// State Hooks
     const [primaryIndex, setPrimaryIndex] = useState<number>(0);
     const [activeIndex, setActiveIndex] = useState<number>(0);
 
+// Ref Hooks
+    const IonListRef = useRef<any>(null);
+
+// ----RENDER---- //
+// Dynamically rendered fields fed from HumanQuestionFields
     const renderField = (field: any, questionIndex:number, fieldArrayIndex:number) => {
         switch (field.fieldName){
             case 'phoneNumber':
@@ -76,15 +79,21 @@ const HumanQuestions = (props: HumanQuestionsProps) => {
         }
     }
 
+// ----UTILITY METHODS---- //
+// Remove field from fieldArray, set all accordions as inactive, 
+  // remove watchedField from state, IonListRef to reset ion-item positions 
     const handleDelete = (index: number) => {
         remove(index);
-        setNumPeople(numPeople-1);
         setActiveIndex(-1);
         let newWatchedFields = watchedFields.slice(0,index).concat(watchedFields.slice(index+1));
         setWatchedFields(newWatchedFields);
         IonListRef.current.closeSlidingItems();
     }
 
+// Callback from input fields below returning onChange data and the name of the field
+  // Parsing fieldName on objectType string sent back
+  // Use parsed index and fieldName to update appropriate watchedField state, 
+  // which is reflected in the human headers
    const handleFieldChange = (data: string, name: string) => {
         // family.0.human.0.firstName
         let newFields = watchedFields.slice();
@@ -101,6 +110,9 @@ const HumanQuestions = (props: HumanQuestionsProps) => {
         setWatchedFields(newFields);
     }
 
+// CallBack for isPrimary checkbox
+  // Uses setValue from useFromContext to set every other isPrimary value to false
+  // Uses the number of watchedFields to know how many to loop through
     const handleCheckBoxChange = (data: boolean, index: number) => {
         for(let i=0; i<watchedFields.length; i++){
             if(i != index){
@@ -110,13 +122,17 @@ const HumanQuestions = (props: HumanQuestionsProps) => {
         setPrimaryIndex(index);
     }
 
+// Append a new copy of InitialHumanQuestionState to formArray
+  // Set active index to this newly added field so it's open
+  // Add a new watchedField to state for header
    const addAnother = (data: any) => {
        append(InitHumanQuestionState());
        setActiveIndex(watchedFields.length);
-       setWatchedFields(watchedFields.concat({firstName:"", lastName:"",isPrimary:false}));
-       setNumPeople(numPeople+1);
+       setWatchedFields(watchedFields.concat({firstName:"", lastName:""}));
    }
 
+// Sets the activeIndex to the clicked accordion
+  // If currently active was clicked, close all accordions
    const handleAccordionChange = (index: number) => {
        if(index == activeIndex){
            setActiveIndex(-1);
@@ -125,6 +141,7 @@ const HumanQuestions = (props: HumanQuestionsProps) => {
        }
    }
 
+// Log pet data and move to next slide
    const moveToPets = (data: any) => {
        console.log("moving to pets");
        console.log(data);
