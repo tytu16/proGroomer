@@ -17,6 +17,10 @@
     margin-left: -1%;
 }
 
+.my-checkbox{
+    opacity: 1 !important;
+}
+
 #my-list{
     width: 100%;
     background-color: lightgray;
@@ -29,9 +33,9 @@
     /* margin-left: 2%; */
 }
 
-#addPhoneButton{
-    /* margin-left: 2%; */
-}
+/* #addPhoneButton{
+    margin-left: 2%;
+} */
 
 ion-select{
     width: 100%;

@@ -33,7 +33,7 @@ export const MyCheckBox = (props: MyCheckBoxInputProps) => {
                 control={control}
                 name={`${objectType}.${index}.${fieldName}`}
                 render={({ field: { value, onChange } }) => (
-                    <IonCheckbox
+                    <IonCheckbox class="my-checkbox"
                       checked={value}
                       disabled={value == true}
                       onIonChange={({ detail: { checked } }) => {
