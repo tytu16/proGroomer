@@ -11,20 +11,6 @@
     margin-bottom: 3%;
 }
 
-ion-item{
-    border-left: 0px;
-    border-right: 0px;
-    border-bottom: 0px;
-    border-style: solid;
-    border-color: lightgray;
-    margin-bottom: 3%;
-}
-
-.primary-person{
-    background-color: var(--ion-color-primary);
-    color: white;
-}
-
 .input-item{
     text-align: center;
 }
@@ -74,30 +60,41 @@ ion-item{
     margin-top: 5%;
 }
 
-.active-icon{
+.icon{
     display:inline-block;
-    transform: rotate(180deg);
     transition: transform 0.3s;
 }
 
-.inactive-icon{
-    display:inline-block;
-    transform: rotate(0deg);
-    transition: transform 0.3s;
+
+.icon.active{
+    transform: rotate(180deg);
+}
+
+.icon.primary{
+    color: var(--ion-color-primary);
 }
 
 .accordion {
     overflow:hidden;
-    transition:max-height 0.3s ease-in-out;
+    transition:0.3s ease-in-out;
     height:auto;
     max-height:600px;
-  }
-  .accordion.collapsed {
-    max-height:0;
-  }
+}
 
-  .accordion-header{
-      border-style: solid;
-      border-color: gray;
-      border-radius: 5%;
-  }
+.accordion.collapsed {
+margin-top:2%;
+max-height:0;
+opacity: 0;
+}
+
+.accordion-header{
+    border-style: solid;
+    border-color: gray;
+    border-radius: 5%;
+}
+
+.accordion-header.primary{
+    border-color: var(--ion-color-primary);
+    font-weight: bold;
+    --background: rgb(56, 128, 255, 0.1);
+}

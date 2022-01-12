@@ -7,7 +7,7 @@ import { HumanQuestionFields, InitHumanQuestionState, TextFieldPropInterface } f
 import {PhoneFieldInput} from "../InputFields/PhoneField";
 import {MyCheckBox} from "../InputFields/MyCheckBox";
 
-import { arrowDownCircleOutline } from 'ionicons/icons';
+import { arrowDownCircleOutline, arrowDownCircle } from 'ionicons/icons';
 
 import 'swiper/swiper.min.css';
 import '@ionic/react/css/ionic-swiper.css';
@@ -68,13 +68,11 @@ const HumanQuestions = (props: HumanQuestionsProps) => {
 
             default:
                 return  (
-                    <IonItem key={questionIndex}>
-                        <MyTextInput index={fieldArrayIndex} 
-                            onChange={handleFieldChange} watched={field.watched}
-                            placeholder={field.placeholder} label={field.label}
-                            objectType={objectType} fieldName={field.fieldName} required={field.required}
-                        />
-                    </IonItem>                               
+                    <MyTextInput key={questionIndex} index={fieldArrayIndex} 
+                        onChange={handleFieldChange} watched={field.watched}
+                        placeholder={field.placeholder} label={field.label}
+                        objectType={objectType} fieldName={field.fieldName} required={field.required}
+                    />
                 );
         }
     }
@@ -167,8 +165,9 @@ const HumanQuestions = (props: HumanQuestionsProps) => {
                                         Delete
                                     </IonItemOption></IonItemOptions>
                                 )}
-                                <IonItem className={primaryIndex == fieldArrayIndex ? 'accordion-header primary-person' : 'accordion-header' } 
-                                    onClick={() => handleAccordionChange(fieldArrayIndex)} slot="header">
+                                <IonItem className={primaryIndex == fieldArrayIndex ? 'accordion-header primary' : 'accordion-header' } 
+                                    onClick={() => handleAccordionChange(fieldArrayIndex)} slot="header" mode='md'
+                                    fill={primaryIndex == fieldArrayIndex ? 'solid': 'outline'}>
                                     {
                                         <IonLabel>
                                             { (fieldArrayIndex < watchedFields.length && 
@@ -179,8 +178,9 @@ const HumanQuestions = (props: HumanQuestionsProps) => {
                                             )}
                                         </IonLabel>
                                     }
-                                    <IonIcon className={activeIndex == fieldArrayIndex ? "active-icon float-right" : "inactive-icon float-right"} 
-                                        size="large"icon={arrowDownCircleOutline}></IonIcon>
+                                    <IonIcon className={[(activeIndex == fieldArrayIndex ? "active icon float-right" : "icon float-right"),
+                                                         primaryIndex == fieldArrayIndex ? "primary" : ""].join(" ")} size="large"
+                                        icon={primaryIndex == fieldArrayIndex ? arrowDownCircle : arrowDownCircleOutline}></IonIcon>
                                 </IonItem>
                                 {(fieldArrayIndex == primaryIndex) ? (
                                     <IonItemOptions side="end"><IonItemOption onClick={() => {alert('Can\'t delete primary contact.')}} color="primary" expandable>
