@@ -19,11 +19,11 @@ export const MySelectList = (props: MySelectListProps) => {
     const {register} = useFormContext();
 
     return(
-        <IonGrid>
+        <IonGrid className="my-text-input">
             <IonRow>
                 <label>{label}</label>
             </IonRow>
-            <IonRow>
+            <IonRow className="ion-text-left">
                 <IonSelect id="my-list" placeholder={placeholder}{...register(`${objectType}.${index}.${fieldName}`)}>
                 {
                     Object(valueList).map((v:ListValueInterface) => {

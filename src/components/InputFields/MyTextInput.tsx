@@ -19,9 +19,18 @@ export const MyTextInput = (props: MyTextInputProps) => {
   
   const {register} = useFormContext();
   const [watchField, setWatchField] = useState<string>("");
+  const [focused, setFocused] = useState<boolean>(false);
 
-   const myFieldName = `${objectType}.${index}.${fieldName}`;
+  const myFieldName = `${objectType}.${index}.${fieldName}`;
 
+  const handleFocus = () => {
+    setFocused(true);
+  }
+
+  const handleBlur = () => {
+    setFocused(false);
+  }
+  
   const handleChange = (e: any) => {
     // console.log(`handle change: ${myFieldName}`);
     const newFieldValue = e.detail.value;
@@ -30,12 +39,14 @@ export const MyTextInput = (props: MyTextInputProps) => {
   }
 
   return(
-    <IonGrid>
+    <IonGrid className={focused ? "my-text-input focused" : "my-text-input"}>
       <IonRow>
         <label>{label}</label>
       </IonRow>
-      <IonRow>
-        <IonInput {...register(myFieldName)}
+      <IonRow className="ion-text-left">
+        <IonInput  {...register(myFieldName)}
+          onIonFocus={handleFocus}
+          onIonBlur={handleBlur}
           onIonChange={(e) => { 
             if(watched){handleChange(e);}
            }}

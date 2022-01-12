@@ -11,6 +11,15 @@
     margin-bottom: 3%;
 }
 
+ion-item{
+    border-left: 0px;
+    border-right: 0px;
+    border-bottom: 0px;
+    border-style: solid;
+    border-color: lightgray;
+    margin-bottom: 3%;
+}
+
 .primary-person{
     background-color: var(--ion-color-primary);
     color: white;

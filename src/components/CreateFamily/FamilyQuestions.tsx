@@ -39,16 +39,16 @@ const FamilyQuestions = (props: FamilyQuestionsProps) => {
                             FamilyQuestionFields.map((field: TextFieldPropInterface, index) => {
 
                                 return (field.fieldName != 'addressState') ? (
-                                    <IonItem key={index}><MyTextInput index={props.index}
+                                    <MyTextInput key={index} index={props.index}
                                         placeholder={field.placeholder} label={field.label} 
                                         onChange={handleFieldChange} watched={field.watched}
                                         objectType={field.objectType} fieldName={field.fieldName} required={field.required}
-                                    /></IonItem>                               
+                                    />                          
                                 ) : (
-                                    <IonItem key={index}><MySelectList index={props.index} valueList={StateList}
+                                    <MySelectList key={index} index={props.index} valueList={StateList}
                                         placeholder={field.placeholder} label={field.label} 
                                         objectType={field.objectType} fieldName={field.fieldName} required={field.required}
-                                    /></IonItem>
+                                    />
                                 );
                             })
                         }

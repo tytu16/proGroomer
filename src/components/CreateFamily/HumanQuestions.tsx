@@ -167,9 +167,10 @@ const HumanQuestions = (props: HumanQuestionsProps) => {
                                         Delete
                                     </IonItemOption></IonItemOptions>
                                 )}
-                                <IonItem onClick={() => handleAccordionChange(fieldArrayIndex)} slot="header">
+                                <IonItem className={primaryIndex == fieldArrayIndex ? 'accordion-header primary-person' : 'accordion-header' } 
+                                    onClick={() => handleAccordionChange(fieldArrayIndex)} slot="header">
                                     {
-                                        <IonLabel className={primaryIndex == fieldArrayIndex ? 'accordion-header primary-person' : 'accordion-header' }>
+                                        <IonLabel>
                                             { (fieldArrayIndex < watchedFields.length && 
                                                 (watchedFields[fieldArrayIndex].firstName != '' || watchedFields[fieldArrayIndex].lastName != '')) ? (
                                                 watchedFields[fieldArrayIndex].firstName + ' ' + watchedFields[fieldArrayIndex].lastName
