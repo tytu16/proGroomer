@@ -1,6 +1,4 @@
-interface PhoneNumberFieldInterface{
-    value: string
-}
+import {PhoneInfo} from './PhoneInfo';
 
 export class HumanInfo {
     private _id: string;
@@ -8,29 +6,19 @@ export class HumanInfo {
     private _firstName: string;
     private _lastName: string;
     private _email: string;
-    private _phone: Array<string>;
+    private _phone: Array<PhoneInfo>;
 
     constructor(data: any, id=0){
-        if(data === {}){
-            this._id = InitHumanInfo.id;
-            this._isPrimary = InitHumanInfo.isPrimary;
-            this._firstName = InitHumanInfo.firstName;
-            this._lastName = InitHumanInfo.lastName;
-            this._email = InitHumanInfo.email;
-            this._phone = InitHumanInfo.phones;
-            return;
-        }
-        
-        this._id = data.id ? data.id : id;
-        this._isPrimary = data.isPrimary;
-        this._firstName = data.firstName;
-        this._lastName  = data.lastName;
-        this._email = data.email;
-        this._phone = new Array<string>();
+        this._id = data.id ? data.id : "0";
+        this._isPrimary = data.isPrimary ? data.isPrimary : false;
+        this._firstName = data.firstName ? data.firstName : "";
+        this._lastName  = data.lastName ? data.lastName : "";
+        this._email = data.email ? data.email : "";
+        this._phone = new Array<PhoneInfo>();
 
         if(data.phone != null && data.phone.length > 0){
             for(let pn of data.phone){
-                this._phone.push(pn.phoneNumber);
+                this._phone.push(pn);
             }
         }
     }
@@ -68,11 +56,11 @@ export class HumanInfo {
         this._email = email;
     }
 
-    get phones(): Array<string>{
+    get phones(): Array<PhoneInfo>{
         return this._phone;
     }
 
-    set phones(phoneNumbers: Array<string>){
+    set phones(phoneNumbers: Array<PhoneInfo>){
         this._phone = phoneNumbers;
     }
 
@@ -84,7 +72,7 @@ export class HumanInfo {
         this._isPrimary = value;
     }
 
-    addPhoneNumber(phoneNumber: string){
+    addPhone(phoneNumber: PhoneInfo){
         this._phone.push(phoneNumber);
     }
 
@@ -97,12 +85,3 @@ export class HumanInfo {
                 diff.length == 0);
     }
 }
-
-export const InitHumanInfo = new HumanInfo({
-    id: 0,
-    isPrimary: false,
-    firstName: "",
-    lastName: "",
-    email: "",
-    phone: [""]
-});
