@@ -1,8 +1,8 @@
 import { useRef, useState } from "react";
 import { useHistory } from "react-router";
-import { FamilyInfo } from "../../models/FamilyInfo";
-import { HumanInfo } from "../../models/HumanInfo";
-import { PetInfo } from "../../models/PetInfo";
+import { FamilyInfo } from "../../../models/FamilyInfo";
+import { HumanInfo } from "../../../models/HumanInfo";
+import { PetInfo } from "../../../models/PetInfo";
 import FamilyQuestions from "./FamilyQuestions";
 import HumanQuestions from "./HumanQuestions";
 import PetQuestions from "./PetQuestions";

@@ -4,10 +4,10 @@ import './CreateFamily.css';
 import { FamilyInfo } from "../../models/FamilyInfo";
 import { HumanInfo } from "../../models/HumanInfo";
 import { PetInfo } from "../../models/PetInfo";
-import FamilyQuestionSlides from "../../components/CreateFamily/FamilyQuestionSlides"
+import FamilyQuestionSlides from "./CreateFamilyQuestions/FamilyQuestionSlides"
 import { useFieldArray, useForm, FormProvider, useFormContext } from "react-hook-form";
 
-import { InitFamilyQuestionState, InitHumanQuestionState } from "../../components/CreateFamily/QuestionProps/InputProperties";
+import { InitFamilyQuestionState, InitHumanQuestionState } from "./CreateFamilyQuestions/QuestionObjects";
 import { familyResponse } from "../../testData";
 
 export interface CreateFamilyProps {

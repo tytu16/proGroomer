@@ -2,9 +2,9 @@ import { IonAccordion, IonAccordionGroup, IonButton, IonCol, IonGrid, IonIcon, I
 import { arrowDownCircleOutline } from 'ionicons/icons';
 import { useRef, useState } from "react";
 import { useFieldArray, useFormContext, useWatch } from "react-hook-form";
-import { PetInfo } from "../../models/PetInfo";
-import { MyTextInput } from "../InputFields/MyTextInput";
-import { InitPetQuestionState, PetQuestionFields, TextFieldPropInterface } from "./QuestionProps/InputProperties";
+import { PetInfo } from "../../../models/PetInfo";
+import { MyTextInput } from "../../../components/InputFields/MyTextInput";
+import { InitPetQuestionState, PetQuestionFields, TextFieldPropInterface } from "./QuestionObjects";
 import "./Questions.css";
 
 export interface PetQuestionsProps{

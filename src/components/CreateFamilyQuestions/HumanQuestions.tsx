@@ -2,10 +2,10 @@ import { IonButton, IonCol, IonGrid, IonItem, IonList, IonRow, IonLabel, IonIcon
 import { useRef, useState } from "react";
 import { useFieldArray, useFormContext } from "react-hook-form";
 import "./Questions.css";
-import {MyTextInput} from "../InputFields/MyTextInput";
-import { HumanQuestionFields, InitHumanQuestionState, TextFieldPropInterface } from "./QuestionProps/InputProperties";
-import {PhoneFieldInput} from "../InputFields/PhoneField";
-import {HorizontalCheckBox} from "../InputFields/HorizontalCheckbox";
+import {MyTextInput} from "../../../components/InputFields/MyTextInput";
+import { HumanQuestionFields, InitHumanQuestionState, TextFieldPropInterface } from "./QuestionObjects";
+import {PhoneFieldInput} from "../../../components/InputFields/PhoneField";
+import {HorizontalCheckBox} from "../../../components/InputFields/HorizontalCheckbox";
 
 import { arrowDownCircleOutline, arrowDownCircle } from 'ionicons/icons';
 

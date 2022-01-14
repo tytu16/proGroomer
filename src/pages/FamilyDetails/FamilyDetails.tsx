@@ -1,6 +1,6 @@
 import React from "react";
 import { useParams } from "react-router";
-import PetQuestions from "../../components/CreateFamily/PetQuestions";
+import PetQuestions from "../CreateFamily/CreateFamilyQuestions/PetQuestions";
 import { FamilyInfo } from "../../models/FamilyInfo";
 
 export interface FamilyDetailProps {

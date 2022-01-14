@@ -1,11 +1,11 @@
 import { IonButton, IonCol, IonGrid, IonItem, IonList, IonRow  } from "@ionic/react";
 import { useFormContext } from "react-hook-form";
-import { FamilyInfo } from "../../models/FamilyInfo";
+import { FamilyInfo } from "../../../models/FamilyInfo";
 import "./Questions.css"
-import { MyTextInput } from "../InputFields/MyTextInput";
-import { MySelectList } from "../InputFields/MySelectList";
-import { StateList } from "../../models/Enums/States";
-import {FamilyQuestionFields, TextFieldPropInterface} from "./QuestionProps/InputProperties"
+import { MyTextInput } from "../../../components/InputFields/MyTextInput";
+import { MySelectList } from "../../../components/InputFields/MySelectList";
+import { StateList } from "../../../models/Enums/States";
+import {FamilyQuestionFields, TextFieldPropInterface} from "./QuestionObjects"
 
 export interface FamilyQuestionsProps {
     toHumanInfo: (newFamily: FamilyInfo) => void,
