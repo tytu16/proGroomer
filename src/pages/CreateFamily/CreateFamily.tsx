@@ -2,13 +2,12 @@ import { IonCol, IonContent, IonGrid, IonRow } from "@ionic/react";
 
 import './CreateFamily.css'; 
 import { FamilyInfo } from "../../models/FamilyInfo";
-import { HumanInfo } from "../../models/HumanInfo";
+import { PersonInfo } from "../../models/PersonInfo";
 import { PetInfo } from "../../models/PetInfo";
 import FamilyQuestionSlides from "./CreateFamilyQuestions/FamilyQuestionSlides"
 import { useFieldArray, useForm, FormProvider, useFormContext } from "react-hook-form";
 
-import { InitFamilyQuestionState, InitHumanQuestionState } from "./CreateFamilyQuestions/QuestionObjects";
-import { familyResponse } from "../../testData";
+import { InitFamilyQuestionState } from "./CreateFamilyQuestions/QuestionObjects";
 
 export interface CreateFamilyProps {
     onCreateFamily: (family: FamilyInfo) => void,
@@ -21,7 +20,7 @@ export interface CreateFamilyState {
 
 const CreateFamily = (props: CreateFamilyProps) => {
 
-  const addHuman = (newHuman: HumanInfo) => {
+  const addPerson = (newperson: PersonInfo) => {
       
   }
 
@@ -45,7 +44,7 @@ const CreateFamily = (props: CreateFamilyProps) => {
       // if(!this.state.familyInProgress.baseFamilyEqual(newFamily)){
       //     newFamily.id = this.props.index.toString();
       //     this.setState({familyInProgress: newFamily});
-      //     console.log('added family info, now to humanInfo');
+      //     console.log('added family info, now to personInfo');
       //     console.log(newFamily);
       // } else {
       //     console.log('data is same, moving forward without saving');
@@ -82,7 +81,7 @@ const CreateFamily = (props: CreateFamilyProps) => {
                       <IonCol>
                         <IonRow>
                             <FamilyQuestionSlides index={index} saveFamilyInfo={saveFamilyInfo}
-                                addHuman={addHuman} addPet={addPet} submitFamily={submitFamily}/>
+                                addPerson={addPerson} addPet={addPet} submitFamily={submitFamily}/>
                         </IonRow>
                           <button type="button" onClick={() => remove(index)}>Delete</button>
                       </IonCol>

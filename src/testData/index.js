@@ -2,7 +2,7 @@ export const familyResponse = [
     {
         id: 1,
         familyName: "The Three Stooges",
-        humans: [
+        people: [
             {
                 id: 1,
                 firstName: "Larry",
@@ -43,7 +43,7 @@ export const familyResponse = [
     {
         id: 2,
         familyName: "The Addams Family",
-        humans: [
+        people: [
             {
                 id: 1,
                 firstName: "Morticia",

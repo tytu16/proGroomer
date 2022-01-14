@@ -1,6 +1,6 @@
 import {PhoneInfo} from './PhoneInfo';
 
-export class HumanInfo {
+export class PersonInfo {
     private _id: string;
     private _isPrimary: boolean;
     private _firstName: string;
@@ -76,7 +76,7 @@ export class HumanInfo {
         this._phone.push(phoneNumber);
     }
 
-    isEqualWithoutId (other: HumanInfo) {
+    isEqualWithoutId (other: PersonInfo) {
         const diff = other._phone.filter(v => !this._phone.includes(v))
         
         return (this._firstName == other.firstName &&

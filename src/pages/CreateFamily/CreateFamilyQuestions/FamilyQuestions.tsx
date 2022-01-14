@@ -8,7 +8,7 @@ import { StateList } from "../../../models/Enums/States";
 import {FamilyQuestionFields, TextFieldPropInterface} from "./QuestionObjects"
 
 export interface FamilyQuestionsProps {
-    toHumanInfo: (newFamily: FamilyInfo) => void,
+    toPeopleInfo: (newFamily: FamilyInfo) => void,
     index: number
 }
 
@@ -16,12 +16,12 @@ const FamilyQuestions = (props: FamilyQuestionsProps) => {
 
     const {handleSubmit} = useFormContext();
 
-    const toHumans = (data: any) => {
-        console.log('to humans');
+    const toPeople = (data: any) => {
+        console.log('to persons');
         console.log(data);
         const newFamily = new FamilyInfo(data);
         // newFamily.id = props.index;
-        props.toHumanInfo(newFamily);
+        props.toPeopleInfo(newFamily);
     }
 
     const handleFieldChange = (data: string, name: string) => {
@@ -56,7 +56,7 @@ const FamilyQuestions = (props: FamilyQuestionsProps) => {
                         <IonRow>
                     <IonCol size="1"></IonCol>
                     <IonCol>
-                        <IonButton class="top-button" expand="block" type="submit" onClick={handleSubmit(toHumans)}>People &gt;</IonButton>
+                        <IonButton class="top-button" expand="block" type="submit" onClick={handleSubmit(toPeople)}>People &gt;</IonButton>
                     </IonCol>
                     <IonCol size="1"></IonCol>
                 </IonRow>                       

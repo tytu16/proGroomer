@@ -18,29 +18,29 @@ export const InitPetQuestionState = () => {
     })
 }
 
-export const InitHumanPhoneNumbers = () => {
+export const InitPhoneNumbers = () => {
     return {phoneNumber: "", phoneType: "", textable: false};
 }
 
-export const InitPrimaryHumanQuestionState = () => {
+export const InitPrimaryPersonQuestionState = () => {
     return ({
         id: 0,
         isPrimary: true,
         firstName: "",
         lastName: "",
         email: "",
-        phone: [InitHumanPhoneNumbers()]
+        phone: [InitPhoneNumbers()]
     })
 }
 
-export const InitHumanQuestionState = () => {
+export const InitPersonQuestionState = () => {
     return ({
         id: 0,
         isPrimary: false,
         firstName: "",
         lastName: "",
         email: "",
-        phone: [InitHumanPhoneNumbers()]
+        phone: [InitPhoneNumbers()]
     });
 }
 
@@ -53,7 +53,7 @@ export const InitFamilyQuestionState = () => {
         addressCity: "",
         addressZip: "",
         garageCd: "",
-        human: [InitPrimaryHumanQuestionState()],
+        person: [InitPrimaryPersonQuestionState()],
         pet: [InitPetQuestionState()]
     });
   }
@@ -117,11 +117,11 @@ export const FamilyQuestionFields = [
     }
 ]
 
-export const HumanQuestionFields = [
+export const PeopleQuestionFields = [
     {
         placeholder: "",
         label: "Primary Contact?", 
-        objectType: "family.0.human",
+        objectType: "family.0.person",
         fieldName: "isPrimary",
         required: true,
         watched: true
@@ -129,7 +129,7 @@ export const HumanQuestionFields = [
     {
         placeholder: "First Name",
         label: "First Name", 
-        objectType: "family.0.human",
+        objectType: "family.0.person",
         fieldName: "firstName",
         required: true,
         watched: true
@@ -137,7 +137,7 @@ export const HumanQuestionFields = [
     {
         placeholder: "Last Name",
         label: "Last Name", 
-        objectType: "family.0.human",
+        objectType: "family.0.person",
         fieldName: "lastName",
         required: true,
         watched: true
@@ -145,7 +145,7 @@ export const HumanQuestionFields = [
     {
         placeholder: "Email Address",
         label: "Email", 
-        objectType: "family.0.human",
+        objectType: "family.0.person",
         fieldName: "email",
         required: true,
         watched: false
@@ -153,7 +153,7 @@ export const HumanQuestionFields = [
     {
         placeholder: "(XXX) XXX-XXXX",
         label: "Phone Numbers",
-        objectType: "family.0.human.0.phone",
+        objectType: "family.0.person.0.phone",
         fieldName: "phoneNumber",
         required: true,
         watched: false

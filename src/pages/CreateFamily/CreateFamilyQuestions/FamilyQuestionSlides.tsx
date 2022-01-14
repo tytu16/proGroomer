@@ -1,10 +1,10 @@
 import { useRef, useState } from "react";
 import { useHistory } from "react-router";
 import { FamilyInfo } from "../../../models/FamilyInfo";
-import { HumanInfo } from "../../../models/HumanInfo";
+import { PersonInfo } from "../../../models/PersonInfo";
 import { PetInfo } from "../../../models/PetInfo";
 import FamilyQuestions from "./FamilyQuestions";
-import HumanQuestions from "./HumanQuestions";
+import PeopleQuestions from "./PeopleQuestions";
 import PetQuestions from "./PetQuestions";
 
 import { Swiper, SwiperSlide } from 'swiper/react/swiper-react.js';
@@ -20,7 +20,7 @@ import '@ionic/react/css/ionic-swiper.css';
 export interface FamilyQuestionProps {
     index: number,
     saveFamilyInfo: (newFamily: FamilyInfo) => void,
-    addHuman: (newHuman: HumanInfo) => void,
+    addPerson: (newPerson: PersonInfo) => void,
     addPet: (newPet: PetInfo) => void,
     submitFamily: (newPet: PetInfo | null) => void
 }
@@ -30,16 +30,8 @@ const FamilyQuestionSlides = (props: FamilyQuestionProps) => {
     const history = useHistory();
     const [swiper, setSwiper] = useState<any>(null);
 
-    const saveFamilyToHuman = (newFamily: FamilyInfo) => {
+    const saveFamilyToPeople = (newFamily: FamilyInfo) => {
         props.saveFamilyInfo(newFamily);
-        toNextSlide();
-    }
-
-    const saveHumanToPet = (newHuman: HumanInfo | null) => {
-        if(newHuman != null){
-            props.addHuman(newHuman);
-        }
-        
         toNextSlide();
     }
 
@@ -75,13 +67,13 @@ const FamilyQuestionSlides = (props: FamilyQuestionProps) => {
           onSwiper={setSwiper}
         >
             <SwiperSlide>
-                <FamilyQuestions index={props.index} toHumanInfo={saveFamilyToHuman} />
+                <FamilyQuestions index={props.index} toPeopleInfo={saveFamilyToPeople} />
             </SwiperSlide>
             <SwiperSlide>
-                <HumanQuestions index={props.index} toFamilyInfo={toPreviousSlide} toPetInfo={toNextSlide}/>
+                <PeopleQuestions index={props.index} toFamilyInfo={toPreviousSlide} toPetInfo={toNextSlide}/>
             </SwiperSlide>
             <SwiperSlide>
-                <PetQuestions index={props.index} backToHumans={toPreviousSlide} submitFamily={SubmitFamilyAndBackToList} />
+                <PetQuestions index={props.index} backToPeople={toPreviousSlide} submitFamily={SubmitFamilyAndBackToList} />
             </SwiperSlide>
         </Swiper>
     );

@@ -13,11 +13,11 @@ const FamilyDetail = (props: FamilyDetailProps) => {
         <h1>Displaying family id {params.id}</h1>
         <h2>family name: {props.family.familyName}</h2>
         <h2>family address: {props.family.fullAddress}</h2>
-        <h2>Humans in the family:</h2>
+        <h2>People in the family:</h2>
         {
-            props.family.humans.map(h => {
+            props.family.people.map(h => {
                 return (
-                    <h3>human name: {h.fullName + " - " + h.email}</h3>
+                    <h3>Person name: {h.fullName + " - " + h.email}</h3>
                 );
             })
         }

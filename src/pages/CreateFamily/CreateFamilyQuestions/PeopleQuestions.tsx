@@ -3,7 +3,7 @@ import { useRef, useState } from "react";
 import { useFieldArray, useFormContext } from "react-hook-form";
 import "./Questions.css";
 import {MyTextInput} from "../../../components/InputFields/MyTextInput";
-import { HumanQuestionFields, InitHumanQuestionState, TextFieldPropInterface } from "./QuestionObjects";
+import { PeopleQuestionFields, InitPersonQuestionState, TextFieldPropInterface } from "./QuestionObjects";
 import {PhoneFieldInput} from "../../../components/InputFields/PhoneField";
 import {HorizontalCheckBox} from "../../../components/InputFields/HorizontalCheckbox";
 
@@ -12,7 +12,7 @@ import { arrowDownCircleOutline, arrowDownCircle } from 'ionicons/icons';
 import 'swiper/swiper.min.css';
 import '@ionic/react/css/ionic-swiper.css';
 
-export interface HumanQuestionsProps {
+export interface PeopleQuestionsProps {
     index: number,
     toPetInfo: () => void,
     toFamilyInfo: () => void
@@ -23,11 +23,11 @@ export interface WatchedFieldsInter {
     lastName: string
 }
 
-const HumanQuestions = (props: HumanQuestionsProps) => {
+const PeopleQuestions = (props: PeopleQuestionsProps) => {
 // ----HOOKS---- //
 
 // form hooks
-    const objectType = `family.${props.index}.human`;
+    const objectType = `family.${props.index}.person`;
     const {control, handleSubmit, setValue} = useFormContext();
     const { fields, append, remove, replace} = useFieldArray({
         control,
@@ -45,7 +45,7 @@ const HumanQuestions = (props: HumanQuestionsProps) => {
     const IonListRef = useRef<any>(null);
 
 // ----RENDER---- //
-// Dynamically rendered fields fed from HumanQuestionFields
+// Dynamically rendered fields fed from PeopleQuestionFields
     const renderField = (field: any, questionIndex:number, fieldArrayIndex:number) => {
         switch (field.fieldName){
             case 'phoneNumber':
@@ -91,9 +91,9 @@ const HumanQuestions = (props: HumanQuestionsProps) => {
 // Callback from input fields below returning onChange data and the name of the field
   // Parsing fieldName on objectType string sent back
   // Use parsed index and fieldName to update appropriate watchedField state, 
-  // which is reflected in the human headers
+  // which is reflected in the person headers
    const handleFieldChange = (data: string, name: string) => {
-        // family.0.human.0.firstName
+        // family.0.person.0.firstName
         let newFields = watchedFields.slice();
         const nameParse = name.split('.');
         const index = Number.parseInt(nameParse[3]);
@@ -120,11 +120,11 @@ const HumanQuestions = (props: HumanQuestionsProps) => {
         setPrimaryIndex(index);
     }
 
-// Append a new copy of InitialHumanQuestionState to formArray
+// Append a new copy of InitialPersonQuestionState to formArray
   // Set active index to this newly added field so it's open
   // Add a new watchedField to state for header
    const addAnother = (data: any) => {
-       append(InitHumanQuestionState());
+       append(InitPersonQuestionState());
        setActiveIndex(watchedFields.length);
        setWatchedFields(watchedFields.concat({firstName:"", lastName:""}));
    }
@@ -194,7 +194,7 @@ const HumanQuestions = (props: HumanQuestionsProps) => {
                             </IonItemSliding>
                             <IonList className={activeIndex == fieldArrayIndex ? "accordion" : "accordion collapsed"} slot="content">
                                 <div className="human-content shadow-container">{
-                                    HumanQuestionFields.map((field: TextFieldPropInterface, questionIndex) => {
+                                    PeopleQuestionFields.map((field: TextFieldPropInterface, questionIndex) => {
                                         return renderField(field, questionIndex, fieldArrayIndex);
                                     })
                                 }</div>
@@ -223,4 +223,4 @@ const HumanQuestions = (props: HumanQuestionsProps) => {
     );
 };
 
-export default HumanQuestions;
+export default PeopleQuestions;

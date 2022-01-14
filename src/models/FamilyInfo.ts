@@ -1,5 +1,6 @@
-import { HumanInfo } from "./HumanInfo";
+import { PersonInfo } from "./PersonInfo";
 import { PetInfo } from "./PetInfo";
+import { Note } from "./Note";
 
 export class FamilyInfo {
     private _id: string;
@@ -10,20 +11,22 @@ export class FamilyInfo {
     private _addrState: string;
     private _addrZip: string;
     private _garageCd: string;
-    private _humans: HumanInfo[];
+    private _people: PersonInfo[];
     private _pets: PetInfo[];
+    private _notes: Note[];
 
     constructor(data: any){
-        this._id = data.id;
-        this._familyName = data.familyName;
-        this._humans = data.humans ? data.humans : new Array<HumanInfo>() ;
+        this._id = data.id ? data.id : "0" ;
+        this._familyName = data.familyName ? data.familyName : "";
+        this._people = data.people ? data.people : new Array<PersonInfo>() ;
         this._pets = data.pets ? data.pets : new Array<PetInfo>();
-        this._addrOne =  data.addrOne;
-        this._addrTwo = data.addrTwo;
-        this._addrCity = data.addrCity;
-        this._addrState = data.addrState;
-        this._addrZip = data.addrZip;
-        this._garageCd = data.garageCd
+        this._notes = data.notes ? data.notes : new Array<Note>();  
+        this._addrOne =  data.addrOne ? data.addrOne : "";
+        this._addrTwo = data.addrTwo ? data.addrTwo : "";
+        this._addrCity = data.addrCity ? data.addrCity : "";
+        this._addrState = data.addrState ? data.addrState : "";
+        this._addrZip = data.addrZip ? data.addrZip : "";
+        this._garageCd = data.garageCd ? data.garageCd : "";
     }
 
     get addrOne(){
@@ -57,7 +60,6 @@ export class FamilyInfo {
     set addrState(addrState: string){
         this._addrState = addrState;
     }
-
 
     get addrZip(){
         return this._addrZip;
@@ -96,11 +98,11 @@ export class FamilyInfo {
         this._familyName = familyName;
     }
 
-    get humans(): HumanInfo[]{
-        return this._humans;
+    get people(): PersonInfo[]{
+        return this._people;
     }
-    set humans(humans: HumanInfo[]){
-        this._humans = humans;
+    set people(people: PersonInfo[]){
+        this._people = people;
     }
 
     get pets(): PetInfo[]{
@@ -108,6 +110,26 @@ export class FamilyInfo {
     }
     set pets(pets: PetInfo[]){
         this._pets = pets;
+    }
+
+    get notes(): Note[]{
+        return this._notes;
+    }
+
+    set notes(notes: Note[]){
+        this._notes = notes;
+    }
+
+    addPerson(person: PersonInfo){
+        this._people.push(person);
+    }
+
+    addPet(pet: PetInfo){
+        this._pets.push(pet);
+    }
+
+    addNote(note: Note){
+        this._notes.push(note);
     }
 
     baseFamilyEqual(other: FamilyInfo){

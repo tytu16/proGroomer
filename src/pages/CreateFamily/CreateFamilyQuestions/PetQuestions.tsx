@@ -9,7 +9,7 @@ import "./Questions.css";
 
 export interface PetQuestionsProps{
     index: number,
-    backToHumans: () => void,
+    backToPeople: () => void,
     submitFamily: () => void,
 }
 
@@ -46,9 +46,9 @@ const PetQuestions = (props: PetQuestionsProps) => {
 // Callback from input fields below returning onChange data and the name of the field
 // Parsing fieldName on objectType string sent back
 // Use parsed index and fieldName to update appropriate watchedField state, 
-// which is reflected in the human headers
+// which is reflected in the pet headers
 const handleFieldChange = (data: string, name: string) => {
-    // family.0.human.0.firstName
+    // family.0.pet.0.name
     let newFields = watchedFields.slice();
     const nameParse = name.split('.');
     const index = Number.parseInt(nameParse[3]);
@@ -63,7 +63,7 @@ const handleFieldChange = (data: string, name: string) => {
     setWatchedFields(newFields);
 }
 
-// Append a new copy of InitialHumanQuestionState to formArray
+// Append a new copy of InitialPetQuestionState to formArray
 // Set active index to this newly added field so it's open
 // Add a new watchedField to state for header
 const addAnother = (data: any) => {
@@ -146,7 +146,7 @@ const handleAccordionChange = (index: number) => {
                     </IonRow>
                     <IonRow>
                         <IonCol>
-                            <IonButton expand="block" onClick={() => props.backToHumans()}>&lt; People</IonButton>
+                            <IonButton expand="block" onClick={() => props.backToPeople()}>&lt; People</IonButton>
                         </IonCol>
                         <IonCol>
                             <IonButton expand="block" onClick={()=> props.submitFamily()}>Submit &gt;</IonButton>
