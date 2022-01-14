@@ -13,7 +13,7 @@ export interface MyCheckBoxInputProps {
   watched: boolean
 }
 
-export const MyCheckBox = (props: MyCheckBoxInputProps) => {
+export const HorizontalCheckBox = (props: MyCheckBoxInputProps) => {
   const {label, objectType, index, fieldName, onChange,watched} = props;
   
   const {control} = useFormContext();
@@ -32,25 +32,24 @@ export const MyCheckBox = (props: MyCheckBoxInputProps) => {
           </IonCol>
           <IonCol>
           <Controller
-                control={control}
-                name={`${objectType}.${index}.${fieldName}`}
-                render={({ field: { value, onChange } }) => (
-                    <IonCheckbox class="my-checkbox"
-                      ref={IonCheckboxRef}
-                      checked={value}
-                      disabled={value == true}
-                      onIonChange={({ detail: { checked } }) => {
-                        if(checked){
-                          onChange(checked);
-                          handleChange(checked);
-                        } else {
-                          value = checked;
-                        }
-                      }}
-                    />
-                  )}
-              />
-            
+              control={control}
+              name={`${objectType}.${index}.${fieldName}`}
+              render={({ field: { value, onChange } }) => (
+                  <IonCheckbox class="my-checkbox"
+                    ref={IonCheckboxRef}
+                    checked={value}
+                    disabled={value == true}
+                    onIonChange={({ detail: { checked } }) => {
+                      if(checked){
+                        onChange(checked);
+                        handleChange(checked);
+                      } else {
+                        value = checked;
+                      }
+                    }}
+                  />
+                )}
+            />
           </IonCol>
       </IonRow>
     </IonGrid>

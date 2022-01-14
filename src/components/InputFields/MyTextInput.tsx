@@ -45,6 +45,7 @@ export const MyTextInput = (props: MyTextInputProps) => {
       </IonRow>
       <IonRow className="ion-text-left">
         <IonInput  {...register(myFieldName)}
+          type="text"
           onIonFocus={handleFocus}
           onIonBlur={handleBlur}
           onIonChange={(e) => { 

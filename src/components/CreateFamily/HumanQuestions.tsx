@@ -5,7 +5,7 @@ import "./Questions.css";
 import {MyTextInput} from "../InputFields/MyTextInput";
 import { HumanQuestionFields, InitHumanQuestionState, TextFieldPropInterface } from "./QuestionProps/InputProperties";
 import {PhoneFieldInput} from "../InputFields/PhoneField";
-import {MyCheckBox} from "../InputFields/MyCheckBox";
+import {HorizontalCheckBox} from "../InputFields/HorizontalCheckbox";
 
 import { arrowDownCircleOutline, arrowDownCircle } from 'ionicons/icons';
 
@@ -50,17 +50,17 @@ const HumanQuestions = (props: HumanQuestionsProps) => {
         switch (field.fieldName){
             case 'phoneNumber':
                 return (
-                    <IonItem key={questionIndex}>
-                        <PhoneFieldInput index={fieldArrayIndex}
+                    <div id="container">
+                        <PhoneFieldInput key={questionIndex} index={fieldArrayIndex}
                             placeholder={field.placeholder} label={field.label} 
                             objectType={objectType} fieldName={field.fieldName}
                         />
-                    </IonItem>
+                    </div>
                 );
 
             case 'isPrimary':
                 return (
-                    <MyCheckBox key={questionIndex} index={fieldArrayIndex}
+                    <HorizontalCheckBox key={questionIndex} index={fieldArrayIndex}
                         onChange={handleCheckBoxChange} watched={field.watched}
                         label={field.label} objectType={objectType}
                         fieldName={field.fieldName} required={field.required} />
@@ -151,7 +151,7 @@ const HumanQuestions = (props: HumanQuestionsProps) => {
             <IonRow class="spacer"></IonRow>
             <IonRow>
                 <IonCol size="10" className="slide-content">
-                    <h1>Human Information</h1>
+                    <h1>People Information</h1>
                     <IonList ref={IonListRef}>
                     {fields.map((item, fieldArrayIndex) => (
                         <div key={fieldArrayIndex}>
@@ -165,8 +165,8 @@ const HumanQuestions = (props: HumanQuestionsProps) => {
                                         Delete
                                     </IonItemOption></IonItemOptions>
                                 )}
-                                <IonItem className={primaryIndex == fieldArrayIndex ? 'accordion-header primary' : 'accordion-header' } 
-                                    onClick={() => handleAccordionChange(fieldArrayIndex)} slot="header" mode='md'
+                                <IonItem  className={primaryIndex == fieldArrayIndex ? 'accordion-header primary' : 'accordion-header' } 
+                                    onClick={() => handleAccordionChange(fieldArrayIndex)} slot="header" mode='md' lines="none"
                                     fill={primaryIndex == fieldArrayIndex ? 'solid': 'outline'}>
                                     {
                                         <IonLabel>
@@ -193,7 +193,7 @@ const HumanQuestions = (props: HumanQuestionsProps) => {
                                 )}
                             </IonItemSliding>
                             <IonList className={activeIndex == fieldArrayIndex ? "accordion" : "accordion collapsed"} slot="content">
-                                <div className="human-content">{
+                                <div className="human-content shadow-container">{
                                     HumanQuestionFields.map((field: TextFieldPropInterface, questionIndex) => {
                                         return renderField(field, questionIndex, fieldArrayIndex);
                                     })

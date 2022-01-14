@@ -19,7 +19,7 @@ export const InitPetQuestionState = () => {
 }
 
 export const InitHumanPhoneNumbers = () => {
-    return {phoneNumber: ""};
+    return {phoneNumber: "", phoneType: "", textable: false};
 }
 
 export const InitPrimaryHumanQuestionState = () => {

@@ -46,7 +46,7 @@ const FamilyQuestions = (props: FamilyQuestionsProps) => {
                                     />                          
                                 ) : (
                                     <MySelectList key={index} index={props.index} valueList={StateList}
-                                        placeholder={field.placeholder} label={field.label} 
+                                        placeholder={field.placeholder} label={field.label} addStyling={true}
                                         objectType={field.objectType} fieldName={field.fieldName} required={field.required}
                                     />
                                 );
@@ -56,7 +56,7 @@ const FamilyQuestions = (props: FamilyQuestionsProps) => {
                         <IonRow>
                     <IonCol size="1"></IonCol>
                     <IonCol>
-                        <IonButton class="top-button" expand="block" type="submit" onClick={handleSubmit(toHumans)}>Humans &gt;</IonButton>
+                        <IonButton class="top-button" expand="block" type="submit" onClick={handleSubmit(toHumans)}>People &gt;</IonButton>
                     </IonCol>
                     <IonCol size="1"></IonCol>
                 </IonRow>                       
