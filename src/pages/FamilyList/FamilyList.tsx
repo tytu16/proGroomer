@@ -3,10 +3,10 @@ import { personAdd } from 'ionicons/icons';
 import React from 'react';
 import './FamilyList.css';
 
-import { FamiliesProps } from '../../interfaces/FamilyInterface';
+import { FamiliesProps } from '../../models/interfaces/FamilyInterface';
 import FamilyRow from '../../components/FamilyRow/FamilyRow';
 import { FamilyInfo } from '../../models/FamilyInfo';
-import FamilyTabEmptyState from '../../components/FamilyTabEmptyState';
+import FamilyTabEmptyState from './FamilyTabEmptyState';
 
 
 export default class FamilyList extends React.Component<FamiliesProps> {

@@ -1,10 +1,9 @@
 import { IonContent, IonFab, IonFabButton, IonHeader, IonIcon, IonPage, IonTitle, IonToolbar } from '@ionic/react';
 import { calendarOutline } from 'ionicons/icons';
 import './CalendarsTab.css';
-import { useFamilyData } from '../../hooks/useFamilyData';
 import React from 'react';
 
-import { FamiliesProps, FamiliesState } from '../../interfaces/FamilyInterface';
+import { FamiliesProps, FamiliesState } from '../../models/interfaces/FamilyInterface';
 import FamilyRow from '../../components/FamilyRow/FamilyRow';
 
 export default class CalendarsTab extends React.Component<FamiliesProps,FamiliesState> {

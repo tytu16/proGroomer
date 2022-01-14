@@ -1,4 +1,4 @@
-import { FamilyInfo } from "../models/FamilyInfo";
+import { FamilyInfo } from "../FamilyInfo";
 
 export interface FamiliesProps {
     families: Array<FamilyInfo>,

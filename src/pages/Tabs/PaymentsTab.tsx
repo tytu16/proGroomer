@@ -3,7 +3,7 @@ import { walletSharp } from 'ionicons/icons';
 import React from 'react';
 import './PaymentsTab.css';
 
-import { FamiliesProps, FamiliesState } from '../../interfaces/FamilyInterface';
+import { FamiliesProps, FamiliesState } from '../../models/interfaces/FamilyInterface';
 import FamilyRow from '../../components/FamilyRow/FamilyRow';
 
 export default class PaymentsTab extends React.Component<FamiliesProps, FamiliesState> {
