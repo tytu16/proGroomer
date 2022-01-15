@@ -119,7 +119,7 @@ const handleAccordionChange = (index: number) => {
                                 </IonItemOption></IonItemOptions>
                             </IonItemSliding>
                             <IonList className={activeIndex == fieldArrayIndex ? "accordion" : "accordion collapsed"} slot="content">
-                                <div className="human-content shadow-container">{
+                                <div className="person-content shadow-container">{
                                     PetQuestionFields.map((field: TextFieldPropInterface, questionIndex) => {
                                         return (field.fieldName != 'sex') ? (
                                             <IonItem key={questionIndex}>

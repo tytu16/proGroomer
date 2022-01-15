@@ -3,7 +3,7 @@
     background-color: lightgray;
 }
 
-.human-content {
+.person-content {
 	color: var(--ion-color-primary);
 	border: 2px solid rgb(228, 228, 228);
 	border-radius: 15px;
