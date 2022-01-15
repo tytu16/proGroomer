@@ -9,6 +9,15 @@
     margin-bottom: 3%;
 }
 
+.shadow-container{
+    overflow: hidden;
+    margin-right: 0px;
+}
+
+.modal-container{
+    width: 80%;
+}
+
 .input-label-field:focus-within{
     border-color: var(--ion-color-primary);
     border-bottom: 3%;
@@ -68,11 +77,6 @@ ion-select{
 .phone-field{
     color: black;
     padding: 4%;
-}
-
-.shadow-container {
-    overflow: hidden;
-    padding: 0 0 5px;
 }
 
 .phone-field-grid{

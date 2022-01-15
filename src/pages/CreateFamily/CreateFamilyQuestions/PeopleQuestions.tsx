@@ -200,7 +200,7 @@ const PeopleQuestions = (props: PeopleQuestionsProps) => {
                                 )}
                             </IonItemSliding>
                             <IonList className={activeIndex == fieldArrayIndex ? "accordion" : "accordion collapsed"} slot="content">
-                                <div className="question-content shadow-container">{
+                                <div className="question-content">{
                                     PeopleQuestionFields.map((field: TextFieldPropInterface, questionIndex) => {
                                         return renderField(field, questionIndex, fieldArrayIndex);
                                     })

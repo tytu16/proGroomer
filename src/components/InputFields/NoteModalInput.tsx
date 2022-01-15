@@ -3,6 +3,8 @@ import { useState } from "react";
 import { MyTextInput } from "./MyTextInput";
 import { MyTextArea } from "./MyTextArea";
 
+import "./InputStyling.css";
+
 export interface NoteModalProps {
     personIndex: number,
     noteIndex: number,

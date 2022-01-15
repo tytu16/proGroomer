@@ -19,7 +19,7 @@ export const MySelectList = (props: MySelectListProps) => {
 
     const {register} = useFormContext();
 
-    return(
+    return(<div className="shadow-container">
         <IonGrid className={addStyling ? "my-select-list" : ""}>
             {(label != '') ? (
                 <IonRow>
@@ -39,5 +39,5 @@ export const MySelectList = (props: MySelectListProps) => {
                 </IonSelect>
             </IonRow>
         </IonGrid>        
-    );
+    </div>);
   }

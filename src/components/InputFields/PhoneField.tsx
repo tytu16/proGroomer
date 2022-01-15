@@ -34,8 +34,8 @@ export const PhoneFieldInput = (props: PhoneFieldProps) => {
     remove(index);
   }
 
-  return(
-    <IonGrid className="ion-no-padding shadow-container">
+  return(<div className="shadow-container">
+    <IonGrid className="ion-no-padding">
         <IonRow><IonCol >
           <IonLabel className="text-left">{props.label}:</IonLabel>&nbsp;
         </IonCol></IonRow>
@@ -86,5 +86,5 @@ export const PhoneFieldInput = (props: PhoneFieldProps) => {
           </IonGrid>
         ))}
     </IonGrid>
-  );
+    </div>);
 }

@@ -26,7 +26,7 @@ export const MyTextLabelInput = (props: MyTextLabelInputProps) => {
     onChange(newFieldValue, myFieldName);
   }
 
-  return(
+  return(<div className="shadow-container">
     <IonGrid className="input-label-field">
       <IonRow>
         <label>{label}</label>
@@ -41,5 +41,5 @@ export const MyTextLabelInput = (props: MyTextLabelInputProps) => {
            }}/>
       </IonRow>
     </IonGrid>
-  );
+    </div>);
 }
