@@ -6,6 +6,7 @@ import {MyTextInput} from "../../../components/InputFields/MyTextInput";
 import { PeopleQuestionFields, InitPersonQuestionState, TextFieldPropInterface } from "./QuestionObjects";
 import {PhoneFieldInput} from "../../../components/InputFields/PhoneField";
 import {HorizontalCheckBox} from "../../../components/InputFields/HorizontalCheckbox";
+import {ModalInput} from "../../../components/InputFields/ModalInput"
 
 import { arrowDownCircleOutline, arrowDownCircle } from 'ionicons/icons';
 
@@ -66,6 +67,10 @@ const PeopleQuestions = (props: PeopleQuestionsProps) => {
                         fieldName={field.fieldName} required={field.required} />
                 );
 
+            case 'note':
+                return (
+                    <ModalInput />
+                );
             default:
                 return  (
                     <MyTextInput key={questionIndex} index={fieldArrayIndex} 

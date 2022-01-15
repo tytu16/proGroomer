@@ -170,6 +170,14 @@ export const PeopleQuestionFields = [
         required: true,
         watched: false
     },
+    {
+        placeholder: "Add a note",
+        label: "Notes",
+        objectType: "family.0.person.0.note",
+        fieldName: "note",
+        required: true,
+        watched: true
+    }
 ]
 
 export const PetQuestionFields = [
