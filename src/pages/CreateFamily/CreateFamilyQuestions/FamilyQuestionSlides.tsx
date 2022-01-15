@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useHistory } from "react-router";
 import { FamilyInfo } from "../../../models/FamilyInfo";
 import { PersonInfo } from "../../../models/PersonInfo";
@@ -16,13 +16,15 @@ import 'swiper/modules/pagination/pagination.min.css';
 import 'swiper/modules/scrollbar/scrollbar.min.css';
 import 'swiper/modules/zoom/zoom.min.css';
 import '@ionic/react/css/ionic-swiper.css';
+import { IonContent } from "@ionic/react";
 
 export interface FamilyQuestionProps {
     index: number,
     saveFamilyInfo: (newFamily: FamilyInfo) => void,
     addPerson: (newPerson: PersonInfo) => void,
     addPet: (newPet: PetInfo) => void,
-    submitFamily: (newPet: PetInfo | null) => void
+    submitFamily: (newPet: PetInfo | null) => void,
+    toTop: () => void
 }
 
 const FamilyQuestionSlides = (props: FamilyQuestionProps) => {
@@ -39,15 +41,16 @@ const FamilyQuestionSlides = (props: FamilyQuestionProps) => {
         console.log("to prev slide");
         if(swiper){
             swiper.slidePrev();
+            props.toTop();
         }
     }
 
     const toNextSlide = () => {
         console.log("to next slide");
         if(swiper){
+            props.toTop();
             swiper.slideNext();
         }
-    
     }
 
     const SubmitFamilyAndBackToList = () => {
@@ -57,15 +60,14 @@ const FamilyQuestionSlides = (props: FamilyQuestionProps) => {
 
     return(
         <Swiper
-        className="swiper-no-swiping" 
-        modules={[Navigation, Keyboard, Pagination, Scrollbar, Zoom, A11y]}
+          className="swiper-no-swiping" 
+          modules={[Navigation, Keyboard, Pagination, Scrollbar, Zoom, A11y]}
           keyboard={true}
           pagination={true}
           slidesPerView={1}
           scrollbar={true}
           zoom={true}
-          onSwiper={setSwiper}
-        >
+          onSwiper={setSwiper}>
             <SwiperSlide>
                 <FamilyQuestions index={props.index} toPeopleInfo={saveFamilyToPeople} />
             </SwiperSlide>

@@ -8,6 +8,7 @@ import FamilyQuestionSlides from "./CreateFamilyQuestions/FamilyQuestionSlides"
 import { useFieldArray, useForm, FormProvider, useFormContext } from "react-hook-form";
 
 import { InitFamilyQuestionState } from "./CreateFamilyQuestions/QuestionObjects";
+import { useRef } from "react";
 
 export interface CreateFamilyProps {
     onCreateFamily: (family: FamilyInfo) => void,
@@ -19,6 +20,8 @@ export interface CreateFamilyState {
 }
 
 const CreateFamily = (props: CreateFamilyProps) => {
+
+  const IonContentRef = useRef<any>(null);
 
   const addPerson = (newperson: PersonInfo) => {
       
@@ -39,6 +42,9 @@ const CreateFamily = (props: CreateFamilyProps) => {
       return new FamilyInfo({});
   }
 
+  const toTop = () => {
+    IonContentRef.current.scrollToTop(300);
+  }
 
   const saveFamilyInfo = (newFamily: FamilyInfo) => {
       // if(!this.state.familyInProgress.baseFamilyEqual(newFamily)){
@@ -71,7 +77,7 @@ const CreateFamily = (props: CreateFamilyProps) => {
   });
 
   return (
-      <IonContent>
+      <IonContent ref={IonContentRef}>
           <IonGrid>
             <FormProvider {...methods}>
               <form onSubmit={methods.handleSubmit(data => console.log(data))}>
@@ -80,7 +86,7 @@ const CreateFamily = (props: CreateFamilyProps) => {
                     <IonRow>
                       <IonCol>
                         <IonRow>
-                            <FamilyQuestionSlides index={index} saveFamilyInfo={saveFamilyInfo}
+                            <FamilyQuestionSlides index={index} saveFamilyInfo={saveFamilyInfo} toTop={toTop}
                                 addPerson={addPerson} addPet={addPet} submitFamily={submitFamily}/>
                         </IonRow>
                           <button type="button" onClick={() => remove(index)}>Delete</button>
