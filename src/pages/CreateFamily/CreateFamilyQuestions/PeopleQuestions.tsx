@@ -50,8 +50,8 @@ const PeopleQuestions = (props: PeopleQuestionsProps) => {
         switch (field.fieldName){
             case 'phoneNumber':
                 return (
-                    <div id="container">
-                        <PhoneFieldInput key={questionIndex} index={fieldArrayIndex}
+                    <div  key={questionIndex} id="container">
+                        <PhoneFieldInput index={fieldArrayIndex}
                             placeholder={field.placeholder} label={field.label} 
                             objectType={objectType} fieldName={field.fieldName}
                         />
@@ -193,7 +193,7 @@ const PeopleQuestions = (props: PeopleQuestionsProps) => {
                                 )}
                             </IonItemSliding>
                             <IonList className={activeIndex == fieldArrayIndex ? "accordion" : "accordion collapsed"} slot="content">
-                                <div className="person-content shadow-container">{
+                                <div className="question-content shadow-container">{
                                     PeopleQuestionFields.map((field: TextFieldPropInterface, questionIndex) => {
                                         return renderField(field, questionIndex, fieldArrayIndex);
                                     })

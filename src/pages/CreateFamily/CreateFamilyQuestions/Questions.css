@@ -1,9 +1,6 @@
-#state-list{
-    width: 100%;
-    background-color: lightgray;
-}
 
-.person-content {
+/* People and Pets */
+.question-content {
 	color: var(--ion-color-primary);
 	border: 2px solid rgb(228, 228, 228);
 	border-radius: 15px;
@@ -11,69 +8,16 @@
     margin-bottom: 3%;
 }
 
-.input-item{
-    text-align: center;
-}
-
-.input-toggle{
-    background-color: white;
-    color: black;
-    --padding-bottom: 0px;
-    --padding-end: 0px;
-    --padding-start: 0px;
-    --padding-top: 0px;
-}
-
-.question-list{
-    border-radius: 2%;
-    padding-left: 4%;
-}
-
-#male-female-toggle{
-    height: 100%;
-    width: 100%;
-}
-
-.active-sex{
-    background-color: var(--ion-color-primary);
-    color: black;
-    border-width: 2px;
-    border-color: black;
-    border-style: solid;
-}
-
-#male{
-    background-color: white;
-    color: lightgray;
-}
-
-#female{
-    background-color: white;
-    color: lightgray;
-}
-
 .input{
     text-align:center;
 }
 
+/* Family Questions */
 .top-button{
     margin-top: 5%;
 }
 
-.icon{
-    display:inline-block;
-    transition: transform 0.3s;
-}
-
-
-.icon.active{
-    transform: rotate(180deg);
-}
-
-.icon.primary{
-    color: var(--ion-color-primary);
-}
-
+/* Accordion stuff */
 .accordion {
     overflow:hidden;
     transition:0.4s ease-in;
@@ -94,14 +38,28 @@ opacity: 0;
     border-radius: 5%;
 }
 
-.primary-backdrop{
-    height: 100%;
-    width: 100%;
-    background-color: white;
-}
 
 .accordion-header.primary{
     border-color: var(--ion-color-primary);
     font-weight: bold;
     --background: rgb(235,242,255); /* alice blue*/
+}
+
+.icon{
+    display:inline-block;
+    transition: transform 0.3s;
+}
+
+.icon.active{
+    transform: rotate(180deg);
+}
+
+.icon.primary{
+    color: var(--ion-color-primary);
+}
+
+.primary-backdrop{
+    height: 100%;
+    width: 100%;
+    background-color: white;
 }
