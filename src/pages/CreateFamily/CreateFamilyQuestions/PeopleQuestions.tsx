@@ -175,7 +175,7 @@ const PeopleQuestions = (props: PeopleQuestionsProps) => {
                                     fill={primaryIndex == fieldArrayIndex ? 'solid': 'outline'}>
                                     {
                                         <IonLabel>
-                                            { (fieldArrayIndex < watchedFields.length && 
+                                            {(fieldArrayIndex < watchedFields.length && 
                                                 (watchedFields[fieldArrayIndex].firstName != '' || watchedFields[fieldArrayIndex].lastName != '')) ? (
                                                 watchedFields[fieldArrayIndex].firstName + ' ' + watchedFields[fieldArrayIndex].lastName
                                             ) : (
