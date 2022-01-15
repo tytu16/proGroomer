@@ -1,12 +1,12 @@
 export class Note {
     private _id: string;
-    private _noteLabel: string;
-    private _noteMessage: string;
+    private _label: string;
+    private _message: string;
 
     constructor(data: any){
         this._id = data.id ? data.id : "0";
-        this._noteLabel = data.noteLabel ? data.noteLabel : "";
-        this._noteMessage = data.noteMessage ? data.noteMessage : "";  
+        this._label = data.label ? data.label : "";
+        this._message = data.message ? data.message : "";  
     }
 
     get id(){
@@ -17,19 +17,19 @@ export class Note {
         this._id = value;
     }
 
-    get noteLabel(){
-        return this._noteLabel;
+    get label(){
+        return this._label;
     }
 
-    set noteLabel(value: string){
-        this._noteLabel = value;
+    set label(value: string){
+        this._label = value;
     }
 
-    get noteMessage(){
-        return this._noteMessage;
+    get message(){
+        return this._message;
     }
 
-    set noteMessage(value: string){
-        this._noteMessage = value;
+    set message(value: string){
+        this._message = value;
     }
 }

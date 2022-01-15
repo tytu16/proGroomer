@@ -7,6 +7,14 @@ export interface TextFieldPropInterface {
     watched: boolean
 }
 
+export const InitNoteQuestionState = () => {
+    return ({
+        id: "0",
+        label: "",
+        message: ""
+    });
+}
+
 export const InitPetQuestionState = () => {
     return({
         id: 0,
@@ -14,7 +22,8 @@ export const InitPetQuestionState = () => {
         breed: "",
         sex: "",
         ageYr: "0",
-        ageMn: "0"
+        ageMn: "0",
+        note: [InitNoteQuestionState()]
     })
 }
 
@@ -29,7 +38,8 @@ export const InitPrimaryPersonQuestionState = () => {
         firstName: "",
         lastName: "",
         email: "",
-        phone: [InitPhoneNumbers()]
+        phone: [InitPhoneNumbers()],
+        note: [InitNoteQuestionState()]
     })
 }
 
@@ -40,7 +50,8 @@ export const InitPersonQuestionState = () => {
         firstName: "",
         lastName: "",
         email: "",
-        phone: [InitPhoneNumbers()]
+        phone: [InitPhoneNumbers()],
+        note: [InitNoteQuestionState()]
     });
 }
 
@@ -54,7 +65,8 @@ export const InitFamilyQuestionState = () => {
         addressZip: "",
         garageCd: "",
         person: [InitPrimaryPersonQuestionState()],
-        pet: [InitPetQuestionState()]
+        pet: [InitPetQuestionState()],
+        note: [InitNoteQuestionState()]
     });
   }
 
