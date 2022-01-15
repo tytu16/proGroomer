@@ -19,8 +19,8 @@
 /* Accordion stuff */
 .accordion {
     overflow:hidden;
-    transition-property: opacity, max-height;
-    transition-duration: 0.3s, 0.5s;
+    transition-property: max-height, opacity ;
+    transition-duration: 0.3s, 0.4s;
     transition-timing-function: ease-in-out;
     height:auto;
     max-height:1800px;
@@ -28,15 +28,15 @@
 }
 
 .accordion.collapsed {
-    margin-top:2%;
     max-height:0;
     opacity: 0;
 }
 
-.accordion-header{
+ion-item.accordion-header{
     border-style: solid;
     border-color: gray;
     border-radius: 5%;
+    --border-width: 2%;
 }
 
 .accordion-header.primary{
@@ -56,10 +56,4 @@
 
 .icon.primary{
     color: var(--ion-color-primary);
-}
-
-.primary-backdrop{
-    height: 100%;
-    width: 100%;
-    background-color: white;
 }

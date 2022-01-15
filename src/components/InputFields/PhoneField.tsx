@@ -7,7 +7,6 @@ import "./InputStyling.css";
 import { MySelectList } from "./MySelectList";
 import { PhoneTypeList } from "../../models/Enums/PhoneTypes";
 import { VerticalCheckbox } from "./VerticalCheckbox";
-import { useState } from "react";
 
 export interface PhoneFieldProps {
   index: number,
@@ -26,7 +25,6 @@ export const PhoneFieldInput = (props: PhoneFieldProps) => {
       control,
       name: formPrefix,
   });
-  const [focusedIndex, setFocusedIndex ] = useState<number>();
 
   const addPhoneInput = (data: any) => {
     append({phoneNumber: "", phoneType: "", textable: false});
@@ -36,21 +34,13 @@ export const PhoneFieldInput = (props: PhoneFieldProps) => {
     remove(index);
   }
 
-  const handleFocus = (index: number) => {
-    setFocusedIndex(index);
-  }
-
-  const handleBlur = () => {
-    setFocusedIndex(-1);
-  }
-
   return(
     <IonGrid className="ion-no-padding shadow-container">
         <IonRow><IonCol >
           <IonLabel className="text-left">{props.label}:</IonLabel>&nbsp;
         </IonCol></IonRow>
         {fields.map((item, fieldArrayIndex) => (
-          <IonGrid className={focusedIndex==fieldArrayIndex ? "phone-field-grid focused" : "phone-field-grid"} key={fieldArrayIndex}>
+          <IonGrid className="phone-field-grid" key={fieldArrayIndex}>
             <IonRow class="nowrap">
               {/* PhoneType */}
               <IonCol size="6">
@@ -74,7 +64,7 @@ export const PhoneFieldInput = (props: PhoneFieldProps) => {
                 )
               }</IonCol>
             </IonRow>
-            <IonRow className={focusedIndex==fieldArrayIndex ? "focused my-phone-input" : "my-phone-input"}>
+            <IonRow>
               <IonCol>
                 <Controller
                   control={control}
@@ -88,8 +78,6 @@ export const PhoneFieldInput = (props: PhoneFieldProps) => {
                       name={name}
                       value={value}
                       onChange={onChange}
-                      onFocus={() => handleFocus(fieldArrayIndex)}
-                      onBlur={() => handleBlur()}
                     />
                   )}
                 />

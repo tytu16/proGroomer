@@ -9,12 +9,7 @@
     margin-bottom: 3%;
 }
 
-/* horizontal offset, + ->, - <-, 
-vertical offset, - -^, + -v,
-blur radius(opt), 0px=sharp, x > makes blurry,
-spread radius, + big shadow, - little shadow,
-color */
-.input-label-field.focused{
+.input-label-field:focus-within{
     border-color: var(--ion-color-primary);
     border-bottom: 3%;
     box-shadow: 3px 5px 5px 0px #ccc;
@@ -37,19 +32,6 @@ color */
 .my-checkbox{
     opacity: 1 !important;
 }
-
-ion-checkbox{
-    border-width: 1px !important;
-    border-style: solid !important;
-    border-radius: 4px;
-    border-color : var(--ion-color-primary) !important;
-    --height : 25px;
-    --width: 50px;
-     /* --checkmark-color:blue;
-     --background-checked: #FFFFFF;
-     --border-color: var(--ion-color-primary);
-     --border-color-checked :#FFFFFF; */
-   }
 
 /* Verticle Checkbox */
 .text-label{
@@ -106,7 +88,7 @@ ion-select{
     padding-bottom: 4%;
 }
 
-.phone-field-grid.focused{
+.phone-field-grid:focus-within{
     border-color: var(--ion-color-primary);
     border-bottom: 3%;
     box-shadow: 3px 5px 5px 0px #ccc;
