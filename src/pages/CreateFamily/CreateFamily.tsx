@@ -72,7 +72,7 @@ const CreateFamily = (props: CreateFamilyProps) => {
 
   return (
       <IonContent>
-          <IonGrid class="thing">
+          <IonGrid>
             <FormProvider {...methods}>
               <form onSubmit={methods.handleSubmit(data => console.log(data))}>
                 {fields.map((item, index) => (
