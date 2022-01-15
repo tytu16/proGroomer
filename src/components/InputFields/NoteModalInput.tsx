@@ -14,19 +14,10 @@ export interface NoteModalProps {
     const noteFormPrefix = formPrefix + `.${personIndex}.note`;
 
     const [modalIsOpen, setIsOpen] = useState<boolean>(false);
-    const [noteHeader, setNoteHeader] = useState<string>("");
 
     function closeModal() {
       setIsOpen(false);
     }
-  
-// Callback from input fields below returning onChange data and the name of the field
-  // Parsing fieldName on objectType string sent back
-  // Use parsed index and fieldName to update appropriate watchedField state, 
-  // which is reflected in the Note's header
-  const handleFieldChange = (data: string, name: string) => {
-    setNoteHeader(data);
-}
 
     return (
       <div className="shadow-container">
@@ -39,8 +30,8 @@ export interface NoteModalProps {
             <IonGrid>
               <IonRow>
                 <MyTextInput index={noteIndex} placeholder="Note Label"
-                            objectType={noteFormPrefix} fieldName="label"
-                            required={false} onChange={handleFieldChange} watched={true}/>
+                              objectType={noteFormPrefix} fieldName="label"
+                              required={false} onChange={()=>{}} watched={true}/>
               </IonRow>
               <IonRow>
                 <MyTextArea index={noteIndex} placeholder="Note Message..."

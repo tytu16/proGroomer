@@ -51,6 +51,7 @@ const PeopleQuestions = (props: PeopleQuestionsProps) => {
         switch (field.fieldName){
             case 'phoneNumber':
                 return (
+                    // ToDo: Make this an expandable Accordion
                     <div key={questionIndex} id="container">
                         <PhoneFieldInput index={fieldArrayIndex}
                             placeholder={field.placeholder} label={field.label} 
@@ -161,7 +162,7 @@ const PeopleQuestions = (props: PeopleQuestionsProps) => {
                     <IonList ref={IonListRef}>
                     {fields.map((item, fieldArrayIndex) => (
                         <div key={fieldArrayIndex}>
-                            <IonItemSliding>
+                            <IonItemSliding className={primaryIndex == fieldArrayIndex ? 'accordion-header primary' : 'accordion-header' }>
                                 {(fieldArrayIndex == primaryIndex) ? (
                                     <IonItemOptions side="start"><IonItemOption onClick={() => {alert('Can\'t delete primary contact.')}} color="primary" expandable>
                                         Primary
@@ -171,7 +172,7 @@ const PeopleQuestions = (props: PeopleQuestionsProps) => {
                                         Delete
                                     </IonItemOption></IonItemOptions>
                                 )}
-                                <IonItem  className={primaryIndex == fieldArrayIndex ? 'accordion-header primary' : 'accordion-header' } 
+                                <IonItem className={primaryIndex == fieldArrayIndex ? 'primary' : '' }
                                     onClick={() => handleAccordionChange(fieldArrayIndex)} slot="header" mode='md' lines="none"
                                     fill={primaryIndex == fieldArrayIndex ? 'solid': 'outline'}>
                                     {

@@ -21,8 +21,7 @@
     overflow:hidden;
     transition-property: max-height, opacity ;
     transition-duration: 0.3s, 0.4s;
-    transition-timing-function: ease-in-out;
-    height:auto;
+    transition-timing-function: ease-in;
     max-height:1800px;
     margin: 1%;
 }
@@ -32,17 +31,18 @@
     opacity: 0;
 }
 
-ion-item.accordion-header{
+.accordion-header{
+    border-radius: 10px;
     border-style: solid;
     border-color: gray;
-    border-radius: 5%;
-    --border-width: 2%;
 }
 
 .accordion-header.primary{
     border-color: var(--ion-color-primary);
+}
+ion-item.primary{
+    --ion-background-color: rgb(235,242,255) !important;
     font-weight: bold;
-    --background: rgb(235,242,255); /* alice blue*/
 }
 
 .icon{
