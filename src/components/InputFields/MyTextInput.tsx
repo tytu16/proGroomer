@@ -39,7 +39,7 @@ export const MyTextInput = (props: MyTextInputProps) => {
   }
 
   return(
-    <IonGrid className={focused ? "my-text-input focused" : "my-text-input"}>
+    <IonGrid className={focused ? "input-label-field focused" : "input-label-field"}>
       <IonRow>
         <label>{label}</label>
       </IonRow>
@@ -52,7 +52,7 @@ export const MyTextInput = (props: MyTextInputProps) => {
             if(watched){handleChange(e);}
            }}
           autocomplete="off" autoCorrect="off"
-          class="input-field" placeholder={placeholder}/>
+          class="text-input-field" placeholder={placeholder}/>
       </IonRow>
       {/* <p>{watchField}</p> */}
     </IonGrid>

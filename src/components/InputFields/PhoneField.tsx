@@ -74,7 +74,7 @@ export const PhoneFieldInput = (props: PhoneFieldProps) => {
                 )
               }</IonCol>
             </IonRow>
-            <IonRow className={focusedIndex==fieldArrayIndex ? "focused" : "my-phone-input"}>
+            <IonRow className={focusedIndex==fieldArrayIndex ? "focused my-phone-input" : "my-phone-input"}>
               <IonCol>
                 <Controller
                   control={control}

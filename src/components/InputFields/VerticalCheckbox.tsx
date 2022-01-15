@@ -28,11 +28,7 @@ export const VerticalCheckbox = (props: MyCheckBoxInputProps) => {
   return(
     <IonGrid>
         <IonRow><IonCol>
-            {(textable) ? (
-                <IonLabel className="textable text-label">Text</IonLabel>
-            ) : (
-                <IonLabel className="text-label">Text?</IonLabel>
-            )}
+        <IonLabel className={(textable) ? "textable text-label" : "text-label" }>Text</IonLabel>
         </IonCol></IonRow>
         <Controller
             control={control}

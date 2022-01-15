@@ -1,8 +1,5 @@
-.item-label{
-    --padding-start: 20px;
-}
-
-.my-text-input{
+/* Text Input */
+.input-label-field{
     border-top: 0px;
     border-bottom: 2%;
     border-left: 0px;
@@ -12,7 +9,7 @@
     margin-bottom: 3%;
 }
 
-.my-text-input.focused{
+.input-label-field.focused{
     border-color: var(--ion-color-primary);
     border-bottom: 3%;
     box-shadow: 3px 5px 5px 0px #ccc;
@@ -23,18 +20,22 @@
         color */
 }
 
-.checked{
-    border-color: var(--ion-color-primary);
-    border-bottom: 3%;
+.text-input-field{
+    background-color: lightgray;
+    margin-top: 2%;
+    margin-bottom: 2%;
+    color: black;
+    border-radius: 2%;
+    border-top: 2px;
+    border-bottom: 2px;
+    border-style: solid;
+    border-color: lightgray;
+    --padding-start: 20px;
 }
 
-.text-label{
-    color: gray;
-}
-
-.text-label.textable{
-    font-weight: bold;
-    color: var(--ion-color-primary);
+/* CheckBox */
+.my-checkbox{
+    opacity: 1 !important;
 }
 
 ion-checkbox{
@@ -50,25 +51,22 @@ ion-checkbox{
      --border-color-checked :#FFFFFF; */
    }
 
-.input-field{
-    background-color: lightgray;
-    margin-top: 2%;
-    margin-bottom: 2%;
-    color: black;
-    border-radius: 2%;
-    border-top: 2px;
-    border-bottom: 2px;
-    border-style: solid;
-    border-color: lightgray;
-    --padding-start: 20px;
+/* Verticle Checkbox */
+.text-label{
+    color: gray;
+    text-decoration: line-through;
 }
 
-.phone-field{
-    padding: 4%;
+.text-label.textable{
+    font-weight: bold;
+    color: var(--ion-color-primary);
+    text-decoration: none;
 }
 
-.my-checkbox{
-    opacity: 1 !important;
+/* MySelectList */
+ion-select{
+    width: 100%;
+    max-width: 100%;
 }
 
 #my-list{
@@ -78,10 +76,16 @@ ion-checkbox{
     margin-bottom: 2%;
 }
 
+/* PhoneField */
 #removePhoneButton{
     --background: var(--ion-color-danger);
     border-radius: 5%;
     /* margin-left: 2%; */
+}
+
+.phone-field{
+    color: black;
+    padding: 4%;
 }
 
 .shadow-container {
@@ -109,18 +113,5 @@ ion-checkbox{
      /* horizontal offset, + ->, - <-, 
         vertical offset, - -^, + -v,
         blur radius(opt), 0px=sharp, x > makes blurry,
-        spread radius, + big shadow, - little shadow,
-      
-
-.phone-button{
-    /* margin-left: -25%; */
-}
-
-/* #addPhoneButton{
-    margin-left: 2%;
-} */
-
-ion-select{
-    width: 100%;
-    max-width: 100%;
+        spread radius, + big shadow, - little shadow,*/
 }
