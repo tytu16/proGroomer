@@ -3,7 +3,7 @@ import { arrowDownCircleOutline } from 'ionicons/icons';
 import { useRef, useState } from "react";
 import { useFieldArray, useFormContext, useWatch } from "react-hook-form";
 import { PetInfo } from "../../../models/PetInfo";
-import { MyTextInput } from "../../../components/InputFields/MyTextInput";
+import { MyTextLabelInput } from "../../../components/InputFields/MyTextLabelInput";
 import { InitPetQuestionState, PetQuestionFields, TextFieldPropInterface } from "./QuestionObjects";
 import "./Questions.css";
 
@@ -123,7 +123,7 @@ const handleAccordionChange = (index: number) => {
                                     PetQuestionFields.map((field: TextFieldPropInterface, questionIndex) => {
                                         return (field.fieldName != 'sex') ? (
                                             <IonItem key={questionIndex}>
-                                                <MyTextInput index={fieldArrayIndex} 
+                                                <MyTextLabelInput index={fieldArrayIndex} 
                                                     onChange={handleFieldChange} watched={field.watched}
                                                     placeholder={field.placeholder} label={field.label}
                                                     objectType={objectType} fieldName={field.fieldName} required={field.required}

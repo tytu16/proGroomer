@@ -3,8 +3,9 @@ import { useState } from "react";
 import { useFormContext } from "react-hook-form";
 import "./InputStyling.css";
 
-export interface MyTextInputProps {
+export interface MyTextLabelInputProps {
   index: number,
+  label: string,
   objectType: string,
   fieldName: string,
   placeholder: string,
@@ -13,8 +14,8 @@ export interface MyTextInputProps {
   watched: boolean
 }
 
-export const MyTextInput = (props: MyTextInputProps) => {
-  const {placeholder, objectType, index, fieldName, onChange, watched} = props;
+export const MyTextLabelInput = (props: MyTextLabelInputProps) => {
+  const {label, placeholder, objectType, index, fieldName, onChange, watched} = props;
   
   const {register} = useFormContext();
 
@@ -27,6 +28,9 @@ export const MyTextInput = (props: MyTextInputProps) => {
 
   return(
     <IonGrid className="input-label-field">
+      <IonRow>
+        <label>{label}</label>
+      </IonRow>
       <IonRow className="ion-text-left">
         <IonInput  {...register(myFieldName)}
           class="text-input-field" type="text"

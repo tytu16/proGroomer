@@ -2,11 +2,11 @@ import { IonButton, IonCol, IonGrid, IonItem, IonList, IonRow, IonLabel, IonIcon
 import { useRef, useState } from "react";
 import { useFieldArray, useFormContext } from "react-hook-form";
 import "./Questions.css";
-import {MyTextInput} from "../../../components/InputFields/MyTextInput";
+import {MyTextLabelInput} from "../../../components/InputFields/MyTextLabelInput";
 import { PeopleQuestionFields, InitPersonQuestionState, TextFieldPropInterface } from "./QuestionObjects";
 import {PhoneFieldInput} from "../../../components/InputFields/PhoneField";
 import {HorizontalCheckBox} from "../../../components/InputFields/HorizontalCheckbox";
-import {ModalInput} from "../../../components/InputFields/ModalInput"
+import {NoteModal} from "../../../components/InputFields/NoteModalInput"
 
 import { arrowDownCircleOutline, arrowDownCircle } from 'ionicons/icons';
 
@@ -51,7 +51,7 @@ const PeopleQuestions = (props: PeopleQuestionsProps) => {
         switch (field.fieldName){
             case 'phoneNumber':
                 return (
-                    <div  key={questionIndex} id="container">
+                    <div key={questionIndex} id="container">
                         <PhoneFieldInput index={fieldArrayIndex}
                             placeholder={field.placeholder} label={field.label} 
                             objectType={objectType} fieldName={field.fieldName}
@@ -69,11 +69,12 @@ const PeopleQuestions = (props: PeopleQuestionsProps) => {
 
             case 'note':
                 return (
-                    <ModalInput />
+                    <NoteModal key={questionIndex} personIndex={fieldArrayIndex} noteIndex={0} 
+                        formPrefix={objectType}/>
                 );
             default:
                 return  (
-                    <MyTextInput key={questionIndex} index={fieldArrayIndex} 
+                    <MyTextLabelInput key={questionIndex} index={fieldArrayIndex} 
                         onChange={handleFieldChange} watched={field.watched}
                         placeholder={field.placeholder} label={field.label}
                         objectType={objectType} fieldName={field.fieldName} required={field.required}

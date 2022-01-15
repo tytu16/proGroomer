@@ -1,7 +1,7 @@
 import { IonButton, IonCol, IonGrid, IonList, IonRow  } from "@ionic/react";
 import { useFormContext } from "react-hook-form";
 import { FamilyInfo } from "../../../models/FamilyInfo";
-import { MyTextInput } from "../../../components/InputFields/MyTextInput";
+import { MyTextLabelInput } from "../../../components/InputFields/MyTextLabelInput";
 import { MySelectList } from "../../../components/InputFields/MySelectList";
 import { StateList } from "../../../models/Enums/States";
 import {FamilyQuestionFields, TextFieldPropInterface} from "./QuestionObjects"
@@ -38,7 +38,7 @@ const FamilyQuestions = (props: FamilyQuestionsProps) => {
                     {
                         FamilyQuestionFields.map((field: TextFieldPropInterface, index) => {
                             return (field.fieldName != 'addressState') ? (
-                                <MyTextInput key={index} index={props.index}
+                                <MyTextLabelInput key={index} index={props.index}
                                     placeholder={field.placeholder} label={field.label} 
                                     onChange={handleFieldChange} watched={field.watched}
                                     objectType={field.objectType} fieldName={field.fieldName} required={field.required}

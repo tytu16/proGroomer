@@ -92,8 +92,9 @@ ion-select{
     border-color: var(--ion-color-primary);
     border-bottom: 3%;
     box-shadow: 3px 5px 5px 0px #ccc;
-     /* horizontal offset, + ->, - <-, 
-        vertical offset, - -^, + -v,
-        blur radius(opt), 0px=sharp, x > makes blurry,
-        spread radius, + big shadow, - little shadow,*/
+}
+
+/* MyTextArea */
+.char-limit{
+    color: gray;
 }
