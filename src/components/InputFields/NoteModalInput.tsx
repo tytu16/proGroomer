@@ -1,33 +1,41 @@
-import { IonButton, IonContent, IonGrid, IonLabel, IonModal, IonRow } from "@ionic/react";
+import { IonButton, IonCol, IonContent, IonGrid, IonLabel, IonModal, IonRow } from "@ionic/react";
 import { useState } from "react";
 import { MyTextInput } from "./MyTextInput";
 import { MyTextArea } from "./MyTextArea";
 
 import "./InputStyling.css";
+import { useFieldArray, useFormContext } from "react-hook-form";
+import { Note } from "../../models/Note";
+import { InitNoteQuestionState } from "../../pages/CreateFamily/CreateFamilyQuestions/QuestionObjects";
 
 export interface NoteModalProps {
     personIndex: number,
-    noteIndex: number,
     formPrefix: string
   }
 
  export const NoteModal = (props: NoteModalProps) => {
-    const {personIndex, noteIndex, formPrefix} = props;
+    const {personIndex, formPrefix} = props;
+
+    const {handleSubmit, watch, control} = useFormContext();
+    
     const noteFormPrefix = formPrefix + `.${personIndex}.note`;
+    const { fields, append, remove} = useFieldArray({
+        control,
+        name: noteFormPrefix,
+    });
 
-    const [modalIsOpen, setIsOpen] = useState<boolean>(false);
+    console.log(`modal name: ${noteFormPrefix}`);
+    const [activeModalIndex, setActiveModalIndex] = useState<number>(-1);
+    const [notes, setNotes] = useState<any>([]);
 
-    function closeModal() {
-      setIsOpen(false);
-    }
-
-    return (
-      <div className="shadow-container">
-        <IonButton id="trigger-button" onClick={() => setIsOpen(true)}>New Note</IonButton>
-        <IonModal
-          trigger="trigger-button"
-          isOpen={modalIsOpen}
-        >
+    const renderModal = (noteIndex: number) => {
+      console.log(`rendering modal: ${noteIndex}`);
+      const shouldShow = notes.length > noteIndex && notes[noteIndex].message != "";
+      const noteLabel = (shouldShow && notes[noteIndex].label != "") ? notes[noteIndex].label : `Note ${noteIndex}`;
+      return (<>
+        <IonLabel onClick={() => openModal(noteIndex)}>{noteLabel}</IonLabel>
+        <IonModal trigger="new-note-button"
+           isOpen={noteIndex == activeModalIndex}>
           <IonContent>
             <IonGrid>
               <IonRow>
@@ -36,15 +44,52 @@ export interface NoteModalProps {
                               required={false} onChange={()=>{}} watched={true}/>
               </IonRow>
               <IonRow>
-                <MyTextArea index={noteIndex} placeholder="Note Message..."
+                <MyTextArea index={notes.length} placeholder="Note Message..."
                               objectType={noteFormPrefix} fieldName="message"/>
               </IonRow>
               <IonRow>
-                <IonButton onClick={closeModal}>Close</IonButton>
+                <IonCol>
+                  <IonButton onClick={() => {
+                    handleSubmit(closeModal);
+                  }}>Save Note</IonButton>
+                </IonCol>
+                <IonCol>
+                  <IonButton onClick={closeModal}>Cancel</IonButton>
+                </IonCol>
               </IonRow>
             </IonGrid>
           </IonContent>
         </IonModal>
-      </div>
+      </>);
+    }
+    
+
+    const closeModal = (data: any) => {
+      console.log('in modal');
+      setActiveModalIndex(-1);
+      if(data){
+        console.log(data);
+        append(InitNoteQuestionState());
+      }
+    }
+
+    const openModal = (noteIndex: number) => {
+      console.log(noteIndex);
+      setActiveModalIndex(noteIndex);
+    }
+
+    return (
+      <IonGrid className="shadow-container">
+        <IonRow>
+          <IonButton id="new-note-button" onClick={() => openModal(0)}>New Note</IonButton>
+        </IonRow>
+        {renderModal(0)}
+        <IonRow>
+            {fields.map((item, noteIndex) => {
+              <p>BeepBoop</p>
+              renderModal(noteIndex)
+            })}
+        </IonRow>
+      </IonGrid>
     );
   }
