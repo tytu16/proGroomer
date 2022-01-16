@@ -1,4 +1,4 @@
-import { IonButton, IonCol, IonGrid, IonItem, IonList, IonRow, IonLabel, IonIcon, IonItemSliding, IonItemOption, IonItemOptions } from "@ionic/react";
+import { IonButton, IonList } from "@ionic/react";
 import { useRef, useState } from "react";
 import { useFieldArray, useFormContext } from "react-hook-form";
 import "./Questions.css";
@@ -6,8 +6,7 @@ import {MyTextLabelInput} from "../../../components/InputFields/MyTextLabelInput
 import { PeopleQuestionFields, InitPersonQuestionState, TextFieldPropInterface } from "./QuestionObjects";
 import {PhoneFieldInput} from "../../../components/InputFields/PhoneField";
 import {HorizontalCheckBox} from "../../../components/InputFields/HorizontalCheckbox";
-import {NoteModal} from "../../../components/InputFields/NoteModalInput"
-import WeightInput from "../../../components/Modal/WeightInput";
+import NoteCardModal from "../../../components/Modal/NoteCardModal";
 import SlideWrapper from "../../../components/Slide/SlideWrapper";
 import AccordionHeader from "../../../components/Accordion/AccordionHeader";
 import AccordionWrapper from "../../../components/Accordion/AccordionWrapper";
@@ -74,10 +73,8 @@ const PeopleQuestions = (props: PeopleQuestionsProps) => {
             case 'note':
                 return (<div key={questionIndex}>
                     <IonButton onClick={()=>setShowWeight(true)}>Add Note</IonButton>
-                    <WeightInput show={showWeight} setShow={setShowWeight} 
-                    defaultValue={10} onSave={(w:number) => setWeight(w)}/>
-                     {/* <NoteModal key={questionIndex} personIndex={fieldArrayIndex} 
-                         formPrefix={objectType}/> */}
+                        <NoteCardModal show={showWeight} setShow={setShowWeight} 
+                            personIndex={fieldArrayIndex} formPrefix={objectType} onSave={(w:number) => setWeight(w)}/>
                     </div>);
             default:
                 return  (
