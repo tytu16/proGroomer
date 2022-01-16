@@ -9,7 +9,6 @@ export interface TextFieldPropInterface {
 
 export const InitNoteQuestionState = () => {
     return ({
-        id: "0",
         label: "",
         message: ""
     });

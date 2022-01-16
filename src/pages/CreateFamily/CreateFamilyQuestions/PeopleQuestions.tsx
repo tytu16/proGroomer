@@ -7,11 +7,15 @@ import { PeopleQuestionFields, InitPersonQuestionState, TextFieldPropInterface }
 import {PhoneFieldInput} from "../../../components/InputFields/PhoneField";
 import {HorizontalCheckBox} from "../../../components/InputFields/HorizontalCheckbox";
 import {NoteModal} from "../../../components/InputFields/NoteModalInput"
+import WeightInput from "../../../components/Modal/WeightInput";
+import SlideWrapper from "../../../components/Slide/SlideWrapper";
+import AccordionHeader from "../../../components/Accordion/AccordionHeader";
 
 import { arrowDownCircleOutline, arrowDownCircle } from 'ionicons/icons';
 
 import 'swiper/swiper.min.css';
 import '@ionic/react/css/ionic-swiper.css';
+import BottomSlideButtons from "../../../components/Slide/BottomButtons";
 
 export interface PeopleQuestionsProps {
     index: number,
@@ -29,7 +33,7 @@ const PeopleQuestions = (props: PeopleQuestionsProps) => {
 
 // form hooks
     const objectType = `family.${props.index}.person`;
-    const {control, handleSubmit, setValue} = useFormContext();
+    const {control, watch, setValue} = useFormContext();
     const { fields, append, remove, replace} = useFieldArray({
         control,
         name: objectType,
@@ -41,7 +45,8 @@ const PeopleQuestions = (props: PeopleQuestionsProps) => {
 // State Hooks
     const [primaryIndex, setPrimaryIndex] = useState<number>(0);
     const [activeIndex, setActiveIndex] = useState<number>(0);
-
+    const [showWeight, setShowWeight] = useState<boolean>(false);
+    const [weight, setWeight] = useState<number>(10);
 // Ref Hooks
     const IonListRef = useRef<any>(null);
 
@@ -69,10 +74,13 @@ const PeopleQuestions = (props: PeopleQuestionsProps) => {
                 );
 
             case 'note':
-                return (
-                    <NoteModal key={questionIndex} personIndex={fieldArrayIndex} noteIndex={0} 
-                        formPrefix={objectType}/>
-                );
+                return (<div key={questionIndex}>
+                    <IonButton onClick={()=>setShowWeight(true)}>Add Note</IonButton>
+                    <WeightInput show={showWeight} setShow={setShowWeight} 
+                    defaultValue={10} onSave={(w:number) => setWeight(w)}/>
+                     {/* <NoteModal key={questionIndex} personIndex={fieldArrayIndex} 
+                         formPrefix={objectType}/> */}
+                    </div>);
             default:
                 return  (
                     <MyTextLabelInput key={questionIndex} index={fieldArrayIndex} 
@@ -130,7 +138,9 @@ const PeopleQuestions = (props: PeopleQuestionsProps) => {
 // Append a new copy of InitialPersonQuestionState to formArray
   // Set active index to this newly added field so it's open
   // Add a new watchedField to state for header
-   const addAnother = (data: any) => {
+   const addAnother = () => {
+       console.log('adding another person');
+       logFormObject();
        append(InitPersonQuestionState());
        setActiveIndex(watchedFields.length);
        setWatchedFields(watchedFields.concat({firstName:"", lastName:""}));
@@ -147,86 +157,57 @@ const PeopleQuestions = (props: PeopleQuestionsProps) => {
    }
 
 // Log pet data and move to next slide
-   const moveToPets = (data: any) => {
-       console.log("moving to pets");
-       console.log(data);
+   const moveToPets = () => {
+       console.log('moving to pets');
+       logFormObject();
        props.toPetInfo();
    }
 
-    return (
-        <IonGrid class="slide-grid ion-justify-content-center ion-align-items-center ion-align-self-center">
-            <IonRow class="spacer"></IonRow>
-            <IonRow>
-                <IonCol size="10" className="slide-content">
-                    <h1>People Information</h1>
-                    <IonList ref={IonListRef}>
-                    {fields.map((item, fieldArrayIndex) => (
-                        <div key={fieldArrayIndex}>
-                            <IonItemSliding className={primaryIndex == fieldArrayIndex ? 'accordion-header primary' : 'accordion-header' }>
-                                {(fieldArrayIndex == primaryIndex) ? (
-                                    <IonItemOptions side="start"><IonItemOption onClick={() => {alert('Can\'t delete primary contact.')}} color="primary" expandable>
-                                        Primary
-                                    </IonItemOption></IonItemOptions>
-                                ) : (
-                                    <IonItemOptions side={"start"}><IonItemOption onClick={() => {handleDelete(fieldArrayIndex)}} color="danger" expandable>
-                                        Delete
-                                    </IonItemOption></IonItemOptions>
-                                )}
-                                <IonItem className={primaryIndex == fieldArrayIndex ? 'primary' : '' }
-                                    onClick={() => handleAccordionChange(fieldArrayIndex)} slot="header" mode='md' lines="none"
-                                    fill={primaryIndex == fieldArrayIndex ? 'solid': 'outline'}>
-                                    {
-                                        <IonLabel>
-                                            {(fieldArrayIndex < watchedFields.length && 
-                                                (watchedFields[fieldArrayIndex].firstName != '' || watchedFields[fieldArrayIndex].lastName != '')) ? (
-                                                watchedFields[fieldArrayIndex].firstName + ' ' + watchedFields[fieldArrayIndex].lastName
-                                            ) : (
-                                                'Person ' + (fieldArrayIndex+1)
-                                            )}
-                                        </IonLabel>
-                                    }
-                                    <IonIcon className={[(activeIndex == fieldArrayIndex ? "active icon float-right" : "icon float-right"),
-                                                         primaryIndex == fieldArrayIndex ? "primary" : ""].join(" ")} size="large"
-                                        icon={primaryIndex == fieldArrayIndex ? arrowDownCircle : arrowDownCircleOutline}></IonIcon>
-                                </IonItem>
-                                {(fieldArrayIndex == primaryIndex) ? (
-                                    <IonItemOptions side="end"><IonItemOption onClick={() => {alert('Can\'t delete primary contact.')}} color="primary" expandable>
-                                        Primary
-                                    </IonItemOption></IonItemOptions>
-                                ) : (
-                                    <IonItemOptions side={"end"}><IonItemOption onClick={() => {handleDelete(fieldArrayIndex)}} color="danger" expandable>
-                                        Delete
-                                    </IonItemOption></IonItemOptions>
-                                )}
-                            </IonItemSliding>
-                            <IonList className={activeIndex == fieldArrayIndex ? "accordion" : "accordion collapsed"} slot="content">
-                                <div className="question-content">{
-                                    PeopleQuestionFields.map((field: TextFieldPropInterface, questionIndex) => {
-                                        return renderField(field, questionIndex, fieldArrayIndex);
-                                    })
-                                }</div>
-                            </IonList>
-                        </div>
-                    ))}
-                    </IonList>
+   const logFormObject = () => {
+      console.log(objectType);
+      console.log(watch(objectType));
+   }
 
-                    <IonRow>
-                        <IonCol><IonButton expand="block" onClick={handleSubmit(addAnother)}>
-                            Add Another
-                        </IonButton></IonCol>
-                    </IonRow>
-                    <IonRow>
-                        <IonCol>
-                            <IonButton expand="block" onClick={props.toFamilyInfo}>&lt; Family</IonButton>
-                        </IonCol>
-                        <IonCol>
-                            <IonButton expand="block" onClick={handleSubmit(moveToPets)}>Pets &gt;</IonButton>
-                        </IonCol>
-                    </IonRow>    
-                </IonCol>
-            </IonRow>
-            <IonRow class="spacer"></IonRow>
-        </IonGrid>
+    return (
+        <SlideWrapper title="People Information">
+            <IonList ref={IonListRef}>
+            {fields.map((item, fieldArrayIndex) => (
+                <div key={fieldArrayIndex}>
+                    <AccordionHeader fieldArrayIndex={fieldArrayIndex} primaryIndex={primaryIndex} handleDelete={handleDelete}>
+                        <IonItem className={primaryIndex == fieldArrayIndex ? 'primary' : '' }
+                            onClick={() => handleAccordionChange(fieldArrayIndex)} slot="header" mode='md' lines="none"
+                            fill={primaryIndex == fieldArrayIndex ? 'solid': 'outline'}>
+                            {
+                                <IonLabel>
+                                    {(fieldArrayIndex < watchedFields.length && 
+                                        (watchedFields[fieldArrayIndex].firstName != '' || watchedFields[fieldArrayIndex].lastName != '')) ? (
+                                        watchedFields[fieldArrayIndex].firstName + ' ' + watchedFields[fieldArrayIndex].lastName
+                                    ) : (
+                                        'Person ' + (fieldArrayIndex+1)
+                                    )}
+                                </IonLabel>
+                            }
+                            <IonIcon className={[(activeIndex == fieldArrayIndex ? "active icon float-right" : "icon float-right"),
+                                                    primaryIndex == fieldArrayIndex ? "primary" : ""].join(" ")} size="large"
+                                icon={primaryIndex == fieldArrayIndex ? arrowDownCircle : arrowDownCircleOutline}></IonIcon>
+                        </IonItem>
+                    </AccordionHeader>
+                    <IonList className={activeIndex == fieldArrayIndex ? "accordion" : "accordion collapsed"} slot="content">
+                        <div className="question-content">{
+                            PeopleQuestionFields.map((field: TextFieldPropInterface, questionIndex) => {
+                                return renderField(field, questionIndex, fieldArrayIndex);
+                            })
+                        }</div>
+                    </IonList>
+                </div>
+            ))}
+            </IonList>
+
+            <BottomSlideButtons numButtons="three"
+                buttonOneLabel="Add Another" buttonOneClick={addAnother}
+                buttonTwoLabel="&lt; Family" buttonTwoClick={props.toFamilyInfo}
+                buttonThreeLabel="Pets &gt;" buttonThreeClick={moveToPets}/>
+        </SlideWrapper>
     );
 };
 

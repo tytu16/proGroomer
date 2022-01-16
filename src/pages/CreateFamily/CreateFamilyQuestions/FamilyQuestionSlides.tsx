@@ -32,8 +32,8 @@ const FamilyQuestionSlides = (props: FamilyQuestionProps) => {
     const history = useHistory();
     const [swiper, setSwiper] = useState<any>(null);
 
-    const saveFamilyToPeople = (newFamily: FamilyInfo) => {
-        props.saveFamilyInfo(newFamily);
+    const saveFamilyToPeople = (newFamily?: FamilyInfo) => {
+        // props.saveFamilyInfo(newFamily);
         toNextSlide();
     }
 
