@@ -2,16 +2,16 @@ import { IonIcon, IonItem, IonItemOption, IonItemOptions, IonItemSliding, IonLab
 
 interface AccordionHeaderProps{
     fieldArrayIndex: number,
-    primaryIndex: number,
+    isPrimary: boolean,
     handleDelete: (i: number) => void,
     handleAccordion: (i: number) => void
 }
 
 const AccordionHeader: React.FC<AccordionHeaderProps> = (props) => {
-    const {fieldArrayIndex, primaryIndex, handleDelete, handleAccordion} = props;
+    const {fieldArrayIndex, isPrimary, handleDelete, handleAccordion} = props;
     return (
-        <IonItemSliding className={primaryIndex == fieldArrayIndex ? 'accordion-header primary' : 'accordion-header' }>
-            {(fieldArrayIndex == primaryIndex) ? (
+        <IonItemSliding className={isPrimary ? 'accordion-header primary' : 'accordion-header' }>
+            {(isPrimary) ? (
                 <IonItemOptions side="start"><IonItemOption onClick={() => {alert('Can\'t delete primary contact.')}} color="primary" expandable>
                     Primary
                 </IonItemOption></IonItemOptions>
@@ -20,12 +20,12 @@ const AccordionHeader: React.FC<AccordionHeaderProps> = (props) => {
                     Delete
                 </IonItemOption></IonItemOptions>
             )}
-            <IonItem className={primaryIndex == fieldArrayIndex ? 'primary' : '' }
+            <IonItem className={isPrimary ? 'primary' : '' }
                             onClick={() => handleAccordion(fieldArrayIndex)} slot="header" mode='md' lines="none"
-                            fill={primaryIndex == fieldArrayIndex ? 'solid': 'outline'}>
+                            fill={isPrimary ? 'solid': 'outline'}>
                 {props.children}
             </IonItem>
-            {(fieldArrayIndex == primaryIndex) ? (
+            {(isPrimary) ? (
                 <IonItemOptions side="end"><IonItemOption onClick={() => {alert('Can\'t delete primary contact.')}} color="primary" expandable>
                     Primary
                 </IonItemOption></IonItemOptions>

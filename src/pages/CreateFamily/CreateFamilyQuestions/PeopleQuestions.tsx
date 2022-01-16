@@ -175,7 +175,7 @@ const PeopleQuestions = (props: PeopleQuestionsProps) => {
             <IonList ref={IonListRef}>
             {fields.map((item, fieldArrayIndex) => (
                 <div key={fieldArrayIndex}>
-                    <AccordionHeader fieldArrayIndex={fieldArrayIndex} primaryIndex={primaryIndex} 
+                    <AccordionHeader fieldArrayIndex={fieldArrayIndex} isPrimary={primaryIndex == fieldArrayIndex} 
                     handleDelete={handleDelete} handleAccordion={handleAccordionChange}>
                         {<IonLabel>
                             {(fieldArrayIndex < watchedFields.length && 
