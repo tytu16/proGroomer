@@ -82,17 +82,8 @@ const CreateFamily = (props: CreateFamilyProps) => {
             <FormProvider {...methods}>
               <form onSubmit={methods.handleSubmit(data => console.log(data))}>
                 {fields.map((item, index) => (
-                  <IonGrid key={item.id} class="slide-grid ion-justify-content-center ion-align-items-center ion-align-self-center">
-                    <IonRow>
-                      <IonCol>
-                        <IonRow>
-                            <FamilyQuestionSlides index={index} saveFamilyInfo={saveFamilyInfo} toTop={toTop}
-                                addPerson={addPerson} addPet={addPet} submitFamily={submitFamily}/>
-                        </IonRow>
-                          <button type="button" onClick={() => remove(index)}>Delete</button>
-                      </IonCol>
-                    </IonRow>
-                  </IonGrid>
+                    <FamilyQuestionSlides key={index} index={index} saveFamilyInfo={saveFamilyInfo} toTop={toTop}
+                        addPerson={addPerson} addPet={addPet} submitFamily={submitFamily}/>
                 ))}
                 <button
                   type="button"
