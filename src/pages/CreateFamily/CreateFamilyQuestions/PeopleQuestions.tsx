@@ -11,10 +11,6 @@ import WeightInput from "../../../components/Modal/WeightInput";
 import SlideWrapper from "../../../components/Slide/SlideWrapper";
 import AccordionHeader from "../../../components/Accordion/AccordionHeader";
 import AccordionWrapper from "../../../components/Accordion/AccordionWrapper";
-
-
-import { arrowDownCircleOutline, arrowDownCircle } from 'ionicons/icons';
-
 import 'swiper/swiper.min.css';
 import '@ionic/react/css/ionic-swiper.css';
 import BottomSlideButtons from "../../../components/Slide/BottomButtons";
@@ -175,22 +171,16 @@ const PeopleQuestions = (props: PeopleQuestionsProps) => {
             <IonList ref={IonListRef}>
             {fields.map((item, fieldArrayIndex) => (
                 <div key={fieldArrayIndex}>
-                    <AccordionHeader fieldArrayIndex={fieldArrayIndex} isPrimary={primaryIndex == fieldArrayIndex} 
-                    handleDelete={handleDelete} handleAccordion={handleAccordionChange}>
-                        {<IonLabel>
-                            {(fieldArrayIndex < watchedFields.length && 
-                                (watchedFields[fieldArrayIndex].firstName != '' || watchedFields[fieldArrayIndex].lastName != '')) ? (
-                                watchedFields[fieldArrayIndex].firstName + ' ' + watchedFields[fieldArrayIndex].lastName
+                    <AccordionHeader fieldArrayIndex={fieldArrayIndex} 
+                        isPrimary={primaryIndex == fieldArrayIndex} isActive={activeIndex == fieldArrayIndex}
+                        handleDelete={handleDelete} handleAccordion={handleAccordionChange} 
+                        label={(fieldArrayIndex < watchedFields.length && 
+                            (watchedFields[fieldArrayIndex].firstName != '' || watchedFields[fieldArrayIndex].lastName != '')) ? (
+                            watchedFields[fieldArrayIndex].firstName + ' ' + watchedFields[fieldArrayIndex].lastName
                             ) : (
                                 'Person ' + (fieldArrayIndex+1)
-                            )}
-                        </IonLabel>}
-                        <IonIcon className={[(activeIndex == fieldArrayIndex ? "active icon float-right" : "icon float-right"),
-                            primaryIndex == fieldArrayIndex ? "primary" : ""].join(" ")} size="large"
-                            icon={primaryIndex == fieldArrayIndex ? arrowDownCircle : arrowDownCircleOutline}>
-                        </IonIcon>
+                            )}>
                     </AccordionHeader>
-
                     <AccordionWrapper classNames={activeIndex == fieldArrayIndex ? "accordion" : "accordion collapsed"}>{
                         PeopleQuestionFields.map((field: TextFieldPropInterface, questionIndex) => {
                             return renderField(field, questionIndex, fieldArrayIndex);
