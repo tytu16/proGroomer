@@ -10,6 +10,8 @@ import {NoteModal} from "../../../components/InputFields/NoteModalInput"
 import WeightInput from "../../../components/Modal/WeightInput";
 import SlideWrapper from "../../../components/Slide/SlideWrapper";
 import AccordionHeader from "../../../components/Accordion/AccordionHeader";
+import AccordionWrapper from "../../../components/Accordion/AccordionWrapper";
+
 
 import { arrowDownCircleOutline, arrowDownCircle } from 'ionicons/icons';
 
@@ -173,32 +175,27 @@ const PeopleQuestions = (props: PeopleQuestionsProps) => {
             <IonList ref={IonListRef}>
             {fields.map((item, fieldArrayIndex) => (
                 <div key={fieldArrayIndex}>
-                    <AccordionHeader fieldArrayIndex={fieldArrayIndex} primaryIndex={primaryIndex} handleDelete={handleDelete}>
-                        <IonItem className={primaryIndex == fieldArrayIndex ? 'primary' : '' }
-                            onClick={() => handleAccordionChange(fieldArrayIndex)} slot="header" mode='md' lines="none"
-                            fill={primaryIndex == fieldArrayIndex ? 'solid': 'outline'}>
-                            {
-                                <IonLabel>
-                                    {(fieldArrayIndex < watchedFields.length && 
-                                        (watchedFields[fieldArrayIndex].firstName != '' || watchedFields[fieldArrayIndex].lastName != '')) ? (
-                                        watchedFields[fieldArrayIndex].firstName + ' ' + watchedFields[fieldArrayIndex].lastName
-                                    ) : (
-                                        'Person ' + (fieldArrayIndex+1)
-                                    )}
-                                </IonLabel>
-                            }
-                            <IonIcon className={[(activeIndex == fieldArrayIndex ? "active icon float-right" : "icon float-right"),
-                                                    primaryIndex == fieldArrayIndex ? "primary" : ""].join(" ")} size="large"
-                                icon={primaryIndex == fieldArrayIndex ? arrowDownCircle : arrowDownCircleOutline}></IonIcon>
-                        </IonItem>
+                    <AccordionHeader fieldArrayIndex={fieldArrayIndex} primaryIndex={primaryIndex} 
+                    handleDelete={handleDelete} handleAccordion={handleAccordionChange}>
+                        {<IonLabel>
+                            {(fieldArrayIndex < watchedFields.length && 
+                                (watchedFields[fieldArrayIndex].firstName != '' || watchedFields[fieldArrayIndex].lastName != '')) ? (
+                                watchedFields[fieldArrayIndex].firstName + ' ' + watchedFields[fieldArrayIndex].lastName
+                            ) : (
+                                'Person ' + (fieldArrayIndex+1)
+                            )}
+                        </IonLabel>}
+                        <IonIcon className={[(activeIndex == fieldArrayIndex ? "active icon float-right" : "icon float-right"),
+                            primaryIndex == fieldArrayIndex ? "primary" : ""].join(" ")} size="large"
+                            icon={primaryIndex == fieldArrayIndex ? arrowDownCircle : arrowDownCircleOutline}>
+                        </IonIcon>
                     </AccordionHeader>
-                    <IonList className={activeIndex == fieldArrayIndex ? "accordion" : "accordion collapsed"} slot="content">
-                        <div className="question-content">{
-                            PeopleQuestionFields.map((field: TextFieldPropInterface, questionIndex) => {
-                                return renderField(field, questionIndex, fieldArrayIndex);
-                            })
-                        }</div>
-                    </IonList>
+
+                    <AccordionWrapper classNames={activeIndex == fieldArrayIndex ? "accordion" : "accordion collapsed"}>{
+                        PeopleQuestionFields.map((field: TextFieldPropInterface, questionIndex) => {
+                            return renderField(field, questionIndex, fieldArrayIndex);
+                        })
+                    }</AccordionWrapper>
                 </div>
             ))}
             </IonList>
