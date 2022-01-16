@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import { useHistory } from "react-router";
 import { FamilyInfo } from "../../../models/FamilyInfo";
 import { PersonInfo } from "../../../models/PersonInfo";
@@ -16,11 +16,11 @@ import 'swiper/modules/pagination/pagination.min.css';
 import 'swiper/modules/scrollbar/scrollbar.min.css';
 import 'swiper/modules/zoom/zoom.min.css';
 import '@ionic/react/css/ionic-swiper.css';
-import { IonContent } from "@ionic/react";
 
 export interface FamilyQuestionProps {
     index: number,
     saveFamilyInfo: (newFamily: FamilyInfo) => void,
+    handleFamilyNames: (name: string, index: number) => void,
     addPerson: (newPerson: PersonInfo) => void,
     addPet: (newPet: PetInfo) => void,
     submitFamily: (newPet: PetInfo | null) => void,
@@ -69,7 +69,7 @@ const FamilyQuestionSlides = (props: FamilyQuestionProps) => {
           zoom={true}
           onSwiper={setSwiper}>
             <SwiperSlide>
-                <FamilyQuestions index={props.index} toPeopleInfo={saveFamilyToPeople} />
+                <FamilyQuestions handleFamilyNames={props.handleFamilyNames} index={props.index} toPeopleInfo={saveFamilyToPeople} />
             </SwiperSlide>
             <SwiperSlide>
                 <PeopleQuestions index={props.index} toFamilyInfo={toPreviousSlide} toPetInfo={toNextSlide}/>

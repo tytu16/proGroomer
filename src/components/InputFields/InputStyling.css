@@ -102,3 +102,8 @@ ion-select{
 .char-limit{
     color: gray;
 }
+
+h1.bold-header{
+    padding-left: 2%;
+    font-weight: bold;
+}

@@ -1,14 +1,15 @@
 import { IonList } from "@ionic/react";
 
 interface AccordionWrapperProps{
-    classNames: string
+    classNames: string,
+    addBorder?: boolean
 }
 
 const AccordionWrapper:React.FC<AccordionWrapperProps> = (props) => {
-    const {classNames} = props;
+    const {classNames, addBorder=true} = props;
     return (
     <IonList className={classNames} slot="content">
-        <div className="question-content">
+        <div className={addBorder ? "question-content" : ""}>
             {props.children}
         </div>
     </IonList>

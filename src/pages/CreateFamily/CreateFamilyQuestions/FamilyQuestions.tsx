@@ -10,6 +10,7 @@ import BottomSlideButtons from "../../../components/Slide/BottomButtons";
 import "./Questions.css"
 
 export interface FamilyQuestionsProps {
+    handleFamilyNames: (name: string, index: number) => void,
     toPeopleInfo: () => void,
     index: number
 }
@@ -26,6 +27,7 @@ const FamilyQuestions = (props: FamilyQuestionsProps) => {
 
     const handleFieldChange = (data: string, name: string) => {
         console.log(`FamilyQuestions: ${name}: ${data}`);
+        props.handleFamilyNames(data, Number.parseInt(name.split('.')[1]));
     }
 
     return (
