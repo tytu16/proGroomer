@@ -1,5 +1,8 @@
 import {IonPopover, IonContent, IonCard, IonCardHeader, IonCardTitle, IonCardContent, IonFooter, IonButton, IonIcon} from '@ionic/react';
 import {addCircleOutline} from 'ionicons/icons';
+
+import "../InputFields/InputStyling.css"
+
 interface ModalProps {
     title: string,
     show: boolean,
@@ -11,7 +14,7 @@ interface ModalProps {
 const ModalInput: React.FC<ModalProps> = (props) => {
     var { show, setShow, title, value, onSave } = props;
     return (
-    <IonPopover isOpen={show}  onDidDismiss={() => { setShow(false); }}>
+    <IonPopover className="modal-popover" isOpen={show} size="cover" side="top" onDidDismiss={() => { setShow(false); }}>
         <IonContent class="ion-text-center modal-content">
             <IonCard>
                 <IonCardHeader>

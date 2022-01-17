@@ -27,7 +27,7 @@ export const MyTextArea = (props: MyTextAreaProps) => {
     <IonGrid className="input-label-field">
       <IonRow className="ion-text-left">
         <IonTextarea  {...register(myFieldName)}
-          class="text-input-field" inputmode="text"          
+          class="text-input-field my-text-area" inputmode="text"          
           placeholder={placeholder} autoGrow={true}
           maxlength={numberChars}
           onIonChange={(e) =>handleChange(e)}>

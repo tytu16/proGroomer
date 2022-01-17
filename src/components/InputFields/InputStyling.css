@@ -77,6 +77,8 @@ ion-select{
 .phone-field{
     color: black;
     padding: 4%;
+    margin-bottom: 3%;
+    border-bottom: 2px black solid;
 }
 
 .phone-field-grid{
@@ -98,12 +100,31 @@ ion-select{
     box-shadow: 3px 5px 5px 0px #ccc;
 }
 
+.phone-header{
+    margin-top: 4%;
+    font-size: 1.2em;
+}
+
+ion-list.phone-list{
+    padding-bottom: 0px;
+}
+
 /* MyTextArea */
 .char-limit{
     color: gray;
 }
 
+.my-text-area{
+    height: 18em;
+}
+
 h1.bold-header{
     padding-left: 2%;
     font-weight: bold;
+}
+
+ion-popover.modal-popover{
+    --offset-y: -10%;
+    --width: 80%;
+    --height: 65%;
 }
