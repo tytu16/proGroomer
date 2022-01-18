@@ -9,15 +9,11 @@ interface ModalProps {
     show: boolean,
     setShow: Function,
     onSave: Function,
+    onCancel: Function
 }
 
 const ModalInput: React.FC<ModalProps> = (props) => {
-    var { show, setShow, title, onSave } = props;
-
-    const handleSave = () => {
-        console.log('handling save in modal input');
-        onSave();
-    }
+    var { show, setShow, title, onSave, onCancel } = props;
 
     return (
     <IonPopover className="modal-popover" isOpen={show} size="cover" side="top" onDidDismiss={() => { setShow(-1); }}>
@@ -31,12 +27,11 @@ const ModalInput: React.FC<ModalProps> = (props) => {
                 </IonCardContent>
             </IonCard>
             <IonFooter>
-                <IonButton color="light" onClick={() => { setShow(-1); }}>Cancel</IonButton>
-                <IonButton color="primary" onClick={() => { handleSave(); setShow(-1); }}><IonIcon slot="start" icon={addCircleOutline} /> Save</IonButton>
+                <IonButton color="light" onClick={() => { onCancel(); setShow(-1); }}>Cancel</IonButton>
+                <IonButton color="primary" onClick={() => { onSave(); setShow(-1); }}><IonIcon slot="start" icon={addCircleOutline} /> Save</IonButton>
             </IonFooter>
-
         </IonContent>
     </IonPopover>
-);
+    );
 };
 export default ModalInput;

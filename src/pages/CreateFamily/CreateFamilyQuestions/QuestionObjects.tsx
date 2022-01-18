@@ -29,7 +29,6 @@ export const InitPhoneNumbers = () => {
 
 export const InitPrimaryPersonQuestionState = () => {
     return ({
-        id: 0,
         isPrimary: true,
         firstName: "",
         lastName: "",
@@ -41,7 +40,6 @@ export const InitPrimaryPersonQuestionState = () => {
 
 export const InitPersonQuestionState = () => {
     return ({
-        id: 0,
         isPrimary: false,
         firstName: "",
         lastName: "",
@@ -53,7 +51,6 @@ export const InitPersonQuestionState = () => {
 
 export const InitFamilyQuestionState = () => {
     return ({
-        id: 0,
         familyName: "",
         addressOne: "",
         addressTwo: "",

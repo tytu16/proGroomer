@@ -71,17 +71,12 @@ const PeopleQuestions = (props: PeopleQuestionsProps) => {
                 );
 
             case 'note':
-                let personName = watchedFields[fieldArrayIndex].firstName != '' ? watchedFields[fieldArrayIndex].firstName : `Person - ${fieldArrayIndex+1}` 
-                return (<IonRow key={questionIndex}>
-                            <IonCol>
-                                <IonLabel className="large-header" >Notes: </IonLabel>
-                            </IonCol>
-                            <IonCol>
-                                <IonButton onClick={()=>setActiveModal(numNotes)}>Add Note</IonButton>
-                            </IonCol>
-                            <NoteCardModal activeModal={activeModal} setActiveModal={setActiveModal} label={personName}
-                                personIndex={fieldArrayIndex} formPrefix={objectType} onSave={()=>{setNumNotes(numNotes+1)}}/>
-                        </IonRow>);
+                let personName = watchedFields[fieldArrayIndex].firstName != '' ? 
+                    watchedFields[fieldArrayIndex].firstName : `Person ${fieldArrayIndex+1}`;
+
+                return (<NoteCardModal key={questionIndex} activeModal={activeModal} 
+                            setActiveModal={setActiveModal} label={personName}
+                            personIndex={fieldArrayIndex} formPrefix={objectType} onSave={()=>{setNumNotes(numNotes+1)}}/>);
             default:
                 return  (
                     <MyTextLabelInput key={questionIndex} index={fieldArrayIndex} 
