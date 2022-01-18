@@ -91,7 +91,6 @@ ion-select{
     border-color: lightgray;
     margin-bottom: 5%;
     margin-top: 3%;
-    padding-bottom: 4%;
 }
 
 .phone-field-grid:focus-within{
@@ -100,7 +99,7 @@ ion-select{
     box-shadow: 3px 5px 5px 0px #ccc;
 }
 
-.phone-header{
+.large-header{
     margin-top: 4%;
     font-size: 1.2em;
 }
@@ -126,5 +125,5 @@ h1.bold-header{
 ion-popover.modal-popover{
     --offset-y: -10%;
     --width: 80%;
-    --height: 65%;
+    --height: 75%;
 }

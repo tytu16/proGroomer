@@ -1,21 +1,26 @@
 import {IonGrid, IonRow, IonCol} from "@ionic/react";
 
 interface SlideWrapperProps {
-    title: string
+    title: string,
+    spacers?: boolean
 }
 
-const SlideWrapper: React.FC<SlideWrapperProps> = (props) => {
-    
+const SlideWrapper: React.FC<SlideWrapperProps> = ({title, spacers=true, children}) => {
+    // add the spacers by default if it's missing
+    // let addSpacers = props.spacers;
+    // if(addSpacers == null){
+    //     addSpacers = true;
+    // }
     return (
         <IonGrid class="slide-grid ion-justify-content-center ion-align-items-center ion-align-self-center">
-        <IonRow class="spacer"></IonRow>
+        {spacers && <IonRow class="spacer"></IonRow>}
         <IonRow>
             <IonCol size="10" className="slide-content">
-                <h1>{props.title}</h1>
-                {props.children}
+                <h1>{title}</h1>
+                {children}
             </IonCol>
         </IonRow>
-        <IonRow class="spacer"></IonRow>
+        {spacers && <IonRow class="spacer"></IonRow>}
         </IonGrid>
     );
 }

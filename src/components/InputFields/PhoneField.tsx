@@ -56,8 +56,6 @@ export const PhoneFieldInput = (props: PhoneFieldProps) => {
   }
 
   const handleFieldChange = (number: string, index: number) => {
-    console.log(number);
-    console.log(index);
     let newPhones = phoneNumbers.slice();
     newPhones[index] = number;
     setPhoneNumbers(newPhones);
@@ -67,17 +65,18 @@ export const PhoneFieldInput = (props: PhoneFieldProps) => {
     remove(index);
   }
 
+  // ToDo: Sides of layout uneven with rest of page
   return(<div className="shadow-container">
     <IonGrid className="ion-no-padding">
         <IonRow>
-          <IonLabel className="text-left phone-header">{props.label}:</IonLabel>&nbsp;
+          <IonLabel className="text-left large-header">{props.label}:</IonLabel>&nbsp;
           <IonButton className="phone-button" expand="block" id="addPhoneButton" onClick={addPhoneInput}>
-            <IonIcon icon={addCircleOutline}></IonIcon>
+            <IonIcon icon={addCircleOutline}></IonIcon><p>&nbsp;Add</p>
           </IonButton>
         </IonRow>
         <IonList className="phone-list" ref={IonListRef}>
-          {fields.map((item, fieldArrayIndex) => (
-            <div key={fieldArrayIndex}>
+          {fields.map((field, fieldArrayIndex) => (
+            <div className="phone-field-grid" key={field.id}>
               <AccordionHeader fieldArrayIndex={fieldArrayIndex} 
                 isPrimary={false} isActive={activeIndex == fieldArrayIndex}
                 handleDelete={handleDelete} handleAccordion={handleAccordionChange} label={
@@ -88,8 +87,9 @@ export const PhoneFieldInput = (props: PhoneFieldProps) => {
                   )
               }>
               </AccordionHeader>
-              <AccordionWrapper  classNames={activeIndex == fieldArrayIndex ? "accordion" : "accordion collapsed"}>
-                <IonGrid className="phone-field-grid" key={fieldArrayIndex}>
+              <AccordionWrapper  classNames={["accordion phone", 
+                                                (activeIndex == fieldArrayIndex ? "" : " collapsed")].join(" ")}>
+                <IonGrid className="" key={fieldArrayIndex}>
                   <IonRow>
                     <IonCol>
                       <Controller

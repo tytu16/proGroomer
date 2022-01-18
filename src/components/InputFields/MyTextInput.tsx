@@ -27,7 +27,7 @@ export const MyTextInput = (props: MyTextInputProps) => {
   return(
     <IonGrid className="input-label-field">
       <IonRow className="ion-text-left">
-        <IonInput  {...register(myFieldName)}
+        <IonInput {...register(myFieldName)}
           class="text-input-field" type="text"
           autocomplete="off" autoCorrect="off"
           placeholder={placeholder}

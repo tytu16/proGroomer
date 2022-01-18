@@ -1,4 +1,4 @@
-import { IonButton, IonList } from "@ionic/react";
+import { IonButton, IonCol, IonLabel, IonList, IonRow } from "@ionic/react";
 import { useRef, useState } from "react";
 import { useFieldArray, useFormContext } from "react-hook-form";
 import "./Questions.css";
@@ -38,12 +38,12 @@ const PeopleQuestions = (props: PeopleQuestionsProps) => {
     const [watchedFields, setWatchedFields] = useState<Array<WatchedFieldsInter>>([{
         firstName: "", lastName: ""
     }]);
+    const [numNotes, setNumNotes] = useState<number>(0);
 
 // State Hooks
     const [primaryIndex, setPrimaryIndex] = useState<number>(0);
     const [activeIndex, setActiveIndex] = useState<number>(0);
-    const [showWeight, setShowWeight] = useState<boolean>(false);
-    const [weight, setWeight] = useState<number>(10);
+    const [activeModal, setActiveModal] = useState<number>(-1);
 // Ref Hooks
     const IonListRef = useRef<any>(null);
 
@@ -71,11 +71,17 @@ const PeopleQuestions = (props: PeopleQuestionsProps) => {
                 );
 
             case 'note':
-                return (<div key={questionIndex}>
-                    <IonButton onClick={()=>setShowWeight(true)}>Add Note</IonButton>
-                        <NoteCardModal show={showWeight} setShow={setShowWeight} 
-                            personIndex={fieldArrayIndex} formPrefix={objectType} onSave={(w:number) => setWeight(w)}/>
-                    </div>);
+                let personName = watchedFields[fieldArrayIndex].firstName != '' ? watchedFields[fieldArrayIndex].firstName : `Person - ${fieldArrayIndex+1}` 
+                return (<IonRow key={questionIndex}>
+                            <IonCol>
+                                <IonLabel className="large-header" >Notes: </IonLabel>
+                            </IonCol>
+                            <IonCol>
+                                <IonButton onClick={()=>setActiveModal(numNotes)}>Add Note</IonButton>
+                            </IonCol>
+                            <NoteCardModal activeModal={activeModal} setActiveModal={setActiveModal} label={personName}
+                                personIndex={fieldArrayIndex} formPrefix={objectType} onSave={()=>{setNumNotes(numNotes+1)}}/>
+                        </IonRow>);
             default:
                 return  (
                     <MyTextLabelInput key={questionIndex} index={fieldArrayIndex} 
@@ -166,8 +172,8 @@ const PeopleQuestions = (props: PeopleQuestionsProps) => {
     return (
         <SlideWrapper title="People Information">
             <IonList ref={IonListRef}>
-            {fields.map((item, fieldArrayIndex) => (
-                <div key={fieldArrayIndex}>
+            {fields.map((field, fieldArrayIndex) => (
+                <div key={field.id}>
                     <AccordionHeader fieldArrayIndex={fieldArrayIndex} 
                         isPrimary={primaryIndex == fieldArrayIndex} isActive={activeIndex == fieldArrayIndex}
                         handleDelete={handleDelete} handleAccordion={handleAccordionChange} 

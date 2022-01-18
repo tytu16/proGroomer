@@ -15,16 +15,12 @@ const BottomSlideButtons = (props: BottomSlideProps) => {
             buttonThreeLabel, buttonThreeClick} = props;
     
 
-    const handleButtonOne = () => {
-        console.log('BottomButton - button one');
-        buttonOneClick();
-    }
     switch (numButtons){
         case "one":
             return (
                 <IonRow>
                     <IonCol>
-                        <IonButton expand="block" onClick={handleButtonOne}>{buttonOneLabel}</IonButton>
+                        <IonButton expand="block" onClick={buttonOneClick}>{buttonOneLabel}</IonButton>
                     </IonCol>
                 </IonRow>
             );

@@ -20,13 +20,10 @@ const FamilyQuestions = (props: FamilyQuestionsProps) => {
     const {watch} = useFormContext();
 
     const toPeople = (data?: any) => {
-        console.log('to persons');
-        console.log(watch('family'));
         props.toPeopleInfo();
     }
 
     const handleFieldChange = (data: string, name: string) => {
-        console.log(`FamilyQuestions: ${name}: ${data}`);
         props.handleFamilyNames(data, Number.parseInt(name.split('.')[1]));
     }
 

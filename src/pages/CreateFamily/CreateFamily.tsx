@@ -115,8 +115,8 @@ const CreateFamily = (props: CreateFamilyProps) => {
           <IonList ref={IonListRef}>
             <FormProvider {...methods}>
               <form onSubmit={methods.handleSubmit(data => console.log(data))}>
-                {fields.map((item, familyIndex) => (
-                  <div key={familyIndex}>
+                {fields.map((field, familyIndex) => (
+                  <div key={field.id}>
                     <div className="family-header">
                     <AccordionHeader fieldArrayIndex={familyIndex} labelClass="bold-header"
                         isPrimary={false} isActive={activeIndex == familyIndex}

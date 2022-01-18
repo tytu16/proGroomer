@@ -7,14 +7,19 @@ interface ModalProps {
     title: string,
     show: boolean,
     setShow: Function,
-    value: number | string,
     onSave: Function
 }
 
 const ModalInput: React.FC<ModalProps> = (props) => {
-    var { show, setShow, title, value, onSave } = props;
+    var { show, setShow, title, onSave } = props;
+
+    const handleSave = () => {
+        console.log('handling save in modal input');
+        onSave();
+    }
+
     return (
-    <IonPopover className="modal-popover" isOpen={show} size="cover" side="top" onDidDismiss={() => { setShow(false); }}>
+    <IonPopover className="modal-popover" isOpen={show} size="cover" side="top" onDidDismiss={() => { setShow(-1); }}>
         <IonContent class="ion-text-center modal-content">
             <IonCard>
                 <IonCardHeader>
@@ -25,8 +30,8 @@ const ModalInput: React.FC<ModalProps> = (props) => {
                 </IonCardContent>
             </IonCard>
             <IonFooter>
-                <IonButton color="light" onClick={() => { setShow(false); }}>Cancel</IonButton>
-                <IonButton color="primary" onClick={() => { onSave(value); setShow(false); }}><IonIcon slot="start" icon={addCircleOutline} /> Save</IonButton>
+                <IonButton color="light" onClick={() => { setShow(-1); }}>Cancel</IonButton>
+                <IonButton color="primary" onClick={() => { handleSave(); setShow(-1); }}><IonIcon slot="start" icon={addCircleOutline} /> Save</IonButton>
             </IonFooter>
 
         </IonContent>
