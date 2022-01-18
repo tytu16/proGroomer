@@ -1,4 +1,4 @@
-import { IonItem,IonInput, IonGrid, IonRow, IonCol, IonButton, IonList } from '@ionic/react';
+import { IonItem,IonInput, IonGrid, IonRow, IonCol, IonButton, IonList, IonLabel } from '@ionic/react';
 import { useRef, useState } from 'react';
 import { useFieldArray, useFormContext } from 'react-hook-form';
 import { MyTextArea } from '../InputFields/MyTextArea';
@@ -26,21 +26,25 @@ const NoteCardModal: React.FC<InputProps> = ({activeModal, setActiveModal, perso
   
     const [noteLabels, setNoteLabels] = useState<Array<string>>([]);
 
-    const handleSave = () => {
+    const handleSave = (index: number) => {
         console.log('in note card modal');
-        const data = watch(`${noteFormPrefix}.${0}.label`);
+        const data = watch(`${noteFormPrefix}.${index}.label`);
+        console.log('')
         append({label: "", message: ""});
-        console.log(data);
         let newNoteLabels = noteLabels.slice().concat(data);
-        console.log(`newNoteLabels: ${newNoteLabels}`);
+        setNoteLabels(newNoteLabels);
         onSave(data);
     }
 
     return (
         <IonList ref={IonListRef}>
-            <p>Field length: {fields.length}</p>
             {fields.map((field, noteIndex) => (<div key={field.id}>
-                <ModalInput show={noteIndex == activeModal} setShow={setActiveModal} title={`New Note for ${label}`} onSave={handleSave}>
+                {(true) ? (
+                    <IonLabel onClick={()=>setActiveModal(noteIndex)}>{noteLabels[noteIndex]}</IonLabel>
+                ) : (
+                    <></>
+                )}
+                <ModalInput show={noteIndex == activeModal} setShow={setActiveModal} title={`New Note for ${label}`} onSave={()=>handleSave(noteIndex)}>
                     <IonGrid>
                         <IonRow>
                             <MyTextInput index={noteIndex} placeholder="Note Label"
