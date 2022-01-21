@@ -20,6 +20,8 @@ const FamilyQuestions = (props: FamilyQuestionsProps) => {
     const {watch} = useFormContext();
 
     const toPeople = (data?: any) => {
+        console.log('family data');
+        console.log(watch());
         props.toPeopleInfo();
     }
 

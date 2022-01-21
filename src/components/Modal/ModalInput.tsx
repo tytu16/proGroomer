@@ -6,17 +6,15 @@ import "../InputFields/InputStyling.css"
 
 interface ModalProps {
     title: string,
-    show: boolean,
     setShow: Function,
     onSave: Function,
     onCancel: Function
 }
 
 const ModalInput: React.FC<ModalProps> = (props) => {
-    var { show, setShow, title, onSave, onCancel } = props;
+    var { setShow, title, onSave, onCancel } = props;
 
     return (
-    <IonPopover className="modal-popover" isOpen={show} size="cover" side="top" onDidDismiss={() => { setShow(-1); }}>
         <IonContent class="ion-text-center modal-content">
             <IonCard>
                 <IonCardHeader>
@@ -31,7 +29,6 @@ const ModalInput: React.FC<ModalProps> = (props) => {
                 <IonButton color="primary" onClick={() => { onSave(); setShow(-1); }}><IonIcon slot="start" icon={addCircleOutline} /> Save</IonButton>
             </IonFooter>
         </IonContent>
-    </IonPopover>
     );
 };
 export default ModalInput;

@@ -6,7 +6,7 @@ import {MyTextLabelInput} from "../../../components/InputFields/MyTextLabelInput
 import { PeopleQuestionFields, InitPersonQuestionState, TextFieldPropInterface } from "./QuestionObjects";
 import {PhoneFieldInput} from "../../../components/InputFields/PhoneField";
 import {HorizontalCheckBox} from "../../../components/InputFields/HorizontalCheckbox";
-import NoteCardModal from "../../../components/Modal/NoteCardModal";
+import ModalFormWrapper from "../../../components/Modal/ModalFormWrapper";
 import SlideWrapper from "../../../components/Slide/SlideWrapper";
 import AccordionHeader from "../../../components/Accordion/AccordionHeader";
 import AccordionWrapper from "../../../components/Accordion/AccordionWrapper";
@@ -74,8 +74,7 @@ const PeopleQuestions = (props: PeopleQuestionsProps) => {
                 let personName = watchedFields[fieldArrayIndex].firstName != '' ? 
                     watchedFields[fieldArrayIndex].firstName : `Person ${fieldArrayIndex+1}`;
 
-                return (<NoteCardModal key={questionIndex} activeModal={activeModal} 
-                            setActiveModal={setActiveModal} label={personName}
+                return (<ModalFormWrapper key={questionIndex} label={personName}
                             personIndex={fieldArrayIndex} formPrefix={objectType} onSave={()=>{setNumNotes(numNotes+1)}}/>);
             default:
                 return  (

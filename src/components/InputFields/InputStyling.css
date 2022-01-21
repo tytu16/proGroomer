@@ -122,8 +122,6 @@ h1.bold-header{
     font-weight: bold;
 }
 
-ion-popover.modal-popover{
-    --offset-y: -10%;
-    --width: 80%;
-    --height: 75%;
+.hidden{
+    display: none;
 }
