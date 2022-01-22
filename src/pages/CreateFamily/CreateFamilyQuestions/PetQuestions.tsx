@@ -1,11 +1,13 @@
-import { IonAccordion, IonAccordionGroup, IonButton, IonCol, IonGrid, IonIcon, IonInput, IonItem, IonItemOption, IonItemOptions, IonItemSliding, IonLabel, IonList, IonRow } from "@ionic/react";
+import { IonButton, IonCol, IonGrid, IonIcon, IonInput, IonItem, IonItemOption, IonItemOptions, IonItemSliding, IonLabel, IonList, IonRow } from "@ionic/react";
 import { arrowDownCircleOutline } from 'ionicons/icons';
 import { useRef, useState } from "react";
-import { useFieldArray, useFormContext, useWatch } from "react-hook-form";
-import { PetInfo } from "../../../models/PetInfo";
+import { useFieldArray, useFormContext } from "react-hook-form";
 import { MyTextLabelInput } from "../../../components/InputFields/MyTextLabelInput";
 import { InitPetQuestionState, PetQuestionFields, TextFieldPropInterface } from "./QuestionObjects";
 import "./Questions.css";
+import ModalFormWrapper from "../../../components/Modal/ModalFormWrapper";
+import { MySelectList } from "../../../components/InputFields/MySelectList";
+import {WeightUnitList} from "../../../models/Enums/WeightUnitList"
 
 export interface PetQuestionsProps{
     index: number,
@@ -45,23 +47,69 @@ const PetQuestions = (props: PetQuestionsProps) => {
 
             case 'age':
                 return (
-                    <IonRow><IonCol size ="6"><p>age yr</p></IonCol><IonCol size="6">month yr</IonCol></IonRow>
+                    <IonRow key={questionIndex}>
+                        <IonCol size ="6">
+                            <MyTextLabelInput key={questionIndex} index={fieldArrayIndex} numbersOnly={true}
+                                onChange={handleFieldChange} watched={field.watched} maxLength={2}
+                                placeholder={field.placeholder} label={"Age - Years"}
+                                objectType={objectType} fieldName={'ageYr'} required={field.required}
+                            />
+                        </IonCol>
+                        <IonCol size="6">
+                            <MyTextLabelInput key={questionIndex} index={fieldArrayIndex} numbersOnly={true}
+                                onChange={handleFieldChange} watched={field.watched} maxLength={2}
+                                placeholder={field.placeholder} label={"Age - Months"}
+                                objectType={objectType} fieldName={'ageMn'} required={field.required}
+                            />
+                        </IonCol>
+                    </IonRow>
                 );
 
             case 'weight':
-                return (<p>weight shit</p>);
+                return (
+                    <IonRow key={questionIndex}>
+                        <IonCol size ="6">
+                            <MyTextLabelInput key={questionIndex} index={fieldArrayIndex} numbersOnly={true}
+                                onChange={handleFieldChange} watched={field.watched}
+                                placeholder={field.placeholder} label={"Weight"}
+                                objectType={objectType} fieldName={'weight'} required={field.required}
+                            />
+                        </IonCol>
+                        <IonCol size="6">
+                            <div className="input-label-field"><MySelectList key={questionIndex} index={fieldArrayIndex} addStyling={true}
+                                placeholder={field.placeholder} label={"Units"} valueList={WeightUnitList}
+                                objectType={objectType} fieldName={'weightUnits'} required={field.required}
+                            /></div>
+                        </IonCol>
+                    </IonRow>
+                );
+
+            case 'note':
+                return (<ModalFormWrapper key={questionIndex} label={derivePetLabel(fieldArrayIndex)}
+                    objectIndex={fieldArrayIndex} formPrefix={objectType}/>);
 
             default:
                 return (
-                    <IonItem key={questionIndex}>
-                        <MyTextLabelInput index={fieldArrayIndex} 
+                        <MyTextLabelInput key={questionIndex} index={fieldArrayIndex} 
                             onChange={handleFieldChange} watched={field.watched}
                             placeholder={field.placeholder} label={field.label}
                             objectType={objectType} fieldName={field.fieldName} required={field.required}
                         />
-                    </IonItem>
                 );
         }
+    }
+
+    const derivePetLabel = (index: number) => {
+        let outString = "";
+        if(index < watchedFields.length && watchedFields[index].petName != ''){
+            outString = watchedFields[index].petName;
+            if(watchedFields[index].petBreed != '') {
+                outString += ' - ' + watchedFields[index].petBreed
+            }
+        } else {
+            outString = `Pet ${index+1}`
+        }
+        return outString;
     }
     // ----UTILITY METHODS---- //
 // Remove field from fieldArray, set all accordions as inactive, 
@@ -134,12 +182,7 @@ const finishFamily = (data: any) => {
                                     onClick={() => handleAccordionChange(fieldArrayIndex)} slot="header" mode='md' lines="none">
                                     {
                                         <IonLabel>
-                                            { (fieldArrayIndex < watchedFields.length && 
-                                                (watchedFields[fieldArrayIndex].petName != '' || watchedFields[fieldArrayIndex].petBreed != '')) ? (
-                                                watchedFields[fieldArrayIndex].petName + ' ' + watchedFields[fieldArrayIndex].petBreed
-                                            ) : (
-                                                'Pet ' + (fieldArrayIndex+1)
-                                            )}
+                                            {derivePetLabel(fieldArrayIndex)}
                                         </IonLabel>
                                     }
                                     <IonIcon className={(activeIndex == fieldArrayIndex ? "active icon float-right" : "icon float-right")} size="large"
@@ -159,7 +202,6 @@ const finishFamily = (data: any) => {
                         </div>
                     ))}
                     </IonList>
-
                     <IonRow>
                         <IonCol><IonButton expand="block" onClick={handleSubmit(addAnother)}>
                             Add Another

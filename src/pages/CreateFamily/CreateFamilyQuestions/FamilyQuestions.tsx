@@ -44,7 +44,7 @@ const FamilyQuestions = (props: FamilyQuestionsProps) => {
                 let familyName = (props.familyNames[props.index] && props.familyNames[props.index] != '') ? 
                 props.familyNames[props.index] : `Family ${props.index+1}`;
                 return (<ModalFormWrapper key={questionIndex} label={familyName}
-                            objectIndex={props.index} formPrefix={field.objectType} onSave={()=>{}}/>);
+                            objectIndex={props.index} formPrefix={field.objectType}/>);
 
             default:
                 return (<MyTextLabelInput key={questionIndex} index={props.index}

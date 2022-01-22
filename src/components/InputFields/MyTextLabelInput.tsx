@@ -9,13 +9,15 @@ export interface MyTextLabelInputProps {
   objectType: string,
   fieldName: string,
   placeholder: string,
+  numbersOnly?: boolean,
+  maxLength?: number,
   required: boolean,
   onChange: (data: string, name: string) => void,
   watched: boolean
 }
 
 export const MyTextLabelInput = (props: MyTextLabelInputProps) => {
-  const {label, placeholder, objectType, index, fieldName, onChange, watched} = props;
+  const {label, placeholder, objectType, index, numbersOnly, maxLength, fieldName, onChange, watched} = props;
   
   const {register} = useFormContext();
 
@@ -33,8 +35,8 @@ export const MyTextLabelInput = (props: MyTextLabelInputProps) => {
       </IonRow>
       <IonRow className="ion-text-left">
         <IonInput  {...register(myFieldName)}
-          class="text-input-field" type="text"
-          autocomplete="off" autoCorrect="off"
+          class="text-input-field" type={numbersOnly ? "tel": "text"}
+          autocomplete="off" autoCorrect="off" maxlength={maxLength ? maxLength : undefined}
           placeholder={placeholder}
           onIonChange={(e) => { 
             if(watched){handleChange(e);}

@@ -19,6 +19,8 @@ export const InitPetQuestionState = () => {
         sex: "",
         ageYr: "0",
         ageMn: "0",
+        weight: "0",
+        wUnits: "",
         note: [InitNoteQuestionState()]
     })
 }
@@ -183,7 +185,7 @@ export const PeopleQuestionFields = [
 
 export const PetQuestionFields = [
     {
-        placeholder: "",
+        placeholder: "Name",
         label: "Name", 
         objectType: "family.0.pet",
         fieldName: "name",
@@ -207,19 +209,27 @@ export const PetQuestionFields = [
         watched: false
     },
     {
-        placeholder: "AgeYr",
-        label: "Years",
+        placeholder: "Age",
+        label: "Age",
         objectType: "family.0.pet",
-        fieldName: "ageYr",
+        fieldName: "age",
         required: false,
         watched: false
     },
     {
-        placeholder: "AgeMn",
-        label: "Months",
+        placeholder: "Weight",
+        label: "Weight",
         objectType: "family.0.pet",
-        fieldName: "ageMn",
+        fieldName: "weight",
         required: false,
         watched: false
+    },
+    {
+        placeholder: "Add a note",
+        label: "Notes",
+        objectType: "family.0.pet.0.note",
+        fieldName: "note",
+        required: true,
+        watched: true
     }
 ] 
