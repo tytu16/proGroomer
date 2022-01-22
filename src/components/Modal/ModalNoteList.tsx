@@ -8,7 +8,6 @@ import { removeCircleOutline, addCircleOutline } from "ionicons/icons";
 
 import "../InputFields/InputStyling.css";
 import AccordionHeader from '../Accordion/AccordionHeader';
-import AccordionWrapper from '../Accordion/AccordionWrapper';
 
 interface ModalNoteListProps{
     fields: any,

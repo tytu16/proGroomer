@@ -6,7 +6,6 @@ import { PetInfo } from "../../../models/PetInfo";
 import { MyTextLabelInput } from "../../../components/InputFields/MyTextLabelInput";
 import { InitPetQuestionState, PetQuestionFields, TextFieldPropInterface } from "./QuestionObjects";
 import "./Questions.css";
-import { render } from "@testing-library/react";
 
 export interface PetQuestionsProps{
     index: number,
