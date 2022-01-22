@@ -38,7 +38,6 @@ const PeopleQuestions = (props: PeopleQuestionsProps) => {
     const [watchedFields, setWatchedFields] = useState<Array<WatchedFieldsInter>>([{
         firstName: "", lastName: ""
     }]);
-    const [numNotes, setNumNotes] = useState<number>(0);
 
 // State Hooks
     const [primaryIndex, setPrimaryIndex] = useState<number>(0);
@@ -75,7 +74,7 @@ const PeopleQuestions = (props: PeopleQuestionsProps) => {
                     watchedFields[fieldArrayIndex].firstName : `Person ${fieldArrayIndex+1}`;
 
                 return (<ModalFormWrapper key={questionIndex} label={personName}
-                            personIndex={fieldArrayIndex} formPrefix={objectType} onSave={()=>{setNumNotes(numNotes+1)}}/>);
+                            personIndex={fieldArrayIndex} formPrefix={objectType} onSave={()=>{}}/>);
             default:
                 return  (
                     <MyTextLabelInput key={questionIndex} index={fieldArrayIndex} 

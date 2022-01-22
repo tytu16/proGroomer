@@ -7,6 +7,8 @@ import {MyTextInput} from "../InputFields/MyTextInput";
 import { removeCircleOutline, addCircleOutline } from "ionicons/icons";
 
 import "../InputFields/InputStyling.css";
+import AccordionHeader from '../Accordion/AccordionHeader';
+import AccordionWrapper from '../Accordion/AccordionWrapper';
 
 interface ModalNoteListProps{
     fields: any,
@@ -21,6 +23,7 @@ interface ModalNoteListState{
     tempString: string,
     displayLabels: Array<string>,
     index: number,
+    notesActive: boolean,
     e: any
 }
 
@@ -30,6 +33,7 @@ export class ModalNoteList extends React.Component<ModalNoteListProps, ModalNote
         this.state = {
             tempString: "",
             displayLabels: [""],
+            notesActive: true,
             index: -1,
             e: undefined
         }
@@ -44,6 +48,7 @@ export class ModalNoteList extends React.Component<ModalNoteListProps, ModalNote
         this.setState({
             tempString: "",
             displayLabels: labelsCopy,
+            notesActive: true,
             index: -1,
             e: undefined
         });
@@ -58,6 +63,7 @@ export class ModalNoteList extends React.Component<ModalNoteListProps, ModalNote
             this.setState({
                 tempString: "",
                 displayLabels: newLabels,
+                notesActive: true,
                 index: -1,
                 e: undefined
             });
@@ -77,6 +83,7 @@ export class ModalNoteList extends React.Component<ModalNoteListProps, ModalNote
         this.setState((prevState)=>({
             tempString: prevState.tempString,
             displayLabels: prevState.displayLabels,
+            notesActive: true,
             index: index,
             e: e
         }));
@@ -86,6 +93,7 @@ export class ModalNoteList extends React.Component<ModalNoteListProps, ModalNote
         this.setState((prevState) => ({
             tempString: data,
             displayLabels: prevState.displayLabels,
+            notesActive: true,
             index: prevState.index,
             e: prevState.e
         }));
@@ -95,6 +103,7 @@ export class ModalNoteList extends React.Component<ModalNoteListProps, ModalNote
         this.setState((prevState) => ({
             tempString: prevState.tempString,
             displayLabels: prevState.displayLabels.concat("").slice(),
+            notesActive: true,
             index: prevState.displayLabels.length-1,
             e: prevState.e
         }));
@@ -106,6 +115,7 @@ export class ModalNoteList extends React.Component<ModalNoteListProps, ModalNote
         this.setState((prevState) => ({
             tempString: prevState.tempString,
             displayLabels: localNotes,
+            notesActive: true,
             index: prevState.index,
             e: prevState.e
         }));
@@ -115,13 +125,24 @@ export class ModalNoteList extends React.Component<ModalNoteListProps, ModalNote
     render() {
         return(<div>
         <IonRow>
-            <IonCol size="12">
-                <IonLabel className="large-header" >Notes for {this.props.label}</IonLabel>
+            <IonCol size="12"><div onClick={()=>this.setState((prevState) =>({
+                tempString: prevState.tempString,
+                displayLabels: prevState.displayLabels,
+                notesActive: !prevState.notesActive,
+                index: prevState.index,
+                e: prevState.e
+            }))}>
+            <AccordionHeader fieldArrayIndex={0} disabled={true}
+                isPrimary={true} isActive={this.state.notesActive}
+                handleDelete={()=>{}} handleAccordion={()=>{}}>
+                    <IonLabel className="large-header" >Notes for {this.props.label}</IonLabel>
+            </AccordionHeader></div>
             </IonCol>
         </IonRow>
         <IonRow>
             <IonCol size="12">
-                <IonList>
+                <IonList className={["accordion", (this.state.notesActive ? "" : " collapsed")].join(" ")}>
+                    <div className="question-content">
                     {this.props.fields.map((field:any, noteIndex:number) => (<div key={field.id}>
                         <IonRow className={this.state.displayLabels[noteIndex] == ""
                              ? "hidden" : "note-label"}>
@@ -153,12 +174,12 @@ export class ModalNoteList extends React.Component<ModalNoteListProps, ModalNote
                             </ModalContentWrapper>
                         </IonModal>
                     </div>))}
-                </IonList>
-                <IonRow><IonCol size="12">
-                    <IonButton expand='block' onClick={(e: any) => {
-                        this.handleAddNewNote(e)
-                    }}><IonIcon icon={addCircleOutline}></IonIcon>&nbsp;Add Note</IonButton>
-                </IonCol></IonRow>
+                    <IonRow><IonCol size="12">
+                        <IonButton expand='block' onClick={(e: any) => {
+                            this.handleAddNewNote(e)
+                        }}><IonIcon icon={addCircleOutline}></IonIcon>&nbsp;Add Note</IonButton>
+                    </IonCol></IonRow>
+               </div></IonList>
             </IonCol>
         </IonRow>
         </div>);

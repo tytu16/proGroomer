@@ -6,6 +6,7 @@ import { PetInfo } from "../../../models/PetInfo";
 import { MyTextLabelInput } from "../../../components/InputFields/MyTextLabelInput";
 import { InitPetQuestionState, PetQuestionFields, TextFieldPropInterface } from "./QuestionObjects";
 import "./Questions.css";
+import { render } from "@testing-library/react";
 
 export interface PetQuestionsProps{
     index: number,
@@ -33,6 +34,36 @@ const PetQuestions = (props: PetQuestionsProps) => {
         petName: "", petBreed: ""
     }]);
 
+    
+    // ----RENDER---- //
+    // Dynamically rendered fields fed from PeopleQuestionFields
+    const renderFields = (field: any, questionIndex:number, fieldArrayIndex:number) => {
+        switch(field.fieldName){
+            case 'sex':
+                return(
+                    <IonInput key={questionIndex} placeholder="sex ;)"></IonInput>
+                );
+
+            case 'age':
+                return (
+                    <IonRow><IonCol size ="6"><p>age yr</p></IonCol><IonCol size="6">month yr</IonCol></IonRow>
+                );
+
+            case 'weight':
+                return (<p>weight shit</p>);
+
+            default:
+                return (
+                    <IonItem key={questionIndex}>
+                        <MyTextLabelInput index={fieldArrayIndex} 
+                            onChange={handleFieldChange} watched={field.watched}
+                            placeholder={field.placeholder} label={field.label}
+                            objectType={objectType} fieldName={field.fieldName} required={field.required}
+                        />
+                    </IonItem>
+                );
+        }
+    }
     // ----UTILITY METHODS---- //
 // Remove field from fieldArray, set all accordions as inactive, 
   // remove watchedField from state, IonListRef to reset ion-item positions 
@@ -83,9 +114,9 @@ const handleAccordionChange = (index: number) => {
    }
 }
 
-    const finishFamily = (data: any) => {
-        props.submitFamily();
-    }
+const finishFamily = (data: any) => {
+    props.submitFamily();
+}
 
     return (
         <IonGrid class="slide-grid ion-justify-content-center ion-align-items-center ion-align-self-center">
@@ -122,17 +153,7 @@ const handleAccordionChange = (index: number) => {
                             <IonList className={activeIndex == fieldArrayIndex ? "accordion" : "accordion collapsed"} slot="content">
                                 <div className="question-content shadow-container">{
                                     PetQuestionFields.map((field: TextFieldPropInterface, questionIndex) => {
-                                        return (field.fieldName != 'sex') ? (
-                                            <IonItem key={questionIndex}>
-                                                <MyTextLabelInput index={fieldArrayIndex} 
-                                                    onChange={handleFieldChange} watched={field.watched}
-                                                    placeholder={field.placeholder} label={field.label}
-                                                    objectType={objectType} fieldName={field.fieldName} required={field.required}
-                                                />
-                                            </IonItem>
-                                        ) : (
-                                            <IonInput key={questionIndex} placeholder="sex ;)"></IonInput>
-                                        )
+                                        return renderFields(field, questionIndex, fieldArrayIndex);
                                     })
                                 }</div>
                             </IonList>

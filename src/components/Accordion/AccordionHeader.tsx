@@ -7,7 +7,7 @@ interface AccordionHeaderProps{
     fieldArrayIndex: number,
     isPrimary: boolean,
     isActive: boolean,
-    label: string,
+    label?: string,
     disabled?: boolean,
     labelClass?: string,
     handleDelete: (i: number) => void,
@@ -15,7 +15,7 @@ interface AccordionHeaderProps{
 }
 
 const AccordionHeader: React.FC<AccordionHeaderProps> = (props) => {
-    const {fieldArrayIndex, isPrimary, isActive, label, handleDelete, handleAccordion, labelClass, disabled=false} = props;
+    const {fieldArrayIndex, isPrimary, isActive, label="", handleDelete, handleAccordion, labelClass, disabled=false} = props;
     return (
         <IonItemSliding disabled={disabled} className={isPrimary ? 'accordion-header primary' : 'accordion-header' }>
             {(isPrimary) ? (
@@ -30,9 +30,13 @@ const AccordionHeader: React.FC<AccordionHeaderProps> = (props) => {
             <IonItem className={isPrimary ? 'primary' : '' }
                             onClick={() => handleAccordion(fieldArrayIndex)} slot="header" mode='md' lines="none"
                             fill={isPrimary ? 'solid': 'outline'}>
-                <IonLabel>
-                    {labelClass == "bold-header" ? (<h1 className={labelClass}>{label}</h1>) : (label) }
-                </IonLabel>
+                {label != "" ? (
+                    <IonLabel>
+                        {labelClass == "bold-header" ? (<h1 className={labelClass}>{label}</h1>) : (label) }
+                    </IonLabel>
+                ) : (
+                    props.children
+                )}
                 <IonIcon className={[(isActive ? "active icon float-right" : "icon float-right"),
                     isPrimary ? "primary" : ""].join(" ")} size="large"
                     icon={isPrimary ? arrowDownCircle : arrowDownCircleOutline}>
