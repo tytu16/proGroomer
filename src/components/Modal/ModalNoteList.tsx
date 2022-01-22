@@ -1,6 +1,6 @@
 import {IonButton, IonCol, IonGrid, IonLabel, IonList, IonListHeader, IonModal, IonPopover, IonRow } from '@ionic/react';
 import React from "react";
-import ModalInput from "./ModalInput"
+import ModalContentWrapper from "./ModalContentWrapper"
 import {MyTextArea} from "../InputFields/MyTextArea"
 import {MyTextInput} from "../InputFields/MyTextInput";
 import ItemSlideWrapper from "../Accordion/ItemSlideWrapper";
@@ -33,10 +33,15 @@ export class ModalNoteList extends React.Component<ModalNoteListProps, ModalNote
     }
 
     handleSave = (noteIndex: number ) => {
+        console.log('saving note');
         let labelsCopy = this.state.displayLabels.slice();
         if(this.state.tempString != ''){
             labelsCopy[noteIndex] = this.state.tempString;
         }
+        console.log('old labels:');
+        console.log(this.state.displayLabels);
+        console.log('new labels');
+        console.log(labelsCopy);
         this.setState({
             tempString: "",
             displayLabels: labelsCopy,
@@ -46,15 +51,23 @@ export class ModalNoteList extends React.Component<ModalNoteListProps, ModalNote
         this.props.handleSave(noteIndex);
     }
 
+    //Todo: Canceling a new addition prevents adding new notes
     handleCancel = (noteIndex: number) => {
         console.log(`handling cancel for index: ${noteIndex}`);
-        if(this.state.displayLabels.length == noteIndex){
-            this.setState((prevState) => ({
+        console.log(this.state.displayLabels);
+        if(this.state.displayLabels.length-2 == noteIndex){
+            let newLabels = this.state.displayLabels.slice();
+            console.log('old lablee');
+            console.log(newLabels);
+            newLabels.pop();
+            console.log('new labels');
+            console.log(newLabels);
+            this.setState({
                 tempString: "",
-                displayLabels: prevState.displayLabels.slice(0,prevState.displayLabels.length-1),
+                displayLabels: newLabels,
                 index: -1,
                 e: undefined
-            }));
+            });
         } else {
             this.setState((prevState) => ({
                 tempString: "",
@@ -66,7 +79,7 @@ export class ModalNoteList extends React.Component<ModalNoteListProps, ModalNote
         this.props.handleCancel(noteIndex);
     }
 
-    handlePopoverChange = (index: number, e: any) => {
+    handleModalChange = (index: number, e: any) => {
         if(e){e.persist();}
         this.setState((prevState)=>({
             tempString: prevState.tempString,
@@ -86,17 +99,25 @@ export class ModalNoteList extends React.Component<ModalNoteListProps, ModalNote
     }
 
     handleAddNewNote = (e: any) => {
+        console.log('adding new note: ');
+        console.log(this.state.displayLabels.length-1)
         this.setState((prevState) => ({
             tempString: prevState.tempString,
-            displayLabels: prevState.displayLabels.concat(""),
+            displayLabels: prevState.displayLabels.concat("").slice(),
             index: prevState.displayLabels.length-1,
             e: prevState.e
         }));
     }
 
     handleButtonDelete = (index: number) => {
+        console.log('deleting');
+        console.log(index);
         let localNotes = this.state.displayLabels.slice();
-        localNotes = localNotes.slice(0,index).concat(localNotes.slice(index+1))
+        console.log('before: ');
+        console.log(localNotes);
+        localNotes = localNotes.slice(0,index).concat(localNotes.slice(index+1));
+        console.log('after: ');
+        console.log(localNotes);
         this.setState((prevState) => ({
             tempString: prevState.tempString,
             displayLabels: localNotes,
@@ -125,18 +146,18 @@ export class ModalNoteList extends React.Component<ModalNoteListProps, ModalNote
                         <IonRow className={this.state.displayLabels[noteIndex] == ""
                              ? "hidden" : "note-label"}>
                             <IonCol size="6">
-                                <IonListHeader onClick={(e:any)=>{this.handlePopoverChange(noteIndex, e)}}>
+                                <IonListHeader onClick={(e:any)=>{this.handleModalChange(noteIndex, e)}}>
                                     {this.state.displayLabels[noteIndex]} 
                                 </IonListHeader>
                             </IonCol>
                             <IonCol size="6">
-                                <IonButton color="danger">Delete</IonButton>
+                                <IonButton onClick={()=>this.handleButtonDelete(noteIndex)} color="danger">Delete</IonButton>
                             </IonCol>
                         </IonRow>
                         
                         <IonModal class="modal-popover" isOpen={this.state.index == noteIndex}
-                                    onDidDismiss={() => this.handlePopoverChange(-1, undefined)}>
-                            <ModalInput setShow={this.handlePopoverChange} title={`Note ${noteIndex+1} for ${this.props.label}`} 
+                                    onDidDismiss={() => this.handleModalChange(-1, undefined)}>
+                            <ModalContentWrapper setShow={this.handleModalChange} title={`Note ${noteIndex+1} for ${this.props.label}`} 
                                 onCancel={()=>this.handleCancel(noteIndex)} onSave={()=>this.handleSave(noteIndex)}>
                                 <IonGrid>
                                     <IonRow>
@@ -149,7 +170,7 @@ export class ModalNoteList extends React.Component<ModalNoteListProps, ModalNote
                                             objectType={this.props.noteFormPrefix} fieldName="message"/>
                                     </IonRow>
                                 </IonGrid>
-                            </ModalInput>
+                            </ModalContentWrapper>
                         </IonModal>
                         </div>))}
                 </IonList>

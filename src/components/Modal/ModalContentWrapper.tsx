@@ -4,14 +4,14 @@ import {addCircleOutline} from 'ionicons/icons';
 
 import "../InputFields/InputStyling.css"
 
-interface ModalProps {
+interface ModalContentWrapperProps {
     title: string,
     setShow: Function,
     onSave: Function,
     onCancel: Function
 }
 
-const ModalInput: React.FC<ModalProps> = (props) => {
+const ModalContentWrapper: React.FC<ModalContentWrapperProps> = (props) => {
     var { setShow, title, onSave, onCancel } = props;
 
     return (
@@ -31,4 +31,4 @@ const ModalInput: React.FC<ModalProps> = (props) => {
         </IonContent>
     );
 };
-export default ModalInput;
+export default ModalContentWrapper;
