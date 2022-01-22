@@ -28,7 +28,7 @@ export interface FamilyQuestionProps {
     toTop: () => void
 }
 
-const FamilyQuestionSlides = (props: FamilyQuestionProps) => {
+const CreateFamilySlideWrapper = (props: FamilyQuestionProps) => {
 
     const history = useHistory();
     const [swiper, setSwiper] = useState<any>(null);
@@ -82,4 +82,4 @@ const FamilyQuestionSlides = (props: FamilyQuestionProps) => {
     );
 }
 
-export default FamilyQuestionSlides;
+export default CreateFamilySlideWrapper;

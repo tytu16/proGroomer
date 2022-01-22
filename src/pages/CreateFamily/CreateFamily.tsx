@@ -4,7 +4,7 @@ import './CreateFamily.css';
 import { FamilyInfo } from "../../models/FamilyInfo";
 import { PersonInfo } from "../../models/PersonInfo";
 import { PetInfo } from "../../models/PetInfo";
-import FamilyQuestionSlides from "./CreateFamilyQuestions/FamilyQuestionSlides"
+import CreateFamilySlideWrapper from "./CreateFamilyQuestions/CreateFamilySlideWrapper"
 import { useFieldArray, useForm, FormProvider } from "react-hook-form";
 
 import { InitFamilyQuestionState } from "./CreateFamilyQuestions/QuestionObjects";
@@ -124,11 +124,11 @@ const CreateFamily = (props: CreateFamilyProps) => {
                         label={(familyIndex < familyNames.length && familyNames[familyIndex] != '') ? (
                             familyNames[familyIndex]
                         ) : (
-                            'Family ' + (familyIndex+1)
+                            'Account ' + (familyIndex+1)
                         )}
                     /></div>
                     <AccordionWrapper addBorder={false} classNames={activeIndex == familyIndex ? "accordion" : "accordion collapsed"}>
-                      <FamilyQuestionSlides familyNames={familyNames} index={familyIndex} saveFamilyInfo={saveFamilyInfo} toTop={toTop}
+                      <CreateFamilySlideWrapper familyNames={familyNames} index={familyIndex} saveFamilyInfo={saveFamilyInfo} toTop={toTop}
                         addPerson={addPerson} addPet={addPet} submitFamily={submitFamily} handleFamilyNames={handleFamilyNames}/>
                     </AccordionWrapper>
                   </div>
