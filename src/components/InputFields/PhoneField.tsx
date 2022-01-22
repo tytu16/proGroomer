@@ -1,4 +1,4 @@
-import { IonButton, IonCol, IonGrid, IonIcon, IonLabel, IonList, IonRow } from "@ionic/react";
+import { IonButton, IonCol, IonGrid, IonIcon, IonList, IonRow } from "@ionic/react";
 import { removeCircleOutline, addCircleOutline } from "ionicons/icons";
 import { Controller, useFieldArray, useFormContext } from "react-hook-form";
 import NumberFormat from "react-number-format";
@@ -159,7 +159,7 @@ export const PhoneFieldInput = (props: PhoneFieldProps) => {
           ))}
           <IonRow><IonCol size="12">
             <IonButton className="phone-button" expand="block" id="addPhoneButton" onClick={addPhoneInput}>
-              <IonIcon icon={addCircleOutline}></IonIcon><p>&nbsp;Add</p>
+              <IonIcon icon={addCircleOutline}></IonIcon><p>&nbsp;Add Phone</p>
             </IonButton>
           </IonCol></IonRow>
           </div>

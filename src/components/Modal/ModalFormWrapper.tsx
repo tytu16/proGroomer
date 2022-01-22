@@ -15,7 +15,7 @@ interface Note{
     message: string
 }
 
-const ModalFormWrapper: React.FC<InputProps> = ({personIndex, formPrefix, onSave}) => {
+const ModalFormWrapper: React.FC<InputProps> = ({personIndex, formPrefix, onSave, label}) => {
     const noteFormPrefix = formPrefix + `.${personIndex}.note`;
     const {watch, control, setValue} = useFormContext();
 
@@ -57,6 +57,6 @@ const ModalFormWrapper: React.FC<InputProps> = ({personIndex, formPrefix, onSave
     }
 
     return <ModalNoteList fields={fields} noteFormPrefix={noteFormPrefix} handleDelete={handleDelete}
-                label={'Person Num'} handleSave={handleSave} handleCancel={handleCancel} />
+                label={label} handleSave={handleSave} handleCancel={handleCancel} />
 }
 export default ModalFormWrapper;

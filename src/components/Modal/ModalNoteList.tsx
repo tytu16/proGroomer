@@ -1,9 +1,12 @@
-import {IonButton, IonCol, IonGrid, IonLabel, IonList, IonListHeader, IonModal, IonPopover, IonRow } from '@ionic/react';
+import {IonButton, IonCol, IonGrid, IonIcon, IonLabel, IonList, IonListHeader, IonModal, IonPopover, IonRow } from '@ionic/react';
 import React from "react";
 import ModalContentWrapper from "./ModalContentWrapper"
 import {MyTextArea} from "../InputFields/MyTextArea"
 import {MyTextInput} from "../InputFields/MyTextInput";
-import ItemSlideWrapper from "../Accordion/ItemSlideWrapper";
+
+import { removeCircleOutline, addCircleOutline } from "ionicons/icons";
+
+import "../InputFields/InputStyling.css";
 
 interface ModalNoteListProps{
     fields: any,
@@ -38,10 +41,6 @@ export class ModalNoteList extends React.Component<ModalNoteListProps, ModalNote
         if(this.state.tempString != ''){
             labelsCopy[noteIndex] = this.state.tempString;
         }
-        console.log('old labels:');
-        console.log(this.state.displayLabels);
-        console.log('new labels');
-        console.log(labelsCopy);
         this.setState({
             tempString: "",
             displayLabels: labelsCopy,
@@ -53,15 +52,9 @@ export class ModalNoteList extends React.Component<ModalNoteListProps, ModalNote
 
     //Todo: Canceling a new addition prevents adding new notes
     handleCancel = (noteIndex: number) => {
-        console.log(`handling cancel for index: ${noteIndex}`);
-        console.log(this.state.displayLabels);
         if(this.state.displayLabels.length-2 == noteIndex){
             let newLabels = this.state.displayLabels.slice();
-            console.log('old lablee');
-            console.log(newLabels);
             newLabels.pop();
-            console.log('new labels');
-            console.log(newLabels);
             this.setState({
                 tempString: "",
                 displayLabels: newLabels,
@@ -99,8 +92,6 @@ export class ModalNoteList extends React.Component<ModalNoteListProps, ModalNote
     }
 
     handleAddNewNote = (e: any) => {
-        console.log('adding new note: ');
-        console.log(this.state.displayLabels.length-1)
         this.setState((prevState) => ({
             tempString: prevState.tempString,
             displayLabels: prevState.displayLabels.concat("").slice(),
@@ -110,14 +101,8 @@ export class ModalNoteList extends React.Component<ModalNoteListProps, ModalNote
     }
 
     handleButtonDelete = (index: number) => {
-        console.log('deleting');
-        console.log(index);
         let localNotes = this.state.displayLabels.slice();
-        console.log('before: ');
-        console.log(localNotes);
         localNotes = localNotes.slice(0,index).concat(localNotes.slice(index+1));
-        console.log('after: ');
-        console.log(localNotes);
         this.setState((prevState) => ({
             tempString: prevState.tempString,
             displayLabels: localNotes,
@@ -130,13 +115,8 @@ export class ModalNoteList extends React.Component<ModalNoteListProps, ModalNote
     render() {
         return(<div>
         <IonRow>
-            <IonCol size="6">
+            <IonCol size="12">
                 <IonLabel className="large-header" >Notes for {this.props.label}</IonLabel>
-            </IonCol>
-            <IonCol size="6">
-                <IonButton onClick={(e: any) => {
-                    this.handleAddNewNote(e)
-                }}>Add Note</IonButton>
             </IonCol>
         </IonRow>
         <IonRow>
@@ -151,7 +131,7 @@ export class ModalNoteList extends React.Component<ModalNoteListProps, ModalNote
                                 </IonListHeader>
                             </IonCol>
                             <IonCol size="6">
-                                <IonButton onClick={()=>this.handleButtonDelete(noteIndex)} color="danger">Delete</IonButton>
+                                <IonButton onClick={()=>this.handleButtonDelete(noteIndex)} color="danger"><IonIcon icon={removeCircleOutline}></IonIcon>&nbsp;Delete</IonButton>
                             </IonCol>
                         </IonRow>
                         
@@ -172,8 +152,13 @@ export class ModalNoteList extends React.Component<ModalNoteListProps, ModalNote
                                 </IonGrid>
                             </ModalContentWrapper>
                         </IonModal>
-                        </div>))}
+                    </div>))}
                 </IonList>
+                <IonRow><IonCol size="12">
+                    <IonButton expand='block' onClick={(e: any) => {
+                        this.handleAddNewNote(e)
+                    }}><IonIcon icon={addCircleOutline}></IonIcon>&nbsp;Add Note</IonButton>
+                </IonCol></IonRow>
             </IonCol>
         </IonRow>
         </div>);
