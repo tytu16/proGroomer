@@ -19,6 +19,7 @@ import '@ionic/react/css/ionic-swiper.css';
 
 export interface FamilyQuestionProps {
     index: number,
+    familyNames: Array<string>,
     saveFamilyInfo: (newFamily: FamilyInfo) => void,
     handleFamilyNames: (name: string, index: number) => void,
     addPerson: (newPerson: PersonInfo) => void,
@@ -69,7 +70,7 @@ const FamilyQuestionSlides = (props: FamilyQuestionProps) => {
           zoom={true}
           onSwiper={setSwiper}>
             <SwiperSlide>
-                <FamilyQuestions handleFamilyNames={props.handleFamilyNames} index={props.index} toPeopleInfo={saveFamilyToPeople} />
+                <FamilyQuestions familyNames={props.familyNames} handleFamilyNames={props.handleFamilyNames} index={props.index} toPeopleInfo={saveFamilyToPeople} />
             </SwiperSlide>
             <SwiperSlide>
                 <PeopleQuestions index={props.index} toFamilyInfo={toPreviousSlide} toPetInfo={toNextSlide}/>

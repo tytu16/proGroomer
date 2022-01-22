@@ -1,8 +1,8 @@
-import {IonRow, IonCol, IonButton} from "@ionic/react";
+import {IonRow, IonCol, IonButton, IonIcon} from "@ionic/react";
 
 interface BottomSlideProps {
     numButtons: string,
-    buttonOneLabel: string, buttonOneClick: (data?:any)=> (any | void),//Top
+    buttonOneLabel: string, buttonOneIcon?: any, buttonOneClick: (data?:any)=> (any | void),//Top
     buttonTwoLabel?: string | null, buttonTwoClick?: (data?:any) => (any | void),//bottom left
     buttonThreeLabel?: string | null, buttonThreeClick?: (data?:any) => (any | void) //bottom right
 }
@@ -20,7 +20,10 @@ const BottomSlideButtons = (props: BottomSlideProps) => {
             return (
                 <IonRow>
                     <IonCol>
-                        <IonButton expand="block" onClick={buttonOneClick}>{buttonOneLabel}</IonButton>
+                        <IonButton expand="block" onClick={buttonOneClick}>
+                            {props.buttonOneIcon && <IonIcon icon={props.buttonOneIcon}></IonIcon>}
+                            &nbsp;{buttonOneLabel}
+                        </IonButton>
                     </IonCol>
                 </IonRow>
             );
@@ -29,7 +32,10 @@ const BottomSlideButtons = (props: BottomSlideProps) => {
             return (
                 <IonRow>
                     <IonCol>
-                        <IonButton expand="block" onClick={buttonOneClick}>{buttonOneLabel}</IonButton>
+                        <IonButton expand="block" onClick={buttonOneClick}>
+                            {props.buttonOneIcon && <IonIcon icon={props.buttonOneIcon}></IonIcon>}
+                            &nbsp;{buttonOneLabel}
+                        </IonButton>
                     </IonCol>
                     <IonCol>
                         <IonButton expand="block" onClick={buttonTwoClick}>{buttonTwoLabel}</IonButton>
@@ -41,7 +47,10 @@ const BottomSlideButtons = (props: BottomSlideProps) => {
             return (<>
                 <IonRow>
                     <IonCol>
-                        <IonButton expand="block" onClick={buttonOneClick}>{buttonOneLabel}</IonButton>
+                        <IonButton expand="block" onClick={buttonOneClick}>
+                            {props.buttonOneIcon && <IonIcon icon={props.buttonOneIcon}></IonIcon>}
+                            &nbsp;{buttonOneLabel}
+                        </IonButton>
                     </IonCol>
                 </IonRow>
                 <IonRow>

@@ -5,7 +5,7 @@ import * as _ from 'lodash';
 
 interface InputProps {
     onSave: Function,
-    personIndex: number,
+    objectIndex: number,
     label: string
     formPrefix: string
 }
@@ -15,8 +15,8 @@ interface Note{
     message: string
 }
 
-const ModalFormWrapper: React.FC<InputProps> = ({personIndex, formPrefix, onSave, label}) => {
-    const noteFormPrefix = formPrefix + `.${personIndex}.note`;
+const ModalFormWrapper: React.FC<InputProps> = ({objectIndex, formPrefix, onSave, label}) => {
+    const noteFormPrefix = formPrefix + `.${objectIndex}.note`;
     const {watch, control, setValue} = useFormContext();
 
     console.log(`notecardModal name:${noteFormPrefix}`)

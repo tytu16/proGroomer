@@ -1,5 +1,6 @@
-import { IonButton, IonCol, IonLabel, IonList, IonRow } from "@ionic/react";
+import { IonList } from "@ionic/react";
 import { useRef, useState } from "react";
+import { removeCircleOutline, addCircleOutline } from "ionicons/icons";
 import { useFieldArray, useFormContext } from "react-hook-form";
 import "./Questions.css";
 import {MyTextLabelInput} from "../../../components/InputFields/MyTextLabelInput";
@@ -74,7 +75,7 @@ const PeopleQuestions = (props: PeopleQuestionsProps) => {
                     watchedFields[fieldArrayIndex].firstName : `Person ${fieldArrayIndex+1}`;
 
                 return (<ModalFormWrapper key={questionIndex} label={personName}
-                            personIndex={fieldArrayIndex} formPrefix={objectType} onSave={()=>{}}/>);
+                            objectIndex={fieldArrayIndex} formPrefix={objectType} onSave={()=>{}}/>);
             default:
                 return  (
                     <MyTextLabelInput key={questionIndex} index={fieldArrayIndex} 
@@ -187,7 +188,7 @@ const PeopleQuestions = (props: PeopleQuestionsProps) => {
             </IonList>
 
             <BottomSlideButtons numButtons="three"
-                buttonOneLabel="Add Another" buttonOneClick={addAnother}
+                buttonOneLabel={"Add Another Person"} buttonOneIcon={addCircleOutline} buttonOneClick={addAnother}
                 buttonTwoLabel="&lt; Family" buttonTwoClick={props.toFamilyInfo}
                 buttonThreeLabel="Pets &gt;" buttonThreeClick={moveToPets}/>
         </SlideWrapper>

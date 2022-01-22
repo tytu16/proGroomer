@@ -119,6 +119,14 @@ export const FamilyQuestionFields = [
         fieldName: "garageCd",
         required: true,
         watched: false
+    },
+    {
+        placeholder: "Add a note",
+        label: "Notes",
+        objectType: "family",
+        fieldName: "note",
+        required: true,
+        watched: true
     }
 ]
 

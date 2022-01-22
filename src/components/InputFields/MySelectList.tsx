@@ -15,20 +15,19 @@ export interface MySelectListProps {
   }
 
 export const MySelectList = (props: MySelectListProps) => {
-    const {label, fieldName, objectType, index, placeholder, valueList, required, addStyling} = props;
+    const {label, fieldName, objectType, index, placeholder, valueList, addStyling} = props;
 
     const {register} = useFormContext();
 
     return(<div className="shadow-container">
         <IonGrid className={addStyling ? "my-select-list" : ""}>
-            {(label != '') ? (
+            {(label != '') && (
                 <IonRow>
                     <label>{label}</label>
-                </IonRow>) : (
-                <></>
-            )}
+                </IonRow>) }
             <IonRow className="ion-text-left">
-                <IonSelect id="my-list" placeholder={placeholder}{...register(`${objectType}.${index}.${fieldName}`)}>
+                {/* ToDo: make this populate from a default state set on profile setup  */}
+                <IonSelect id="my-list" value={"MO"} placeholder={placeholder}{...register(`${objectType}.${index}.${fieldName}`)}>
                 {
                     Object(valueList).map((v:ListValueInterface) => {
                         return (

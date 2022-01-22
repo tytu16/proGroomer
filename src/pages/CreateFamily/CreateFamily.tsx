@@ -128,7 +128,7 @@ const CreateFamily = (props: CreateFamilyProps) => {
                         )}
                     /></div>
                     <AccordionWrapper addBorder={false} classNames={activeIndex == familyIndex ? "accordion" : "accordion collapsed"}>
-                      <FamilyQuestionSlides index={familyIndex} saveFamilyInfo={saveFamilyInfo} toTop={toTop}
+                      <FamilyQuestionSlides familyNames={familyNames} index={familyIndex} saveFamilyInfo={saveFamilyInfo} toTop={toTop}
                         addPerson={addPerson} addPet={addPet} submitFamily={submitFamily} handleFamilyNames={handleFamilyNames}/>
                     </AccordionWrapper>
                   </div>
