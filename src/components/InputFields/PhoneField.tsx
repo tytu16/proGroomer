@@ -16,12 +16,13 @@ export interface PhoneFieldProps {
   placeholder: string,
   label: string,
   objectType: string,
-  fieldName: string,
+  fieldName: string
 }
 
 export const PhoneFieldInput = (props: PhoneFieldProps) => {
   const {index, placeholder, fieldName, objectType} = props;
   const formPrefix = objectType + `.${index}` + '.phone';
+  const phoneRegex = /(^\(\d{3}\)\s\d{3}\s-\s\d{4})/g;
 
   const {control} = useFormContext();
   const { fields, append, remove} = useFieldArray({
@@ -31,6 +32,8 @@ export const PhoneFieldInput = (props: PhoneFieldProps) => {
 
   const [activeIndex, setActiveIndex] = useState<number>(0);
   const [phoneNumbers, setPhoneNumbers] = useState<Array<string>>([]);
+  const [numFilledPhones, setNumFilledPhones]  = useState<number>(0);
+  const [phonesActive, setPhonesActive] = useState<boolean>(true);
   const IonListRef = useRef<any>(null);
 
   const addPhoneInput = (data: any) => {
@@ -44,6 +47,7 @@ export const PhoneFieldInput = (props: PhoneFieldProps) => {
     removePhoneInput(index);
     let newPhones = phoneNumbers.slice(0,index).concat(phoneNumbers.slice(index+1));
     setPhoneNumbers(newPhones);
+    setNumFilledPhones(numFilledPhones-1);
     IonListRef.current.closeSlidingItems();
   }
 
@@ -55,26 +59,41 @@ export const PhoneFieldInput = (props: PhoneFieldProps) => {
     }
   }
 
-  const handleFieldChange = (number: string, index: number) => {
+  const handleFieldChange = (phoneNumber: string, index: number) => {
     let newPhones = phoneNumbers.slice();
-    newPhones[index] = number;
+    console.log('new phoneNum: '+phoneNumber);
+    if(newPhones[index]){
+      console.log('old phoneNum: '+newPhones[index]);
+      if(!newPhones[index].search(phoneRegex) && phoneNumber.search(phoneRegex)){
+        console.log(`lowering numFilledPhones: ${numFilledPhones} -> ${numFilledPhones-1}`)
+        setNumFilledPhones(numFilledPhones-1);
+      } else if(newPhones[index].search(phoneRegex) && !phoneNumber.search(phoneRegex)){
+        console.log(`raising numFilledPhones: ${numFilledPhones} -> ${numFilledPhones+1}`)
+        setNumFilledPhones(numFilledPhones+1);
+      }
+    }
+    newPhones[index] = phoneNumber;
     setPhoneNumbers(newPhones);
 }
 
   const removePhoneInput = (index: number) => {
     remove(index);
+    setNumFilledPhones(numFilledPhones-1);
   }
 
   // ToDo: Sides of layout uneven with rest of page
   return(<div className="shadow-container">
     <IonGrid className="ion-no-padding">
-        <IonRow>
-          <IonLabel className="text-left large-header">{props.label}:</IonLabel>&nbsp;
-          <IonButton className="phone-button" expand="block" id="addPhoneButton" onClick={addPhoneInput}>
-            <IonIcon icon={addCircleOutline}></IonIcon><p>&nbsp;Add</p>
-          </IonButton>
-        </IonRow>
-        <IonList className="phone-list" ref={IonListRef}>
+      <div onClick={()=>setPhonesActive(!phonesActive)}>
+      <AccordionHeader fieldArrayIndex={0} disabled={true}
+                      isPrimary={true} isActive={phonesActive}
+                      handleDelete={()=>{}} handleAccordion={()=>{}} 
+                      label={(numFilledPhones == 0) ? props.label : 
+                        `${numFilledPhones} ` + ( numFilledPhones == 1 ? props.label : props.label+'s' )} >
+        </AccordionHeader>
+      </div>
+        <IonList className={["accordion", (phonesActive ? "" : " collapsed")].join(" ")} ref={IonListRef}>
+          <div className="question-content">
           {fields.map((field, fieldArrayIndex) => (
             <div className="phone-field-grid" key={field.id}>
               <AccordionHeader fieldArrayIndex={fieldArrayIndex} 
@@ -117,7 +136,7 @@ export const PhoneFieldInput = (props: PhoneFieldProps) => {
                     {/* PhoneType */}
                     <IonCol size="6">
                       <MySelectList index={fieldArrayIndex} valueList={PhoneTypeList}
-                                    placeholder="Phone Type" label=""
+                                    placeholder="Type" label=""
                                     objectType={formPrefix} fieldName="phoneType"
                                     required={false} addStyling={false}
                       />
@@ -138,6 +157,12 @@ export const PhoneFieldInput = (props: PhoneFieldProps) => {
               </AccordionWrapper>
             </div>
           ))}
+          <IonRow><IonCol size="12">
+            <IonButton className="phone-button" expand="block" id="addPhoneButton" onClick={addPhoneInput}>
+              <IonIcon icon={addCircleOutline}></IonIcon><p>&nbsp;Add</p>
+            </IonButton>
+          </IonCol></IonRow>
+          </div>
         </IonList>
       </IonGrid>
     </div>);

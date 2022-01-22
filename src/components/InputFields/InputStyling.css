@@ -75,6 +75,7 @@ ion-select{
 }
 
 .phone-field{
+    width: 100%;
     color: black;
     padding: 4%;
     margin-bottom: 3%;

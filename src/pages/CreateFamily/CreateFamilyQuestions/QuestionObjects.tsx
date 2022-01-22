@@ -157,7 +157,7 @@ export const PeopleQuestionFields = [
     },
     {
         placeholder: "(XXX) XXX-XXXX",
-        label: "Phone Numbers",
+        label: "Phone Number",
         objectType: "family.0.person.0.phone",
         fieldName: "phoneNumber",
         required: true,

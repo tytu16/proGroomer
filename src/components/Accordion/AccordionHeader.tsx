@@ -8,15 +8,16 @@ interface AccordionHeaderProps{
     isPrimary: boolean,
     isActive: boolean,
     label: string,
+    disabled?: boolean,
     labelClass?: string,
     handleDelete: (i: number) => void,
     handleAccordion: (i: number) => void
 }
 
 const AccordionHeader: React.FC<AccordionHeaderProps> = (props) => {
-    const {fieldArrayIndex, isPrimary, isActive, label, handleDelete, handleAccordion, labelClass} = props;
+    const {fieldArrayIndex, isPrimary, isActive, label, handleDelete, handleAccordion, labelClass, disabled=false} = props;
     return (
-        <IonItemSliding className={isPrimary ? 'accordion-header primary' : 'accordion-header' }>
+        <IonItemSliding disabled={disabled} className={isPrimary ? 'accordion-header primary' : 'accordion-header' }>
             {(isPrimary) ? (
                 <IonItemOptions side="start"><IonItemOption onClick={() => {alert('Can\'t delete primary contact.')}} color="primary" expandable>
                     Primary
