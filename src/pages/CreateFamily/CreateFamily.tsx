@@ -1,9 +1,7 @@
-import { IonCol, IonContent, IonGrid, IonIcon, IonLabel, IonList, IonRow } from "@ionic/react";
+import { IonButton, IonCol, IonContent, IonGrid, IonIcon, IonLabel, IonList, IonRow } from "@ionic/react";
 
 import './CreateFamily.scss'; 
 import { FamilyInfo } from "../../models/FamilyInfo";
-import { PersonInfo } from "../../models/PersonInfo";
-import { PetInfo } from "../../models/PetInfo";
 import CreateFamilySlideWrapper from "./CreateFamilyQuestions/CreateFamilySlideWrapper"
 import { useFieldArray, useForm, FormProvider } from "react-hook-form";
 
@@ -11,6 +9,7 @@ import { InitFamilyQuestionState } from "./CreateFamilyQuestions/QuestionObjects
 import { useRef, useState } from "react";
 import AccordionWrapper from "../../components/Accordion/AccordionWrapper";
 import AccordionHeader from "../../components/Accordion/AccordionHeader";
+import { useHistory } from "react-router";
 
 export interface CreateFamilyProps {
     onCreateFamily: (family: FamilyInfo) => void,
@@ -24,25 +23,20 @@ export interface CreateFamilyState {
 const CreateFamily = (props: CreateFamilyProps) => {
 
   const IonContentRef = useRef<any>(null);
+  const IonListRef = useRef<any>(null);
+  const history = useHistory();
+  const methods = useForm({
+    defaultValues: {family: [InitFamilyQuestionState()]}
+  });
+  const control = methods.control;
+  const watch   = methods.watch;
+  const { fields, append, remove} = useFieldArray({
+    control,
+    name: "family",
+  });
 
-  const addPerson = (newperson: PersonInfo) => {
-      
-  }
-
-  const addPet = (newPet: PetInfo): FamilyInfo => {
-      // let newFamily = this.state.familyInProgress;
-      // if(newFamily.pets.length == 0){
-      //     newFamily.pets = [newPet];
-      // } else {
-      //     newFamily.pets.push(newPet);
-      // }
-
-      // console.log('family has a new pet');
-      // console.log(newFamily);
-      // this.setState({familyInProgress: newFamily});
-      // return newFamily;
-      return new FamilyInfo({});
-  }
+  const [activeIndex, setActiveIndex] = useState<number>(0);
+  const [familyNames, setFamilyNames] = useState<string[]>([]);
 
   const saveFamilyInfo = (newFamily: FamilyInfo) => {
       // if(!this.state.familyInProgress.baseFamilyEqual(newFamily)){
@@ -55,32 +49,17 @@ const CreateFamily = (props: CreateFamilyProps) => {
       // }
   }
 
-  const submitFamily = (newPet: PetInfo | null) => {
-      // this method is broken
-      // if(newPet == null){
-      //     console.log('pet already exists, moving on with family as is');
-      //     this.props.onCreateFamily(this.state.familyInProgress);
-      // } else {
-      //     this.props.onCreateFamily(addPet(newPet));
-      // }
+  const submitFamily = (index: number) => {
+      console.log('in Create Family submit function');
+      console.log(`submitting family ${index}`);
+      let submitData = watch(`family.${index}`);
+      console.log(submitData);
+      history.goBack();
   }
-
-  const IonListRef = useRef<any>(null);
-  const methods = useForm({
-    defaultValues: {family: [InitFamilyQuestionState()]}
-  });
-  const control = methods.control;
-  const { fields, append, remove} = useFieldArray({
-    control,
-    name: "family",
-  });
-
-  const [activeIndex, setActiveIndex] = useState<number>(0);
-  const [familyNames, setFamilyNames] = useState<string[]>([]);
 
   const handleFamilyNames = (name: string, index: number) => {
     // family.0.person.0.firstName
-    let newFamilyNames = familyNames.slice();
+    let newFamilyNames = [...familyNames];
     newFamilyNames[index] = name;
     setFamilyNames(newFamilyNames);
   }
@@ -109,7 +88,6 @@ const CreateFamily = (props: CreateFamilyProps) => {
     IonContentRef.current.scrollToTop(300);
   }
 
-
   return (
       <IonContent ref={IonContentRef}>
           <IonList ref={IonListRef}>
@@ -128,15 +106,15 @@ const CreateFamily = (props: CreateFamilyProps) => {
                         )}
                     /></div>
                     <AccordionWrapper addBorder={false} classNames={activeIndex == familyIndex ? "accordion" : "accordion collapsed"}>
-                      <CreateFamilySlideWrapper familyNames={familyNames} index={familyIndex} saveFamilyInfo={saveFamilyInfo} toTop={toTop}
-                        addPerson={addPerson} addPet={addPet} submitFamily={submitFamily} handleFamilyNames={handleFamilyNames}/>
+                      <CreateFamilySlideWrapper familyNames={familyNames} index={familyIndex} 
+                        saveFamilyInfo={saveFamilyInfo} toTop={toTop}
+                        submitFamily={submitFamily} handleFamilyNames={handleFamilyNames}/>
                     </AccordionWrapper>
                   </div>
                 ))}
-                <button type="button" onClick={() => append(InitFamilyQuestionState())}>
-                  append
-                </button>
-                <input type="submit" />
+                <IonButton type="button" onClick={() => {
+                  append(InitFamilyQuestionState())
+                }}>append</IonButton>
               </form>
             </FormProvider>
           </IonList>

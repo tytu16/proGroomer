@@ -6,11 +6,6 @@ interface SlideWrapperProps {
 }
 
 const SlideWrapper: React.FC<SlideWrapperProps> = ({title, spacers=true, children}) => {
-    // add the spacers by default if it's missing
-    // let addSpacers = props.spacers;
-    // if(addSpacers == null){
-    //     addSpacers = true;
-    // }
     return (
         <IonGrid class="slide-grid ion-justify-content-center ion-align-items-center ion-align-self-center">
         {spacers && <IonRow class="spacer"></IonRow>}

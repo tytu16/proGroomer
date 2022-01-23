@@ -22,19 +22,15 @@ export interface FamilyQuestionProps {
     familyNames: Array<string>,
     saveFamilyInfo: (newFamily: FamilyInfo) => void,
     handleFamilyNames: (name: string, index: number) => void,
-    addPerson: (newPerson: PersonInfo) => void,
-    addPet: (newPet: PetInfo) => void,
-    submitFamily: (newPet: PetInfo | null) => void,
+    submitFamily: (index: number) => void,
     toTop: () => void
 }
 
 const CreateFamilySlideWrapper = (props: FamilyQuestionProps) => {
 
-    const history = useHistory();
     const [swiper, setSwiper] = useState<any>(null);
 
     const saveFamilyToPeople = (newFamily?: FamilyInfo) => {
-        // props.saveFamilyInfo(newFamily);
         toNextSlide();
     }
 
@@ -54,9 +50,8 @@ const CreateFamilySlideWrapper = (props: FamilyQuestionProps) => {
         }
     }
 
-    const SubmitFamilyAndBackToList = () => {
-        // props.submitFamily(petInfo);
-        history.goBack();
+    const submitFamilyAndBackToList = () => {
+        props.submitFamily(props.index);
     }
 
     return(
@@ -76,7 +71,7 @@ const CreateFamilySlideWrapper = (props: FamilyQuestionProps) => {
                 <PeopleQuestions index={props.index} toFamilyInfo={toPreviousSlide} toPetInfo={toNextSlide}/>
             </SwiperSlide>
             <SwiperSlide>
-                <PetQuestions index={props.index} backToPeople={toPreviousSlide} submitFamily={SubmitFamilyAndBackToList} />
+                <PetQuestions index={props.index} backToPeople={toPreviousSlide} submitFamily={submitFamilyAndBackToList} />
             </SwiperSlide>
         </Swiper>
     );

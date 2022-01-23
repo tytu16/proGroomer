@@ -27,6 +27,8 @@ interface ModalNoteListState{
     e: any
 }
 
+
+// ToDo: Differentiator between note with only label and one with message
 export class ModalNoteList extends React.Component<ModalNoteListProps, ModalNoteListState> {
     constructor(props: ModalNoteListProps){
         super(props);
