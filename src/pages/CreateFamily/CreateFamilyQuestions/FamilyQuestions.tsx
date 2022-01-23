@@ -34,7 +34,7 @@ const FamilyQuestions = (props: FamilyQuestionsProps) => {
         switch(field.fieldName){
             case "addressState":
                 return (<MySelectList key={questionIndex} index={props.index} valueList={StateList}
-                    placeholder={field.placeholder} label={field.label} addStyling={true}
+                    placeholder={field.placeholder} label={field.label} addStyling={true} defaultValue={"MO"}
                     objectType={field.objectType} fieldName={field.fieldName} required={field.required}
                 />);
 

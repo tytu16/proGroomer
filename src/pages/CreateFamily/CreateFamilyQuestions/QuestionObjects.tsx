@@ -13,10 +13,8 @@ export const InitNoteQuestionState = () => {
 
 export const InitPetQuestionState = () => {
     return({
-        id: 0,
         name: "",
         breed: "",
-        sex: "",
         ageYr: "0",
         ageMn: "0",
         weight: "0",

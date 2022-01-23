@@ -10,12 +10,13 @@ export interface MySelectListProps {
     fieldName: string,
     objectType: string,
     required: boolean,
+    defaultValue?: string,
     addStyling: boolean,
     valueList: Array<ListValueInterface>
   }
 
 export const MySelectList = (props: MySelectListProps) => {
-    const {label, fieldName, objectType, index, placeholder, valueList, addStyling} = props;
+    const {label, fieldName, objectType, index, placeholder, valueList, addStyling, defaultValue} = props;
 
     const {register} = useFormContext();
 
@@ -24,10 +25,10 @@ export const MySelectList = (props: MySelectListProps) => {
             {(label != '') && (
                 <IonRow>
                     <label>{label}</label>
-                </IonRow>) }
+                </IonRow>)}
             <IonRow className="ion-text-left">
                 {/* ToDo: make this populate from a default state set on profile setup  */}
-                <IonSelect id="my-list" value={"MO"} placeholder={placeholder}{...register(`${objectType}.${index}.${fieldName}`)}>
+                <IonSelect id="my-list" value={defaultValue} placeholder={placeholder}{...register(`${objectType}.${index}.${fieldName}`)}>
                 {
                     Object(valueList).map((v:ListValueInterface) => {
                         return (

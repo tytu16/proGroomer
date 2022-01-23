@@ -8,6 +8,8 @@ import "./Questions.scss";
 import ModalFormWrapper from "../../../components/Modal/ModalFormWrapper";
 import { MySelectList } from "../../../components/InputFields/MySelectList";
 import {WeightUnitList} from "../../../models/Enums/WeightUnitList"
+import { addCircleOutline } from "ionicons/icons";
+import BottomSlideButtons from "../../../components/Slide/BottomButtons";
 
 export interface PetQuestionsProps{
     index: number,
@@ -30,14 +32,10 @@ const PetQuestions = (props: PetQuestionsProps) => {
     });
 
     const IonListRef = useRef<any>(null);
-    const IonFemale = useRef<any>(null);
-    const IonMale = useRef<any>(null);
     const [activeIndex, setActiveIndex] = useState<number>(0);
     const [watchedFields, setWatchedFields] = useState<Array<WatchedFieldsInter>>([{
         petName: "", petBreed: ""
     }]);
-    const [maleFemale, setMaleFemale] = useState<Array<string>>([""]);
-
     
 // ----RENDER---- //
 // Dynamically rendered fields fed from PeopleQuestionFields
@@ -49,18 +47,18 @@ const PetQuestions = (props: PetQuestionsProps) => {
                         control={control}
                         name={`${objectType}.${petIndex}.${field.fieldName}`}
                         render={({ field: { onChange, name, value } }) => (
-                            <IonRadioGroup value={maleFemale} onIonChange={(e) => handleRadioChange(e.detail.value, petIndex)}>
+                            <IonRadioGroup value={value} onIonChange={onChange} name={name}>
                                     <IonRow>
-                                        <IonCol size="5">
-                                            <IonItem>
+                                        <IonCol size="6">
+                                            <IonItem class="ion-no-padding ion-text-center" mode="md">
                                                 <IonLabel>Male</IonLabel>
-                                                <IonRadio slot="start" value="Male" />
+                                                <IonRadio class="ion-no-padding" slot="end" value="Male" />
                                             </IonItem>
                                         </IonCol>
-                                        <IonCol size="7">
-                                            <IonItem>
+                                        <IonCol size="6">
+                                            <IonItem class="ion-no-padding ion-text-center" mode="md">
                                                 <IonLabel>Female</IonLabel>
-                                                <IonRadio slot="end" value="Female" />
+                                                <IonRadio class="ion-no-padding" slot="end" value="Female" />
                                             </IonItem>
                                         </IonCol>
                                     </IonRow>
@@ -102,14 +100,14 @@ const PetQuestions = (props: PetQuestionsProps) => {
                         <IonCol size="6">
                             <div className="input-label-field"><MySelectList key={questionIndex} index={petIndex} addStyling={true}
                                 placeholder={field.placeholder} label={"Units"} valueList={WeightUnitList}
-                                objectType={objectType} fieldName={'weightUnits'} required={field.required}
+                                objectType={objectType} fieldName={'wUnits'} required={field.required}
                             /></div>
                         </IonCol>
                     </IonRow>
                 );
 
             case 'note':
-                return (<ModalFormWrapper key={questionIndex} label={derivePetLabel(petIndex)}
+                return (<ModalFormWrapper key={questionIndex} label={derivePetLabel(petIndex, true)}
                     defaultOn={false} objectIndex={petIndex} formPrefix={objectType}/>);
 
             default:
@@ -123,11 +121,11 @@ const PetQuestions = (props: PetQuestionsProps) => {
         }
     }
 
-    const derivePetLabel = (index: number) => {
+    const derivePetLabel = (index: number, isNote: boolean) => {
         let outString = "";
         if(index < watchedFields.length && watchedFields[index].petName != ''){
             outString = watchedFields[index].petName;
-            if(watchedFields[index].petBreed != '') {
+            if(watchedFields[index].petBreed != '' && !isNote) {
                 outString += ' - ' + watchedFields[index].petBreed
             }
         } else {
@@ -144,9 +142,6 @@ const PetQuestions = (props: PetQuestionsProps) => {
     setActiveIndex(-1);
     let newWatchedFields = watchedFields.slice(0,index).concat(watchedFields.slice(index+1));
     setWatchedFields(newWatchedFields);
-    let localMaleFemale = [...maleFemale];
-    localMaleFemale = localMaleFemale.slice(0,index).concat(localMaleFemale.slice(index+1));
-    setMaleFemale(localMaleFemale);
     IonListRef.current.closeSlidingItems();
 }
 
@@ -176,9 +171,6 @@ const handleFieldChange = (data: string, name: string) => {
 const addAnother = (data: any) => {
    append(InitPetQuestionState());
    setActiveIndex(watchedFields.length);
-   const localMaleFemale = [...maleFemale];
-   localMaleFemale.push("");
-   setMaleFemale(localMaleFemale);
    setWatchedFields(watchedFields.concat({petName:"", petBreed:""}));
 }
 
@@ -190,14 +182,6 @@ const handleAccordionChange = (index: number) => {
    } else {
        setActiveIndex(index);
    }
-}
-
-const handleRadioChange = (value: string, index: number) => {
-
-}
-
-const finishFamily = (data: any) => {
-    props.submitFamily();
 }
 
     return (
@@ -217,7 +201,7 @@ const finishFamily = (data: any) => {
                                     onClick={() => handleAccordionChange(fieldArrayIndex)} slot="header" mode='md' lines="none">
                                     {
                                         <IonLabel>
-                                            {derivePetLabel(fieldArrayIndex)}
+                                            {derivePetLabel(fieldArrayIndex, false)}
                                         </IonLabel>
                                     }
                                     <IonIcon className={(activeIndex == fieldArrayIndex ? "active icon float-right" : "icon float-right")} size="large"
@@ -237,19 +221,10 @@ const finishFamily = (data: any) => {
                         </div>
                     ))}
                     </IonList>
-                    <IonRow>
-                        <IonCol><IonButton expand="block" onClick={handleSubmit(addAnother)}>
-                            Add Another
-                        </IonButton></IonCol>
-                    </IonRow>
-                    <IonRow>
-                        <IonCol>
-                            <IonButton expand="block" onClick={() => props.backToPeople()}>&lt; People</IonButton>
-                        </IonCol>
-                        <IonCol>
-                            <IonButton expand="block" onClick={()=> props.submitFamily()}>Submit &gt;</IonButton>
-                        </IonCol>
-                    </IonRow>    
+                    <BottomSlideButtons numButtons="three"
+                        buttonOneLabel={"Add Another Pet"} buttonOneIcon={addCircleOutline} buttonOneClick={addAnother}
+                        buttonTwoLabel="&lt; People" buttonTwoClick={() => props.backToPeople()}
+                        buttonThreeLabel="Submit &gt;" buttonThreeClick={()=> props.submitFamily()}/>
                 </IonCol>
             </IonRow>
             <IonRow class="spacer"></IonRow>
