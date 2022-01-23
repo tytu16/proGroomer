@@ -1,7 +1,7 @@
 import { IonContent, IonFab, IonFabButton, IonHeader, IonIcon, IonPage, IonTitle, IonToolbar } from '@ionic/react';
 import { walletSharp } from 'ionicons/icons'; 
 import React from 'react';
-import './PaymentsTab.css';
+import './PaymentsTab.scss';
 
 import { FamiliesProps, FamiliesState } from '../../models/interfaces/FamilyInterface';
 import FamilyRow from '../../components/FamilyRow/FamilyRow';

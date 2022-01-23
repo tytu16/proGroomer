@@ -6,13 +6,14 @@ import {MyTextInput} from "../InputFields/MyTextInput";
 
 import { removeCircleOutline, addCircleOutline } from "ionicons/icons";
 
-import "../InputFields/InputStyling.css";
+import "../InputFields/InputStyling.scss";
 import AccordionHeader from '../Accordion/AccordionHeader';
 
 interface ModalNoteListProps{
     fields: any,
     noteFormPrefix: string,
     label: string,
+    defaultOn: boolean
     handleSave: Function,
     handleCancel: Function,
     handleDelete: Function
@@ -32,7 +33,7 @@ export class ModalNoteList extends React.Component<ModalNoteListProps, ModalNote
         this.state = {
             tempString: "",
             displayLabels: [""],
-            notesActive: true,
+            notesActive: props.defaultOn,
             index: -1,
             e: undefined
         }

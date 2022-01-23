@@ -6,7 +6,8 @@ import * as _ from 'lodash';
 interface InputProps {
     objectIndex: number,
     label: string
-    formPrefix: string
+    formPrefix: string,
+    defaultOn: boolean
 }
 
 interface Note{
@@ -14,11 +15,10 @@ interface Note{
     message: string
 }
 
-const ModalFormWrapper: React.FC<InputProps> = ({objectIndex, formPrefix, label}) => {
+const ModalFormWrapper: React.FC<InputProps> = ({objectIndex, formPrefix, label, defaultOn}) => {
     const noteFormPrefix = formPrefix + `.${objectIndex}.note`;
     const {watch, control, setValue} = useFormContext();
 
-    console.log(`notecardModal name:${noteFormPrefix}`)
     const { fields, append, remove} = useFieldArray({
         control,
         name: noteFormPrefix,
@@ -55,6 +55,6 @@ const ModalFormWrapper: React.FC<InputProps> = ({objectIndex, formPrefix, label}
     }
 
     return <ModalNoteList fields={fields} noteFormPrefix={noteFormPrefix} handleDelete={handleDelete}
-                label={label} handleSave={handleSave} handleCancel={handleCancel} />
+                label={label} handleSave={handleSave} handleCancel={handleCancel} defaultOn={defaultOn}/>
 }
 export default ModalFormWrapper;

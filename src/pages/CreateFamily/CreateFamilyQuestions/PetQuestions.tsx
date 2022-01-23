@@ -1,10 +1,10 @@
-import { IonButton, IonCol, IonGrid, IonIcon, IonInput, IonItem, IonItemOption, IonItemOptions, IonItemSliding, IonLabel, IonList, IonRow } from "@ionic/react";
+import { IonButton, IonCheckbox, IonCol, IonGrid, IonIcon, IonInput, IonItem, IonItemOption, IonItemOptions, IonItemSliding, IonLabel, IonList, IonListHeader, IonRadio, IonRadioGroup, IonRow } from "@ionic/react";
 import { arrowDownCircleOutline } from 'ionicons/icons';
 import { useRef, useState } from "react";
-import { useFieldArray, useFormContext } from "react-hook-form";
+import { Controller, useFieldArray, useFormContext } from "react-hook-form";
 import { MyTextLabelInput } from "../../../components/InputFields/MyTextLabelInput";
 import { InitPetQuestionState, PetQuestionFields, TextFieldPropInterface } from "./QuestionObjects";
-import "./Questions.css";
+import "./Questions.scss";
 import ModalFormWrapper from "../../../components/Modal/ModalFormWrapper";
 import { MySelectList } from "../../../components/InputFields/MySelectList";
 import {WeightUnitList} from "../../../models/Enums/WeightUnitList"
@@ -30,35 +30,59 @@ const PetQuestions = (props: PetQuestionsProps) => {
     });
 
     const IonListRef = useRef<any>(null);
+    const IonFemale = useRef<any>(null);
+    const IonMale = useRef<any>(null);
     const [activeIndex, setActiveIndex] = useState<number>(0);
     const [watchedFields, setWatchedFields] = useState<Array<WatchedFieldsInter>>([{
         petName: "", petBreed: ""
     }]);
+    const [maleFemale, setMaleFemale] = useState<Array<string>>([""]);
 
     
-    // ----RENDER---- //
-    // Dynamically rendered fields fed from PeopleQuestionFields
-    const renderFields = (field: any, questionIndex:number, fieldArrayIndex:number) => {
+// ----RENDER---- //
+// Dynamically rendered fields fed from PeopleQuestionFields
+    const renderFields = (field: any, questionIndex:number, petIndex:number) => {
         switch(field.fieldName){
-            case 'sex':
+            case 'maleFemale':
                 return(
-                    <IonInput key={questionIndex} placeholder="sex ;)"></IonInput>
+                    <Controller key={questionIndex}
+                        control={control}
+                        name={`${objectType}.${petIndex}.${field.fieldName}`}
+                        render={({ field: { onChange, name, value } }) => (
+                            <IonRadioGroup value={maleFemale} onIonChange={(e) => handleRadioChange(e.detail.value, petIndex)}>
+                                    <IonRow>
+                                        <IonCol size="5">
+                                            <IonItem>
+                                                <IonLabel>Male</IonLabel>
+                                                <IonRadio slot="start" value="Male" />
+                                            </IonItem>
+                                        </IonCol>
+                                        <IonCol size="7">
+                                            <IonItem>
+                                                <IonLabel>Female</IonLabel>
+                                                <IonRadio slot="end" value="Female" />
+                                            </IonItem>
+                                        </IonCol>
+                                    </IonRow>
+                            </IonRadioGroup>
+                        )}
+                    />
                 );
 
             case 'age':
                 return (
                     <IonRow key={questionIndex}>
                         <IonCol size ="6">
-                            <MyTextLabelInput key={questionIndex} index={fieldArrayIndex} numbersOnly={true}
+                            <MyTextLabelInput key={questionIndex} index={petIndex} numbersOnly={true}
                                 onChange={handleFieldChange} watched={field.watched} maxLength={2}
-                                placeholder={field.placeholder} label={"Age - Years"}
+                                placeholder={"years"} label={"Age - Years"}
                                 objectType={objectType} fieldName={'ageYr'} required={field.required}
                             />
                         </IonCol>
                         <IonCol size="6">
-                            <MyTextLabelInput key={questionIndex} index={fieldArrayIndex} numbersOnly={true}
+                            <MyTextLabelInput key={questionIndex} index={petIndex} numbersOnly={true}
                                 onChange={handleFieldChange} watched={field.watched} maxLength={2}
-                                placeholder={field.placeholder} label={"Age - Months"}
+                                placeholder={"months"} label={"Age - Months"}
                                 objectType={objectType} fieldName={'ageMn'} required={field.required}
                             />
                         </IonCol>
@@ -69,14 +93,14 @@ const PetQuestions = (props: PetQuestionsProps) => {
                 return (
                     <IonRow key={questionIndex}>
                         <IonCol size ="6">
-                            <MyTextLabelInput key={questionIndex} index={fieldArrayIndex} numbersOnly={true}
+                            <MyTextLabelInput key={questionIndex} index={petIndex} numbersOnly={true}
                                 onChange={handleFieldChange} watched={field.watched}
                                 placeholder={field.placeholder} label={"Weight"}
                                 objectType={objectType} fieldName={'weight'} required={field.required}
                             />
                         </IonCol>
                         <IonCol size="6">
-                            <div className="input-label-field"><MySelectList key={questionIndex} index={fieldArrayIndex} addStyling={true}
+                            <div className="input-label-field"><MySelectList key={questionIndex} index={petIndex} addStyling={true}
                                 placeholder={field.placeholder} label={"Units"} valueList={WeightUnitList}
                                 objectType={objectType} fieldName={'weightUnits'} required={field.required}
                             /></div>
@@ -85,12 +109,12 @@ const PetQuestions = (props: PetQuestionsProps) => {
                 );
 
             case 'note':
-                return (<ModalFormWrapper key={questionIndex} label={derivePetLabel(fieldArrayIndex)}
-                    objectIndex={fieldArrayIndex} formPrefix={objectType}/>);
+                return (<ModalFormWrapper key={questionIndex} label={derivePetLabel(petIndex)}
+                    defaultOn={false} objectIndex={petIndex} formPrefix={objectType}/>);
 
             default:
                 return (
-                        <MyTextLabelInput key={questionIndex} index={fieldArrayIndex} 
+                        <MyTextLabelInput key={questionIndex} index={petIndex} 
                             onChange={handleFieldChange} watched={field.watched}
                             placeholder={field.placeholder} label={field.label}
                             objectType={objectType} fieldName={field.fieldName} required={field.required}
@@ -111,14 +135,18 @@ const PetQuestions = (props: PetQuestionsProps) => {
         }
         return outString;
     }
-    // ----UTILITY METHODS---- //
+
+// ----UTILITY METHODS---- //
 // Remove field from fieldArray, set all accordions as inactive, 
-  // remove watchedField from state, IonListRef to reset ion-item positions 
+// remove watchedField from state, IonListRef to reset ion-item positions 
   const handleDelete = (index: number) => {
     remove(index);
     setActiveIndex(-1);
     let newWatchedFields = watchedFields.slice(0,index).concat(watchedFields.slice(index+1));
     setWatchedFields(newWatchedFields);
+    let localMaleFemale = [...maleFemale];
+    localMaleFemale = localMaleFemale.slice(0,index).concat(localMaleFemale.slice(index+1));
+    setMaleFemale(localMaleFemale);
     IonListRef.current.closeSlidingItems();
 }
 
@@ -128,7 +156,7 @@ const PetQuestions = (props: PetQuestionsProps) => {
 // which is reflected in the pet headers
 const handleFieldChange = (data: string, name: string) => {
     // family.0.pet.0.name
-    let newFields = watchedFields.slice();
+    let newFields = [...watchedFields];
     const nameParse = name.split('.');
     const index = Number.parseInt(nameParse[3]);
     const fieldName = nameParse[4];
@@ -148,6 +176,9 @@ const handleFieldChange = (data: string, name: string) => {
 const addAnother = (data: any) => {
    append(InitPetQuestionState());
    setActiveIndex(watchedFields.length);
+   const localMaleFemale = [...maleFemale];
+   localMaleFemale.push("");
+   setMaleFemale(localMaleFemale);
    setWatchedFields(watchedFields.concat({petName:"", petBreed:""}));
 }
 
@@ -159,6 +190,10 @@ const handleAccordionChange = (index: number) => {
    } else {
        setActiveIndex(index);
    }
+}
+
+const handleRadioChange = (value: string, index: number) => {
+
 }
 
 const finishFamily = (data: any) => {

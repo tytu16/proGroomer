@@ -2,7 +2,7 @@ import { IonList } from "@ionic/react";
 import { useRef, useState } from "react";
 import { removeCircleOutline, addCircleOutline } from "ionicons/icons";
 import { useFieldArray, useFormContext } from "react-hook-form";
-import "./Questions.css";
+import "./Questions.scss";
 import {MyTextLabelInput} from "../../../components/InputFields/MyTextLabelInput";
 import { PeopleQuestionFields, InitPersonQuestionState, TextFieldPropInterface } from "./QuestionObjects";
 import {PhoneFieldInput} from "../../../components/InputFields/PhoneField";
@@ -74,7 +74,7 @@ const PeopleQuestions = (props: PeopleQuestionsProps) => {
                 let personName = watchedFields[fieldArrayIndex].firstName != '' ? 
                     watchedFields[fieldArrayIndex].firstName : `Person ${fieldArrayIndex+1}`;
 
-                return (<ModalFormWrapper key={questionIndex} label={personName}
+                return (<ModalFormWrapper key={questionIndex} label={personName} defaultOn={false}
                             objectIndex={fieldArrayIndex} formPrefix={objectType}/>);
             default:
                 return  (

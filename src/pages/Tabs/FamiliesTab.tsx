@@ -1,6 +1,6 @@
 import {IonPage, IonRouterOutlet } from '@ionic/react';
 import React from 'react';
-import './FamiliesTab.css';
+import './FamiliesTab.scss';
 
 import { FamiliesState } from '../../models/interfaces/FamilyInterface';
 import FamilyList from '../FamilyList/FamilyList';

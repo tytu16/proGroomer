@@ -1,7 +1,7 @@
 import { IonCheckbox, IonCol, IonGrid, IonRow } from "@ionic/react";
 import { useRef } from "react";
 import { Controller, useFormContext } from "react-hook-form";
-import "./InputStyling.css";
+import "./InputStyling.scss";
 
 export interface MyCheckBoxInputProps {
   index: number,

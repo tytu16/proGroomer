@@ -1,15 +1,13 @@
 import { IonButton, IonCol, IonGrid, IonList, IonRow  } from "@ionic/react";
 import { useFormContext } from "react-hook-form";
-import { FamilyInfo } from "../../../models/FamilyInfo";
 import { MyTextLabelInput } from "../../../components/InputFields/MyTextLabelInput";
 import { MySelectList } from "../../../components/InputFields/MySelectList";
 import { StateList } from "../../../models/Enums/States";
 import {FamilyQuestionFields, TextFieldPropInterface} from "./QuestionObjects"
 import SlideWrapper from "../../../components/Slide/SlideWrapper";
 import BottomSlideButtons from "../../../components/Slide/BottomButtons";
-import "./Questions.css"
+import "./Questions.scss"
 import ModalFormWrapper from "../../../components/Modal/ModalFormWrapper";
-import { useState } from "react";
 
 export interface FamilyQuestionsProps {
     handleFamilyNames: (name: string, index: number) => void,
@@ -42,8 +40,8 @@ const FamilyQuestions = (props: FamilyQuestionsProps) => {
 
             case "note":
                 let familyName = (props.familyNames[props.index] && props.familyNames[props.index] != '') ? 
-                props.familyNames[props.index] : `Family ${props.index+1}`;
-                return (<ModalFormWrapper key={questionIndex} label={familyName}
+                props.familyNames[props.index] : `Account ${props.index+1}`;
+                return (<ModalFormWrapper key={questionIndex} label={familyName} defaultOn={false}
                             objectIndex={props.index} formPrefix={field.objectType}/>);
 
             default:
@@ -56,14 +54,12 @@ const FamilyQuestions = (props: FamilyQuestionsProps) => {
     }
 
     return (
-        <SlideWrapper title="Family Information">
-            <IonList>
-            {
+        <SlideWrapper title="Account Information">
+            <IonList>{
                 FamilyQuestionFields.map((field: TextFieldPropInterface, questionIndex: number) => {
                     return renderFields(field, questionIndex);
                 })
-            }
-            </IonList>
+            }</IonList>
             <BottomSlideButtons numButtons="one" buttonOneLabel="People &gt;" buttonOneClick={toPeople}/>
         </SlideWrapper>
     );

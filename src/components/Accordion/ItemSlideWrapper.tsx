@@ -1,6 +1,6 @@
 import {IonItem, IonItemOption, IonItemOptions, IonItemSliding } from "@ionic/react";
 
-import "../InputFields/InputStyling.css";  
+import "../InputFields/InputStyling.scss";  
 
 interface ItemSlideWrapperProps{
     fieldArrayIndex: number,

@@ -1,7 +1,7 @@
 import { IonContent, IonFab, IonFabButton, IonHeader, IonIcon, IonPage, IonTitle, IonToolbar } from '@ionic/react';
 import { personAdd } from 'ionicons/icons';
 import React from 'react';
-import './FamilyList.css';
+import './FamilyList.scss';
 
 import { FamiliesProps } from '../../models/interfaces/FamilyInterface';
 import FamilyRow from '../../components/FamilyRow/FamilyRow';

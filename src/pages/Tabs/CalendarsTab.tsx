@@ -1,6 +1,6 @@
 import { IonContent, IonFab, IonFabButton, IonHeader, IonIcon, IonPage, IonTitle, IonToolbar } from '@ionic/react';
 import { calendarOutline } from 'ionicons/icons';
-import './CalendarsTab.css';
+import './CalendarsTab.scss';
 import React from 'react';
 
 import { FamiliesProps, FamiliesState } from '../../models/interfaces/FamilyInterface';

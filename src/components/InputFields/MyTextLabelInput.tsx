@@ -1,7 +1,7 @@
-import { IonGrid, IonInput, IonRow } from "@ionic/react";
+import { IonGrid, IonInput, IonItem, IonLabel, IonRow } from "@ionic/react";
 import { useState } from "react";
 import { useFormContext } from "react-hook-form";
-import "./InputStyling.css";
+import "./InputStyling.scss";
 
 export interface MyTextLabelInputProps {
   index: number,
@@ -28,20 +28,21 @@ export const MyTextLabelInput = (props: MyTextLabelInputProps) => {
     onChange(newFieldValue, myFieldName);
   }
 
-  return(<div className="shadow-container">
-    <IonGrid className="input-label-field">
-      <IonRow>
-        <label>{label}</label>
-      </IonRow>
-      <IonRow className="ion-text-left">
-        <IonInput  {...register(myFieldName)}
-          class="text-input-field" type={numbersOnly ? "tel": "text"}
-          autocomplete="off" autoCorrect="off" maxlength={maxLength ? maxLength : undefined}
-          placeholder={placeholder}
-          onIonChange={(e) => { 
-            if(watched){handleChange(e);}
-           }}/>
-      </IonRow>
-    </IonGrid>
-    </div>);
+  return(
+    <IonItem mode={"md"} class="ion-no-padding">
+      <IonGrid className="input-label-field">
+        <IonRow>
+          <IonLabel>{label}</IonLabel>
+        </IonRow>
+        <IonRow className="ion-text-left">
+          <IonInput  {...register(myFieldName)}
+            class="text-input-field" type={numbersOnly ? "tel": "text"}
+            autocomplete="off" autoCorrect="off" maxlength={maxLength ? maxLength : undefined}
+            placeholder={placeholder}
+            onIonChange={(e) => {
+              if(watched){handleChange(e);}
+            }}/>
+        </IonRow>
+      </IonGrid>
+    </IonItem>);
 }

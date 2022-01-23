@@ -1,7 +1,7 @@
-import { IonGrid, IonRow, IonTextarea } from "@ionic/react";
+import { IonGrid, IonItem, IonRow, IonTextarea } from "@ionic/react";
 import { useState } from "react";
 import { useFormContext } from "react-hook-form";
-import "./InputStyling.css";
+import "./InputStyling.scss";
 
 export interface MyTextAreaProps {
   index: number,
@@ -16,29 +16,17 @@ export const MyTextArea = (props: MyTextAreaProps) => {
   const {register} = useFormContext();
 
   const myFieldName = `${objectType}.${index}.${fieldName}`;
-  const [charsLeft, setCharsLeft] = useState<number>(numberChars)
-
-  const handleChange = (e: any) => {
-    const newFieldValue = e.detail.value;
-    setCharsLeft(numberChars-newFieldValue.length);
-  }
 
   return(
-    <IonGrid className="input-label-field">
+    <IonGrid>
       <IonRow className="ion-text-left">
-        <IonTextarea  {...register(myFieldName)}
-          class="text-input-field my-text-area" inputmode="text"          
-          placeholder={placeholder} autoGrow={true}
-          maxlength={numberChars}
-          onIonChange={(e) =>handleChange(e)}>
-        </IonTextarea>
-      </IonRow>
-      <IonRow class="char-limit ion-float-right">
-          { charsLeft == numberChars ? (
-            <p>Character limit: {charsLeft}</p>
-          ) : (
-            <p>{charsLeft} characters left</p>
-          )}
+        <IonItem className="my-text-area-item ion-no-padding" counter={true}>
+          <IonTextarea {...register(myFieldName)}
+            class="text-input-field my-text-area" inputmode="text"
+            placeholder={placeholder} autoGrow={true}
+            maxlength={numberChars}>
+          </IonTextarea>
+        </IonItem>
       </IonRow>
     </IonGrid>
   );

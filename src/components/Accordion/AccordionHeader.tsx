@@ -1,7 +1,7 @@
 import { IonIcon, IonItem, IonItemOption, IonItemOptions, IonItemSliding, IonLabel } from "@ionic/react";
 import { arrowDownCircleOutline, arrowDownCircle } from 'ionicons/icons';
 
-import "../InputFields/InputStyling.css";  
+import "../InputFields/InputStyling.scss";  
 
 interface AccordionHeaderProps{
     fieldArrayIndex: number,

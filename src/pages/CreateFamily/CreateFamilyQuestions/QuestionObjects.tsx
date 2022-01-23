@@ -202,9 +202,9 @@ export const PetQuestionFields = [
     },
     {
         placeholder: "",
-        label: "sex",
+        label: "maleFemale",
         objectType: "family.0.pet",
-        fieldName: "sex",
+        fieldName: "maleFemale",
         required: false,
         watched: false
     },

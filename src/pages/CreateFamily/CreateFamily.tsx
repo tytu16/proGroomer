@@ -1,6 +1,6 @@
 import { IonCol, IonContent, IonGrid, IonIcon, IonLabel, IonList, IonRow } from "@ionic/react";
 
-import './CreateFamily.css'; 
+import './CreateFamily.scss'; 
 import { FamilyInfo } from "../../models/FamilyInfo";
 import { PersonInfo } from "../../models/PersonInfo";
 import { PetInfo } from "../../models/PetInfo";

@@ -3,7 +3,7 @@ import { removeCircleOutline, addCircleOutline } from "ionicons/icons";
 import { Controller, useFieldArray, useFormContext } from "react-hook-form";
 import NumberFormat from "react-number-format";
 
-import "./InputStyling.css";
+import "./InputStyling.scss";
 import { MySelectList } from "./MySelectList";
 import { PhoneTypeList } from "../../models/Enums/PhoneTypes";
 import { VerticalCheckbox } from "./VerticalCheckbox";

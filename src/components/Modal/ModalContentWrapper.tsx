@@ -2,7 +2,7 @@ import {IonPopover, IonContent, IonCard, IonCardHeader, IonCardTitle, IonCardCon
 import { appendFileSync } from 'fs';
 import {addCircleOutline} from 'ionicons/icons';
 
-import "../InputFields/InputStyling.css"
+import "../InputFields/InputStyling.scss"
 
 interface ModalContentWrapperProps {
     title: string,

@@ -1,6 +1,6 @@
 import { IonButton, IonGrid, IonRow, IonCol, IonHeader, IonText } from "@ionic/react";
 import { useHistory } from "react-router";
-import "../CreateFamily/CreateFamily.css";
+import "../CreateFamily/CreateFamily.scss";
 
 const FamilyTabEmptyState = () => {
 

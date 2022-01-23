@@ -1,6 +1,6 @@
-import { IonGrid, IonInput, IonRow } from "@ionic/react";
+import { IonGrid, IonInput, IonItem, IonRow } from "@ionic/react";
 import { useFormContext } from "react-hook-form";
-import "./InputStyling.css";
+import "./InputStyling.scss";
 
 export interface MyTextInputProps {
   index: number,
@@ -25,16 +25,18 @@ export const MyTextInput = (props: MyTextInputProps) => {
   }
 
   return(
-    <IonGrid className="input-label-field">
-      <IonRow className="ion-text-left">
-        <IonInput {...register(myFieldName)}
-          class="text-input-field" type="text"
-          autocomplete="off" autoCorrect="off"
-          placeholder={placeholder}
-          onIonChange={(e) => { 
-            if(watched){handleChange(e);}
-           }}/>
-      </IonRow>
-    </IonGrid>
+    <IonItem  mode={"md"} class="ion-no-padding">
+      <IonGrid className="input-label-field">
+        <IonRow className="ion-text-left">
+          <IonInput {...register(myFieldName)}
+            class="text-input-field" type="text"
+            autocomplete="off" autoCorrect="off"
+            placeholder={placeholder}
+            onIonChange={(e) => { 
+              if(watched){handleChange(e);}
+            }}/>
+        </IonRow>
+      </IonGrid>
+    </IonItem>
   );
 }

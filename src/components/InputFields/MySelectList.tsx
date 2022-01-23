@@ -1,7 +1,7 @@
-import { IonCol, IonGrid, IonRow, IonSelect, IonSelectOption } from "@ionic/react";
+import { IonCol, IonGrid, IonItem, IonRow, IonSelect, IonSelectOption } from "@ionic/react";
 import { useFormContext } from "react-hook-form";
 import { ListValueInterface } from "../../models/Enums/States";
-import "./InputStyling.css";
+import "./InputStyling.scss";
 
 export interface MySelectListProps {
     index: number,
@@ -19,7 +19,7 @@ export const MySelectList = (props: MySelectListProps) => {
 
     const {register} = useFormContext();
 
-    return(<div className="shadow-container">
+    return (<IonItem className="ion-no-padding" mode="md">
         <IonGrid className={addStyling ? "my-select-list" : ""}>
             {(label != '') && (
                 <IonRow>
@@ -37,6 +37,6 @@ export const MySelectList = (props: MySelectListProps) => {
                 }
                 </IonSelect>
             </IonRow>
-        </IonGrid>        
-    </div>);
+        </IonGrid>
+    </IonItem>);
   }
