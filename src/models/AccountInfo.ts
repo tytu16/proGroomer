@@ -2,9 +2,9 @@ import { PersonInfo } from "./PersonInfo";
 import { PetInfo } from "./PetInfo";
 import { Note } from "./Note";
 
-export class FamilyInfo {
+export class AccountInfo {
     private _id: string;
-    private _familyName: string;
+    private _accountName: string;
     private _addrOne: string;
     private _addrTwo: string;
     private _addrCity: string;
@@ -17,7 +17,7 @@ export class FamilyInfo {
 
     constructor(data: any){
         this._id = data.id ? data.id : "0" ;
-        this._familyName = data.familyName ? data.familyName : "";
+        this._accountName = data.accountName ? data.accountName : "";
         this._people = data.people ? data.people : new Array<PersonInfo>() ;
         this._pets = data.pets ? data.pets : new Array<PetInfo>();
         this._notes = data.notes ? data.notes : new Array<Note>();  
@@ -91,11 +91,11 @@ export class FamilyInfo {
         this._id = id;
     }
 
-    get familyName(): string{
-        return this._familyName;
+    get accountName(): string{
+        return this._accountName;
     }
-    set(familyName: string){
-        this._familyName = familyName;
+    set(accountName: string){
+        this._accountName = accountName;
     }
 
     get people(): PersonInfo[]{
@@ -132,8 +132,8 @@ export class FamilyInfo {
         this._notes.push(note);
     }
 
-    baseFamilyEqual(other: FamilyInfo){
-        return this._familyName == other.familyName &&
+    baseAccountEqual(other: AccountInfo){
+        return this._accountName == other.accountName &&
                 this.addrOne == other.addrOne &&
                 this.addrTwo == other.addrTwo &&
                 this.addrCity == other.addrCity &&

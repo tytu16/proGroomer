@@ -18,7 +18,7 @@ import BottomSlideButtons from "../../../components/Slide/BottomButtons";
 export interface PeopleQuestionsProps {
     index: number,
     toPetInfo: () => void,
-    toFamilyInfo: () => void
+    toAccountInfo: () => void
 }
 
 export interface WatchedFieldsInter {
@@ -30,7 +30,7 @@ const PeopleQuestions = (props: PeopleQuestionsProps) => {
 // ----HOOKS---- //
 
 // form hooks
-    const objectType = `family.${props.index}.person`;
+    const objectType = `account.${props.index}.person`;
     const {control, watch, setValue} = useFormContext();
     const { fields, append, remove, replace} = useFieldArray({
         control,
@@ -103,7 +103,7 @@ const PeopleQuestions = (props: PeopleQuestionsProps) => {
   // Use parsed index and fieldName to update appropriate watchedField state, 
   // which is reflected in the person headers
    const handleFieldChange = (data: string, name: string) => {
-        // family.0.person.0.firstName
+        // account.0.person.0.firstName
         let newFields = watchedFields.slice();
         const nameParse = name.split('.');
         const index = Number.parseInt(nameParse[3]);
@@ -189,7 +189,7 @@ const PeopleQuestions = (props: PeopleQuestionsProps) => {
 
             <BottomSlideButtons numButtons="three"
                 buttonOneLabel={"Add Another Person"} buttonOneIcon={addCircleOutline} buttonOneClick={addAnother}
-                buttonTwoLabel="&lt; Family" buttonTwoClick={props.toFamilyInfo}
+                buttonTwoLabel="&lt; Account" buttonTwoClick={props.toAccountInfo}
                 buttonThreeLabel="Pets &gt;" buttonThreeClick={moveToPets}/>
         </SlideWrapper>
     );

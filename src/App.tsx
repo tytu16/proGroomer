@@ -11,7 +11,7 @@ import {
 } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
 import { people, calendar, wallet } from 'ionicons/icons';
-import FamiliesTab from './pages/Tabs/FamiliesTab';
+import AccountsTab from './pages/Tabs/AcccountsTab';
 import CalendarsTab from './pages/Tabs/CalendarsTab';
 import PaymentsTab from './pages/Tabs/PaymentsTab';
 
@@ -34,12 +34,12 @@ import '@ionic/react/css/display.css';
 /* Theme variables */
 import './theme/variables.scss';
 import React from 'react';
-import CreateFamily from './pages/CreateFamily/CreateFamily';
-import { FamilyInfo } from './models/FamilyInfo';
-import FamilyDetail from './pages/FamilyDetails/FamilyDetails';
+import CreateAccount from './pages/CreateAccount/CreateAccount';
+import { AccountInfo } from './models/AccountInfo';
+import AccountDetail from './pages/AccountDetails/AccountDetails';
 
 interface AppState {
-  families: Array<FamilyInfo>,
+  accounts: Array<AccountInfo>,
   topIndex: number
 }
 
@@ -50,41 +50,41 @@ export default class App extends React.Component<any,AppState> {
   constructor(props: any){
     super(props);
     this.state = {
-      families: [],
+      accounts: [],
       topIndex: 0
     }
   }
 
-  onNewFamily = (familyName: string) => {
+  onNewAccount = (accountName: string) => {
     let currentState: AppState = this.state;
-    const newFamily = new FamilyInfo({
+    const newAccount = new AccountInfo({
       id: currentState.topIndex + 1,
-      familyName
+      accountName
     })
-    currentState.families.push(newFamily);
+    currentState.accounts.push(newAccount);
     let newIndex = currentState.topIndex + 1
     this.setState({
-      families: currentState.families,
+      accounts: currentState.accounts,
       topIndex: newIndex
     });
   }
 
-  onCreateFamily = (newFamily: FamilyInfo) => {
-    console.log('creating family');
+  onCreateAccount = (newAccount: AccountInfo) => {
+    console.log('creating account');
     let localState: AppState = this.state;
 
-    localState.families.push(newFamily);
+    localState.accounts.push(newAccount);
     let newIndex = localState.topIndex+1
 
     this.setState({
-      families: localState.families,
+      accounts: localState.accounts,
       topIndex: newIndex,
 
     })
   }
 
-  defaultFam = new FamilyInfo({
-    familyName: "defaultFam",
+  defaultAccount = new AccountInfo({
+    accountName: "defaultAccount",
     id: -1
   });
 
@@ -94,31 +94,31 @@ export default class App extends React.Component<any,AppState> {
       <IonReactRouter>
         <IonTabs>
           <IonRouterOutlet>
-            <Route exact path="/families">
-              <FamiliesTab currentIndex={this.state.topIndex} families={this.state.families} onCreateFamily={this.onCreateFamily} onNewFamily={this.onNewFamily} />
-              <Route exact path="/families/createFamily" >
-                <CreateFamily index={this.state.topIndex} onCreateFamily={this.onCreateFamily}/>
+            <Route exact path="/accounts">
+              <AccountsTab currentIndex={this.state.topIndex} accounts={this.state.accounts} onCreateAccount={this.onCreateAccount} onNewAccount={this.onNewAccount} />
+              <Route exact path="/accounts/createAccounts" >
+                <CreateAccount index={this.state.topIndex} onCreateAccount={this.onCreateAccount}/>
               </Route>
-              <Route exact path="/families/details:id" render={({match}) => (
-                <FamilyDetail family={this.state.families.find( f =>  ':'+f.id.toString() == match.params.id ) || this.defaultFam}/>
+              <Route exact path="/accounts/details:id" render={({match}) => (
+                <AccountDetail account={this.state.accounts.find( a =>  ':'+a.id.toString() == match.params.id ) || this.defaultAccount}/>
               )} />
             </Route>
 
             <Route exact path="/calendars">
-              <CalendarsTab families={this.state.families} onNewFamily={this.onNewFamily} />
+              <CalendarsTab accounts={this.state.accounts} onNewAccount={this.onNewAccount} />
             </Route>
             
             <Route path="/payments">
-              <PaymentsTab families={this.state.families}  onNewFamily={this.onNewFamily}/>
+              <PaymentsTab accounts={this.state.accounts}  onNewAccount={this.onNewAccount}/>
             </Route>
             <Route exact path="/">
-              <Redirect to="/families" />
+              <Redirect to="/accounts" />
             </Route>
           </IonRouterOutlet>
           <IonTabBar slot="bottom">
-            <IonTabButton tab="Families" href="/families">
+            <IonTabButton tab="Accounts" href="/accounts">
               <IonIcon icon={people} />
-              <IonLabel>Families</IonLabel>
+              <IonLabel>Accounts</IonLabel>
             </IonTabButton>
             <IonTabButton tab="Calendars" href="/calendars">
               <IonIcon icon={calendar} />

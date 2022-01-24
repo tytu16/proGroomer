@@ -1,4 +1,4 @@
-import { IonButton, IonCheckbox, IonCol, IonGrid, IonIcon, IonInput, IonItem, IonItemOption, IonItemOptions, IonItemSliding, IonLabel, IonList, IonListHeader, IonRadio, IonRadioGroup, IonRow } from "@ionic/react";
+import { IonCol, IonGrid, IonIcon, IonItem, IonItemOption, IonItemOptions, IonItemSliding, IonLabel, IonList, IonRadio, IonRadioGroup, IonRow } from "@ionic/react";
 import { arrowDownCircleOutline } from 'ionicons/icons';
 import { useRef, useState } from "react";
 import { Controller, useFieldArray, useFormContext } from "react-hook-form";
@@ -14,7 +14,7 @@ import BottomSlideButtons from "../../../components/Slide/BottomButtons";
 export interface PetQuestionsProps{
     index: number,
     backToPeople: () => void,
-    submitFamily: () => void,
+    submitAccount: () => void,
 }
 
 export interface WatchedFieldsInter{
@@ -25,7 +25,7 @@ export interface WatchedFieldsInter{
 // ToDo: Add Weight
 const PetQuestions = (props: PetQuestionsProps) => {
     const {control, handleSubmit} = useFormContext();
-    const objectType = `family.${props.index}.pet`;
+    const objectType = `account.${props.index}.pet`;
     const { fields, append, remove} = useFieldArray({
         control,
         name: objectType,
@@ -150,7 +150,7 @@ const PetQuestions = (props: PetQuestionsProps) => {
 // Use parsed index and fieldName to update appropriate watchedField state, 
 // which is reflected in the pet headers
 const handleFieldChange = (data: string, name: string) => {
-    // family.0.pet.0.name
+    // account.0.pet.0.name
     let newFields = [...watchedFields];
     const nameParse = name.split('.');
     const index = Number.parseInt(nameParse[3]);
@@ -224,7 +224,7 @@ const handleAccordionChange = (index: number) => {
                     <BottomSlideButtons numButtons="three"
                         buttonOneLabel={"Add Another Pet"} buttonOneIcon={addCircleOutline} buttonOneClick={addAnother}
                         buttonTwoLabel="&lt; People" buttonTwoClick={() => props.backToPeople()}
-                        buttonThreeLabel="Submit &gt;" buttonThreeClick={()=> props.submitFamily()}/>
+                        buttonThreeLabel="Submit &gt;" buttonThreeClick={()=> props.submitAccount()}/>
                 </IonCol>
             </IonRow>
             <IonRow class="spacer"></IonRow>

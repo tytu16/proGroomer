@@ -1,13 +1,13 @@
 import { IonButton, IonGrid, IonRow, IonCol, IonHeader, IonText } from "@ionic/react";
 import { useHistory } from "react-router";
-import "../CreateFamily/CreateFamily.scss";
+import "../CreateAccount/CreateAccount.scss";
 
-const FamilyTabEmptyState = () => {
+const AccountTabEmptyState = () => {
 
     const history = useHistory();
 
 const getStarted = () => {
-    history.push("/families/createFamily");
+    history.push("/accounts/createAccounts");
 }
 
 	return (
@@ -17,7 +17,7 @@ const getStarted = () => {
                     <IonCol size="10" className="slide-content">
                         <IonHeader><h1 className="ion-text-center">Hello!</h1></IonHeader>
                         <IonText>
-                            <h2 className="ion-text-center">Looks like you haven't saved any families.</h2>
+                            <h2 className="ion-text-center">Looks like you haven't saved any accounts.</h2>
                         </IonText>
                         <IonButton onClick={getStarted} expand="block" fill="outline">Get Started! &rarr;</IonButton>
                     </IonCol>
@@ -27,4 +27,4 @@ const getStarted = () => {
 	);
 }
 
-export default FamilyTabEmptyState;
+export default AccountTabEmptyState;

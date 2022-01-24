@@ -3,23 +3,23 @@ import { calendarOutline } from 'ionicons/icons';
 import './CalendarsTab.scss';
 import React from 'react';
 
-import { FamiliesProps, FamiliesState } from '../../models/interfaces/FamilyInterface';
-import FamilyRow from '../../components/FamilyRow/FamilyRow';
+import { AccountsProps, AccountsState } from '../../models/interfaces/AccountInterface';
+import AccountRow from '../../components/AccountRow/AccountRow';
 
-export default class CalendarsTab extends React.Component<FamiliesProps,FamiliesState> {
+export default class CalendarsTab extends React.Component<AccountsProps,AccountsState> {
 
-  constructor(props: FamiliesProps) {
+  constructor(props: AccountsProps) {
     super(props);
     this.state = {
-      families: props.families
+      accounts: props.accounts
     }
   }
 
   render(){
-    const { onNewFamily, families } = this.props;
+    const { onNewAccount, accounts } = this.props;
     const calendarText = "Displaying calendar ";
-    const familiesToDisplay = families.length > 0;
-    console.log(families);
+    const accountsToDisplay = accounts.length > 0;
+    console.log(accounts);
 
     return (
       <IonPage>
@@ -35,12 +35,12 @@ export default class CalendarsTab extends React.Component<FamiliesProps,Families
             </IonToolbar>
           </IonHeader>
           {
-            familiesToDisplay ? (
+            accountsToDisplay ? (
               <>
                 {
-                  families.map(( family ) => {
+                  accounts.map(( account ) => {
                     return (
-                      <FamilyRow key={family.id} family={family} text={calendarText}/>
+                      <AccountRow key={account.id} account={account} text={calendarText}/>
                   );})
                 }
               </>
@@ -52,7 +52,7 @@ export default class CalendarsTab extends React.Component<FamiliesProps,Families
             )
           }
           <IonFab vertical="bottom" horizontal="center" slot="fixed">
-            <IonFabButton onClick={() => {onNewFamily("familyCal-"+families.length+1)}}>
+            <IonFabButton onClick={() => {onNewAccount("accountCal-"+accounts.length+1)}}>
               <IonIcon icon={calendarOutline}></IonIcon>
             </IonFabButton>
           </IonFab>

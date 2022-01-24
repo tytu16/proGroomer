@@ -1,16 +1,16 @@
-import { FamilyInfo } from "./FamilyInfo";
+import { AccountInfo } from "./AccountInfo";
 
 export class GroomerProfile {
     private _id: string;
     private _firstName: string;
     private _lastName: string;
-    private _clients: Array<FamilyInfo>;
+    private _clients: Array<AccountInfo>;
 
     constructor(data: any){
         this._id = data.id;
         this._firstName = data.firstName;
         this._lastName = data.lastName;
-        this._clients = data.clients.length > 0 ? data.clients : new Array<FamilyInfo>();
+        this._clients = data.clients.length > 0 ? data.clients : new Array<AccountInfo>();
     }
 
     get id(): string{
@@ -34,14 +34,14 @@ export class GroomerProfile {
         this._lastName = lastName;
     }
 
-    get clients(): Array<FamilyInfo> {
+    get clients(): Array<AccountInfo> {
         return this._clients;
     }
-    set clients(clients: Array<FamilyInfo>) {
+    set clients(clients: Array<AccountInfo>) {
         this._clients = clients;
     }
 
-    addClient(client: FamilyInfo){
+    addClient(client: AccountInfo){
         if(this._clients == null){
             this._clients = [client];
         } else {

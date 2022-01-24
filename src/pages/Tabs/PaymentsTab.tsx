@@ -3,23 +3,23 @@ import { walletSharp } from 'ionicons/icons';
 import React from 'react';
 import './PaymentsTab.scss';
 
-import { FamiliesProps, FamiliesState } from '../../models/interfaces/FamilyInterface';
-import FamilyRow from '../../components/FamilyRow/FamilyRow';
+import { AccountsProps, AccountsState } from '../../models/interfaces/AccountInterface';
+import AccountRow from '../../components/AccountRow/AccountRow';
 
-export default class PaymentsTab extends React.Component<FamiliesProps, FamiliesState> {
+export default class PaymentsTab extends React.Component<AccountsProps, AccountsState> {
 
-  constructor(props: FamiliesProps){
+  constructor(props: AccountsProps){
     super(props);
     this.state = {
-      families: props.families
+      accounts: props.accounts
     }
   }
 
   render(){
 
-    const {families, onNewFamily} = this.props;
+    const {accounts, onNewAccount} = this.props;
     const paymentText = "Displaying payment ";
-    let familiesToDisplay = families.length > 0;
+    let accountsToDisplay = accounts.length > 0;
 
     return (
       <IonPage>
@@ -35,12 +35,12 @@ export default class PaymentsTab extends React.Component<FamiliesProps, Families
             </IonToolbar>
           </IonHeader>
           {
-            familiesToDisplay ? (
+            accountsToDisplay ? (
               <>
                 {
-                  families.map(( family ) => {
+                  accounts.map(( account ) => {
                     return (
-                      <FamilyRow key={family.id} family={family} text={paymentText}/>
+                      <AccountRow key={account.id} account={account} text={paymentText}/>
                   );})
                 }
               </>
@@ -52,7 +52,7 @@ export default class PaymentsTab extends React.Component<FamiliesProps, Families
             )
           }
           <IonFab horizontal="center" vertical="bottom" slot="fixed">
-            <IonFabButton onClick={() => {onNewFamily("familyPay"+families.length+1)}}>
+            <IonFabButton onClick={() => {onNewAccount("accountPay"+accounts.length+1)}}>
               <IonIcon icon={walletSharp}></IonIcon>
             </IonFabButton>
           </IonFab>

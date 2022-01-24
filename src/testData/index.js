@@ -1,7 +1,7 @@
-export const familyResponse = [
+export const accountResponse = [
     {
         id: 1,
-        familyName: "The Three Stooges",
+        accountName: "The Three Stooges",
         people: [
             {
                 id: 1,
@@ -42,7 +42,7 @@ export const familyResponse = [
     },
     {
         id: 2,
-        familyName: "The Addams Family",
+        accountName: "The Addams Family",
         people: [
             {
                 id: 1,
@@ -92,7 +92,7 @@ export const groomerResponse = {
     id: 1,
     firstName: "Lenn",
     lastName: "MacAnnaly",
-    clients: familyResponse
+    clients: accountResponse
 }
 
-export const emptyFamily = []
+export const emptyAccount = []

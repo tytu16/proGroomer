@@ -1,9 +1,6 @@
 import { useState } from "react";
-import { useHistory } from "react-router";
-import { FamilyInfo } from "../../../models/FamilyInfo";
-import { PersonInfo } from "../../../models/PersonInfo";
-import { PetInfo } from "../../../models/PetInfo";
-import FamilyQuestions from "./FamilyQuestions";
+import { AccountInfo } from "../../../models/AccountInfo";
+import AccountQuestions from "./AccountQuestions";
 import PeopleQuestions from "./PeopleQuestions";
 import PetQuestions from "./PetQuestions";
 
@@ -17,20 +14,20 @@ import 'swiper/modules/scrollbar/scrollbar.min.css';
 import 'swiper/modules/zoom/zoom.min.css';
 import '@ionic/react/css/ionic-swiper.css';
 
-export interface FamilyQuestionProps {
+export interface AccountQuestionProps {
     index: number,
-    familyNames: Array<string>,
-    saveFamilyInfo: (newFamily: FamilyInfo) => void,
-    handleFamilyNames: (name: string, index: number) => void,
-    submitFamily: (index: number) => void,
+    accountNames: Array<string>,
+    saveAccountInfo: (newAccount: AccountInfo) => void,
+    handleAccountNames: (name: string, index: number) => void,
+    submitAccount: (index: number) => void,
     toTop: () => void
 }
 
-const CreateFamilySlideWrapper = (props: FamilyQuestionProps) => {
+const CreateAccountSlideWrapper = (props: AccountQuestionProps) => {
 
     const [swiper, setSwiper] = useState<any>(null);
 
-    const saveFamilyToPeople = (newFamily?: FamilyInfo) => {
+    const saveAccountToPeople = (newAccount?: AccountInfo) => {
         toNextSlide();
     }
 
@@ -50,8 +47,8 @@ const CreateFamilySlideWrapper = (props: FamilyQuestionProps) => {
         }
     }
 
-    const submitFamilyAndBackToList = () => {
-        props.submitFamily(props.index);
+    const submitAccountAndBackToList = () => {
+        props.submitAccount(props.index);
     }
 
     return(
@@ -65,16 +62,16 @@ const CreateFamilySlideWrapper = (props: FamilyQuestionProps) => {
           zoom={true}
           onSwiper={setSwiper}>
             <SwiperSlide>
-                <FamilyQuestions familyNames={props.familyNames} handleFamilyNames={props.handleFamilyNames} index={props.index} toPeopleInfo={saveFamilyToPeople} />
+                <AccountQuestions accountNames={props.accountNames} handleAccountNames={props.handleAccountNames} index={props.index} toPeopleInfo={saveAccountToPeople} />
             </SwiperSlide>
             <SwiperSlide>
-                <PeopleQuestions index={props.index} toFamilyInfo={toPreviousSlide} toPetInfo={toNextSlide}/>
+                <PeopleQuestions index={props.index} toAccountInfo={toPreviousSlide} toPetInfo={toNextSlide}/>
             </SwiperSlide>
             <SwiperSlide>
-                <PetQuestions index={props.index} backToPeople={toPreviousSlide} submitFamily={submitFamilyAndBackToList} />
+                <PetQuestions index={props.index} backToPeople={toPreviousSlide} submitAccount={submitAccountAndBackToList} />
             </SwiperSlide>
         </Swiper>
     );
 }
 
-export default CreateFamilySlideWrapper;
+export default CreateAccountSlideWrapper;

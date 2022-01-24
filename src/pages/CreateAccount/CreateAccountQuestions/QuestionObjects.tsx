@@ -49,9 +49,9 @@ export const InitPersonQuestionState = () => {
     });
 }
 
-export const InitFamilyQuestionState = () => {
+export const InitAccountQuestionState = () => {
     return ({
-        familyName: "",
+        accountName: "",
         addressOne: "",
         addressTwo: "",
         addressCity: "",
@@ -63,19 +63,19 @@ export const InitFamilyQuestionState = () => {
     });
   }
 
-export const FamilyQuestionFields = [
+export const AccountQuestionFields = [
     {
-        placeholder: "Family Name",
-        label: "Family Name", 
-        objectType: "family",
-        fieldName: "familyName",
+        placeholder: "Account Name",
+        label: "Account Name", 
+        objectType: "account",
+        fieldName: "accountName",
         required: true,
         watched: true
     },
     {
         placeholder: "123 Some St",
         label: "Address One", 
-        objectType: "family",
+        objectType: "account",
         fieldName: "addressOne",
         required: true,
         watched: false
@@ -83,7 +83,7 @@ export const FamilyQuestionFields = [
     {
         placeholder: "Apt 321",
         label: "Address Two", 
-        objectType: "family",
+        objectType: "account",
         fieldName: "addressTwo",
         required: false,
         watched: false
@@ -91,7 +91,7 @@ export const FamilyQuestionFields = [
     {
         placeholder: "City",
         label: "City", 
-        objectType: "family",
+        objectType: "account",
         fieldName: "addressCity",
         required: true,
         watched: false
@@ -99,7 +99,7 @@ export const FamilyQuestionFields = [
     {
         placeholder: "State",
         label: "State",
-        objectType: "family",
+        objectType: "account",
         fieldName: "addressState",
         required: false,
         watched: false
@@ -107,7 +107,7 @@ export const FamilyQuestionFields = [
     {
         placeholder: "12345",
         label: "Zipcode", 
-        objectType: "family",
+        objectType: "account",
         fieldName: "addressZip",
         required: true,
         watched: false
@@ -115,7 +115,7 @@ export const FamilyQuestionFields = [
     {
         placeholder: "*1234",
         label: "Garage Code", 
-        objectType: "family",
+        objectType: "account",
         fieldName: "garageCd",
         required: true,
         watched: false
@@ -123,7 +123,7 @@ export const FamilyQuestionFields = [
     {
         placeholder: "Add a note",
         label: "Notes",
-        objectType: "family",
+        objectType: "account",
         fieldName: "note",
         required: true,
         watched: true
@@ -134,7 +134,7 @@ export const PeopleQuestionFields = [
     {
         placeholder: "",
         label: "Primary Contact?", 
-        objectType: "family.0.person",
+        objectType: "account.0.person",
         fieldName: "isPrimary",
         required: true,
         watched: true
@@ -142,7 +142,7 @@ export const PeopleQuestionFields = [
     {
         placeholder: "First Name",
         label: "First Name", 
-        objectType: "family.0.person",
+        objectType: "account.0.person",
         fieldName: "firstName",
         required: true,
         watched: true
@@ -150,7 +150,7 @@ export const PeopleQuestionFields = [
     {
         placeholder: "Last Name",
         label: "Last Name", 
-        objectType: "family.0.person",
+        objectType: "account.0.person",
         fieldName: "lastName",
         required: true,
         watched: true
@@ -158,7 +158,7 @@ export const PeopleQuestionFields = [
     {
         placeholder: "Email Address",
         label: "Email", 
-        objectType: "family.0.person",
+        objectType: "account.0.person",
         fieldName: "email",
         required: true,
         watched: false
@@ -166,7 +166,7 @@ export const PeopleQuestionFields = [
     {
         placeholder: "(XXX) XXX-XXXX",
         label: "Phone Number",
-        objectType: "family.0.person.0.phone",
+        objectType: "account.0.person.0.phone",
         fieldName: "phoneNumber",
         required: true,
         watched: false
@@ -174,7 +174,7 @@ export const PeopleQuestionFields = [
     {
         placeholder: "Add a note",
         label: "Notes",
-        objectType: "family.0.person.0.note",
+        objectType: "account.0.person.0.note",
         fieldName: "note",
         required: true,
         watched: true
@@ -185,7 +185,7 @@ export const PetQuestionFields = [
     {
         placeholder: "Name",
         label: "Name", 
-        objectType: "family.0.pet",
+        objectType: "account.0.pet",
         fieldName: "name",
         required: true,
         watched: true
@@ -193,7 +193,7 @@ export const PetQuestionFields = [
     {
         placeholder: "Breed",
         label: "Breed",
-        objectType: "family.0.pet",
+        objectType: "account.0.pet",
         fieldName: "breed",
         required: false,
         watched: true
@@ -201,7 +201,7 @@ export const PetQuestionFields = [
     {
         placeholder: "",
         label: "maleFemale",
-        objectType: "family.0.pet",
+        objectType: "account.0.pet",
         fieldName: "maleFemale",
         required: false,
         watched: false
@@ -209,7 +209,7 @@ export const PetQuestionFields = [
     {
         placeholder: "Age",
         label: "Age",
-        objectType: "family.0.pet",
+        objectType: "account.0.pet",
         fieldName: "age",
         required: false,
         watched: false
@@ -217,7 +217,7 @@ export const PetQuestionFields = [
     {
         placeholder: "Weight",
         label: "Weight",
-        objectType: "family.0.pet",
+        objectType: "account.0.pet",
         fieldName: "weight",
         required: false,
         watched: false
@@ -225,7 +225,7 @@ export const PetQuestionFields = [
     {
         placeholder: "Add a note",
         label: "Notes",
-        objectType: "family.0.pet.0.note",
+        objectType: "account.0.pet.0.note",
         fieldName: "note",
         required: true,
         watched: true

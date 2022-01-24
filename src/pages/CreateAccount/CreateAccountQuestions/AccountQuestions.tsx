@@ -1,33 +1,33 @@
-import { IonButton, IonCol, IonGrid, IonList, IonRow  } from "@ionic/react";
+import { IonList } from "@ionic/react";
 import { useFormContext } from "react-hook-form";
 import { MyTextLabelInput } from "../../../components/InputFields/MyTextLabelInput";
 import { MySelectList } from "../../../components/InputFields/MySelectList";
 import { StateList } from "../../../models/Enums/States";
-import {FamilyQuestionFields, TextFieldPropInterface} from "./QuestionObjects"
+import {AccountQuestionFields, TextFieldPropInterface} from "./QuestionObjects"
 import SlideWrapper from "../../../components/Slide/SlideWrapper";
 import BottomSlideButtons from "../../../components/Slide/BottomButtons";
 import "./Questions.scss"
 import ModalFormWrapper from "../../../components/Modal/ModalFormWrapper";
 
-export interface FamilyQuestionsProps {
-    handleFamilyNames: (name: string, index: number) => void,
-    familyNames: Array<string>,
+export interface AccountQuestionsProps {
+    handleAccountNames: (name: string, index: number) => void,
+    accountNames: Array<string>,
     toPeopleInfo: () => void,
     index: number
 }
 
-const FamilyQuestions = (props: FamilyQuestionsProps) => {
+const AccountQuestions = (props: AccountQuestionsProps) => {
 
     const {watch} = useFormContext();
 
     const toPeople = (data?: any) => {
-        console.log('family data');
+        console.log('account data');
         console.log(watch());
         props.toPeopleInfo();
     }
 
     const handleFieldChange = (data: string, name: string) => {
-        props.handleFamilyNames(data, Number.parseInt(name.split('.')[1]));
+        props.handleAccountNames(data, Number.parseInt(name.split('.')[1]));
     }
 
     const renderFields = (field: any, questionIndex: number) => {
@@ -39,9 +39,9 @@ const FamilyQuestions = (props: FamilyQuestionsProps) => {
                 />);
 
             case "note":
-                let familyName = (props.familyNames[props.index] && props.familyNames[props.index] != '') ? 
-                props.familyNames[props.index] : `Account ${props.index+1}`;
-                return (<ModalFormWrapper key={questionIndex} label={familyName} defaultOn={false}
+                let accountName = (props.accountNames[props.index] && props.accountNames[props.index] != '') ? 
+                props.accountNames[props.index] : `Account ${props.index+1}`;
+                return (<ModalFormWrapper key={questionIndex} label={accountName} defaultOn={false}
                             objectIndex={props.index} formPrefix={field.objectType}/>);
 
             default:
@@ -56,7 +56,7 @@ const FamilyQuestions = (props: FamilyQuestionsProps) => {
     return (
         <SlideWrapper title="Account Information">
             <IonList>{
-                FamilyQuestionFields.map((field: TextFieldPropInterface, questionIndex: number) => {
+                AccountQuestionFields.map((field: TextFieldPropInterface, questionIndex: number) => {
                     return renderFields(field, questionIndex);
                 })
             }</IonList>
@@ -65,4 +65,4 @@ const FamilyQuestions = (props: FamilyQuestionsProps) => {
     );
 };
 
-export default FamilyQuestions;
+export default AccountQuestions;
