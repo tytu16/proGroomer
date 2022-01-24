@@ -5,7 +5,7 @@ import { AccountInfo } from "../../models/AccountInfo";
 import CreateAccountSlideWrapper from "./CreateAccountQuestions/CreateAccountSlideWrapper"
 import { useFieldArray, useForm, FormProvider } from "react-hook-form";
 
-import { InitAccountQuestionState } from "./CreateAccountQuestions/QuestionObjects";
+import { InitAccountQuestionState, AutoFillAccount } from "./CreateAccountQuestions/QuestionObjects";
 import { useRef, useState } from "react";
 import AccordionWrapper from "../../components/Accordion/AccordionWrapper";
 import AccordionHeader from "../../components/Accordion/AccordionHeader";
@@ -21,12 +21,22 @@ export interface CreateAccountState {
 }
 
 const CreateAccount = (props: CreateAccountProps) => {
+  // Set this by hand for testing, autofills form
+  const autoFill = true;
 
   const IonContentRef = useRef<any>(null);
   const IonListRef = useRef<any>(null);
   const history = useHistory();
+
+  let defaultFormValues: any;
+  if(autoFill){
+    defaultFormValues = AutoFillAccount(); 
+  } else {
+    defaultFormValues = InitAccountQuestionState();
+  }
+   
   const methods = useForm({
-    defaultValues: {account: [InitAccountQuestionState()]}
+    defaultValues: {account: [defaultFormValues]}
   });
   const control = methods.control;
   const watch   = methods.watch;

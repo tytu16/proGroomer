@@ -61,7 +61,7 @@ export const InitAccountQuestionState = () => {
         pet: [InitPetQuestionState()],
         note: [InitNoteQuestionState()]
     });
-  }
+}
 
 export const AccountQuestionFields = [
     {
@@ -231,3 +231,60 @@ export const PetQuestionFields = [
         watched: true
     }
 ] 
+
+export const AutoFillNote = () => {
+    return {label: "Note Label", message: "Note Message"};
+}
+
+export const AutoFillPet = () => {
+    return({
+        name: "PetName",
+        breed: "PetBreed",
+        maleFemale: "Male",
+        ageYr: "1",
+        ageMn: "4",
+        weight: "14",
+        wUnits: "LB",
+        note: [AutoFillNote()]
+    })
+}
+
+export const AutoFillPhoneNumbers = () => {
+    return {phoneNumber: "5732752610", phoneType: "CL", textable: true};
+}
+
+export const AutoFillPrimaryPerson = () => {
+    return ({
+        isPrimary: true,
+        firstName: "Primary",
+        lastName: "Person",
+        email: "important@gmail.com",
+        phone: [AutoFillPhoneNumbers()],
+        note: [AutoFillNote()]
+    })
+}
+
+export const AutoFillPerson = () => {
+    return ({
+        isPrimary: false,
+        firstName: "Secondary",
+        lastName: "Person",
+        email: "sad_rawr@msn.com",
+        phone: [AutoFillPhoneNumbers()],
+        note: [AutoFillNote()]
+    });
+}
+
+export const AutoFillAccount = () => {
+    return ({
+        accountName: "Account Name",
+        addressOne: "Address One",
+        addressTwo: "",
+        addressCity: "Address City",
+        addressZip: "65203",
+        garageCd: "",
+        person: [AutoFillPrimaryPerson()],
+        pet: [AutoFillPet()],
+        note: [AutoFillNote()]
+    });
+}

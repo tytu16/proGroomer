@@ -1,5 +1,5 @@
 export const WeightUnitList = [
-    {value: "g", label: "Grams"},
-    {value: "lb", label: "Pounds"},
-    {value: "oz", label: "Ounces"}
+    {value: "G", label: "Grams"},
+    {value: "LB", label: "Pounds"},
+    {value: "Os", label: "Ounces"}
  ];

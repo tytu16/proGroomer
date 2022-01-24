@@ -14,7 +14,7 @@ import BottomSlideButtons from "../../../components/Slide/BottomButtons";
 export interface PetQuestionsProps{
     index: number,
     backToPeople: () => void,
-    submitAccount: () => void,
+    reviewAccount: () => void,
 }
 
 export interface WatchedFieldsInter{
@@ -224,7 +224,7 @@ const handleAccordionChange = (index: number) => {
                     <BottomSlideButtons numButtons="three"
                         buttonOneLabel={"Add Another Pet"} buttonOneIcon={addCircleOutline} buttonOneClick={addAnother}
                         buttonTwoLabel="&lt; People" buttonTwoClick={() => props.backToPeople()}
-                        buttonThreeLabel="Submit &gt;" buttonThreeClick={()=> props.submitAccount()}/>
+                        buttonThreeLabel="Review &gt;" buttonThreeClick={()=> props.reviewAccount()}/>
                 </IonCol>
             </IonRow>
             <IonRow class="spacer"></IonRow>

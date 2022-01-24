@@ -15,7 +15,7 @@ import 'swiper/modules/scrollbar/scrollbar.min.css';
 import 'swiper/modules/zoom/zoom.min.css';
 import '@ionic/react/css/ionic-swiper.css';
 
-export interface AccountQuestionProps {
+export interface CreateAccountSlideWrapperProps {
     index: number,
     accountNames: Array<string>,
     saveAccountInfo: (newAccount: AccountInfo) => void,
@@ -24,7 +24,7 @@ export interface AccountQuestionProps {
     toTop: () => void
 }
 
-const CreateAccountSlideWrapper = (props: AccountQuestionProps) => {
+const CreateAccountSlideWrapper = (props: CreateAccountSlideWrapperProps) => {
 
     const [swiper, setSwiper] = useState<any>(null);
 
@@ -69,7 +69,7 @@ const CreateAccountSlideWrapper = (props: AccountQuestionProps) => {
                 <PeopleQuestions index={props.index} toAccountInfo={toPreviousSlide} toPetInfo={toNextSlide}/>
             </SwiperSlide>
             <SwiperSlide>
-                <PetQuestions index={props.index} backToPeople={toPreviousSlide} submitAccount={toNextSlide} />
+                <PetQuestions index={props.index} backToPeople={toPreviousSlide} reviewAccount={toNextSlide} />
             </SwiperSlide>
             <SwiperSlide>
                 <AccountSummary index={props.index} submitAndEnd={()=>{}} submitAndRepeat={()=>{}}></AccountSummary>

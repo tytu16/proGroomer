@@ -1,5 +1,4 @@
 import { IonList } from "@ionic/react";
-
 interface AccordionWrapperProps{
     classNames: string,
     addBorder?: boolean
