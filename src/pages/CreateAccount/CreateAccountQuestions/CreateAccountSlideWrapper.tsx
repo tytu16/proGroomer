@@ -3,6 +3,7 @@ import { AccountInfo } from "../../../models/AccountInfo";
 import AccountQuestions from "./AccountQuestions";
 import PeopleQuestions from "./PeopleQuestions";
 import PetQuestions from "./PetQuestions";
+import AccountSummary from "./AccountSummary"
 
 import { Swiper, SwiperSlide } from 'swiper/react/swiper-react.js';
 import { Keyboard, Pagination, Navigation, Scrollbar, Zoom, A11y } from 'swiper';
@@ -68,7 +69,10 @@ const CreateAccountSlideWrapper = (props: AccountQuestionProps) => {
                 <PeopleQuestions index={props.index} toAccountInfo={toPreviousSlide} toPetInfo={toNextSlide}/>
             </SwiperSlide>
             <SwiperSlide>
-                <PetQuestions index={props.index} backToPeople={toPreviousSlide} submitAccount={submitAccountAndBackToList} />
+                <PetQuestions index={props.index} backToPeople={toPreviousSlide} submitAccount={toNextSlide} />
+            </SwiperSlide>
+            <SwiperSlide>
+                <AccountSummary index={props.index} submitAndEnd={()=>{}} submitAndRepeat={()=>{}}></AccountSummary>
             </SwiperSlide>
         </Swiper>
     );
