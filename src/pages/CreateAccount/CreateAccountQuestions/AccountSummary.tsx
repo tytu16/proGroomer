@@ -1,7 +1,7 @@
 import { IonCol, IonGrid, IonLabel, IonList, IonRow, IonText } from "@ionic/react";
 import { useState } from "react";
 import { useFormContext } from "react-hook-form";
-import {addCircleOutline} from "ionicons/icons";
+import {addCircleOutline, pencil} from "ionicons/icons";
 
 import SummaryHeader from "../../../components/Accordion/SummaryHeader";
 import SummaryAccordion from "../../../components/Accordion/SummaryAccordion";

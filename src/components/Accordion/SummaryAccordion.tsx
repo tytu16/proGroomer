@@ -13,8 +13,8 @@ const SummaryAccordion:React.FC<SummaryAccordionProps> = (props) => {
             <IonCard>
                 <IonCardContent>
                     {
-                        fields.map(f => {
-                            return(<IonItem slot="content" mode='md' lines="none">
+                        fields.map((f, fieldIndex) => {
+                            return(<IonItem key={fieldIndex} slot="content" mode='md' lines="none">
                                 <IonLabel>{f}</IonLabel>
                             </IonItem>);
                         })

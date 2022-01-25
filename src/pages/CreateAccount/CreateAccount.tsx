@@ -48,25 +48,6 @@ const CreateAccount = (props: CreateAccountProps) => {
   const [activeIndex, setActiveIndex] = useState<number>(0);
   const [accountNames, setAccountNames] = useState<string[]>([]);
 
-  const saveAccountInfo = (newAccount: AccountInfo) => {
-      // if(!this.state.accountInProgress.baseAccountEqual(newAccount)){
-      //     newAccount.id = this.props.index.toString();
-      //     this.setState({accountInProgress: newAccount});
-      //     console.log('added account info, now to personInfo');
-      //     console.log(newAccount);
-      // } else {
-      //     console.log('data is same, moving forward without saving');
-      // }
-  }
-
-  const submitAccount = (index: number) => {
-      console.log('in Create Account submit function');
-      console.log(`submitting account ${index}`);
-      let submitData = watch(`account.${index}`);
-      console.log(submitData);
-      history.goBack();
-  }
-
   const handleAccountNames = (name: string, index: number) => {
     // Account.0.person.0.firstName
     let newAccountNames = [...accountNames];
@@ -98,6 +79,22 @@ const CreateAccount = (props: CreateAccountProps) => {
     IonContentRef.current.scrollToTop(300);
   }
 
+  const submitAndRepeat = () => {
+    //Do validation stuff
+    appendAccount();
+    console.log(`changing active index in CreateAccount: ${accountNames.length+1}`);
+    setActiveIndex(accountNames.length+1);
+  }
+
+  const submitAndEnd = () => {
+    //Do validation stuff
+    history.goBack();
+  }
+
+  const appendAccount = () => {
+    append(InitAccountQuestionState());
+  }
+
   return (
       <IonContent ref={IonContentRef}>
           <IonList ref={IonListRef}>
@@ -116,15 +113,13 @@ const CreateAccount = (props: CreateAccountProps) => {
                         )}
                     /></div>
                     <AccordionWrapper addBorder={false} classNames={activeIndex == accountIndex ? "accordion" : "accordion collapsed"}>
-                      <CreateAccountSlideWrapper accountNames={accountNames} index={accountIndex} 
-                        saveAccountInfo={saveAccountInfo} toTop={toTop}
-                        submitAccount={submitAccount} handleAccountNames={handleAccountNames}/>
+                      <CreateAccountSlideWrapper accountNames={accountNames} index={accountIndex}
+                        toTop={toTop} submitAndRepeat={submitAndRepeat} submitAndEnd={submitAndEnd}
+                        handleAccountNames={handleAccountNames}/>
                     </AccordionWrapper>
                   </div>
                 ))}
-                <IonButton type="button" onClick={() => {
-                  append(InitAccountQuestionState())
-                }}>append</IonButton>
+                <IonButton type="button" onClick={appendAccount}>append</IonButton>
               </form>
             </FormProvider>
           </IonList>
