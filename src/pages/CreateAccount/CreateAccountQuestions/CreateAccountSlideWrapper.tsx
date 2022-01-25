@@ -72,7 +72,7 @@ const CreateAccountSlideWrapper = (props: CreateAccountSlideWrapperProps) => {
                 <PetQuestions index={props.index} backToPeople={toPreviousSlide} reviewAccount={toNextSlide} />
             </SwiperSlide>
             <SwiperSlide>
-                <AccountSummary index={props.index} submitAndEnd={()=>{}} submitAndRepeat={()=>{}}></AccountSummary>
+                <AccountSummary index={props.index} submitAndEnd={()=>{}} submitAndRepeat={()=>{}} backToPets={toPreviousSlide}></AccountSummary>
             </SwiperSlide>
         </Swiper>
     );

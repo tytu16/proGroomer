@@ -281,10 +281,24 @@ export const AutoFillAccount = () => {
         addressOne: "Address One",
         addressTwo: "",
         addressCity: "Address City",
+        addressState: "MO",
         addressZip: "65203",
         garageCd: "",
         person: [AutoFillPrimaryPerson()],
         pet: [AutoFillPet()],
         note: [AutoFillNote()]
     });
+}
+
+
+export const AccountFieldNames = () => {
+    return Object.keys(AutoFillAccount());
+}
+
+export const PeopleFieldNames = () => {
+    return Object.keys(AutoFillPerson());
+}
+
+export const PetFieldNames = () => {
+    return Object.keys(AutoFillPet());
 }
