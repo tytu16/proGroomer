@@ -4,9 +4,8 @@ import { ModalNoteList } from './ModalNoteList';
 import * as _ from 'lodash';
 
 interface InputProps {
-    objectIndex: number,
     label: string
-    formPrefix: string,
+    formName: string,
     defaultOn: boolean
 }
 
@@ -15,19 +14,18 @@ interface Note{
     message: string
 }
 
-const ModalFormWrapper: React.FC<InputProps> = ({objectIndex, formPrefix, label, defaultOn}) => {
-    const noteFormPrefix = formPrefix + `.${objectIndex}.note`;
+const ModalFormWrapper: React.FC<InputProps> = ({formName, label, defaultOn}) => {
     const {watch, control, setValue} = useFormContext();
 
     const { fields, append, remove} = useFieldArray({
         control,
-        name: noteFormPrefix,
+        name: formName,
     });
   
     const [notes, setNotes] = useState<Array<Note>>([]);
 
     const handleSave = (index: number) => {
-        const data = _.cloneDeep(watch(`${noteFormPrefix}.${index}`));
+        const data = _.cloneDeep(watch(`${formName}.${index}`));
         let newNotes = notes.slice();
         if(index < newNotes.length){
             newNotes[index] = data;
@@ -39,7 +37,7 @@ const ModalFormWrapper: React.FC<InputProps> = ({objectIndex, formPrefix, label,
     }
 
     const handleCancel = (index: number) => {
-        let fieldName = `${noteFormPrefix}.${index}`;
+        let fieldName = `${formName}.${index}`;
         if(index < notes.length){
             setValue(fieldName, {message: _.cloneDeep(notes[index].message), 
                                    label: _.cloneDeep(notes[index].label)});
@@ -54,7 +52,7 @@ const ModalFormWrapper: React.FC<InputProps> = ({objectIndex, formPrefix, label,
         remove(index);
     }
 
-    return <ModalNoteList fields={fields} noteFormPrefix={noteFormPrefix} handleDelete={handleDelete}
+    return <ModalNoteList fields={fields} noteFormPrefix={formName} handleDelete={handleDelete}
                 label={label} handleSave={handleSave} handleCancel={handleCancel} defaultOn={defaultOn}/>
 }
 export default ModalFormWrapper;

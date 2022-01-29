@@ -1,31 +1,50 @@
 
-import { IonItem, IonLabel } from "@ionic/react";
+import { IonContent, IonIcon, IonItem, IonLabel, IonText } from "@ionic/react";
+import { useFormContext } from "react-hook-form";
+import * as _ from "lodash";
+import {pencil} from "ionicons/icons";
 import { AccountFieldNames, PeopleFieldNames, PetFieldNames } from "../../../pages/CreateAccount/CreateAccountQuestions/QuestionObjects";
+import ModalFormWrapper from "../../Modal/ModalFormWrapper";
 
 interface SummaryContentProps{
     formName: string,
-    fieldIndex: number
+    fieldIndex: number,
+    fieldName?: string
 }
 
 const SummaryContent = (props: SummaryContentProps) => {
-    return (<IonItem key={props.fieldIndex} slot="content" mode='md' lines="none">
-                <IonLabel>{props.formName}</IonLabel>
-            </IonItem>
-    );
+    const {watch} = useFormContext();
+    const fieldName = props.fieldName ? props.fieldName : "";  
+    let fieldValue = watch(props.formName);
+    return (<div>
+        <IonItem mode='md' lines="none">
+            <IonText slot="start" >{fieldValue ? fieldValue : fieldName}</IonText>
+            <IonIcon slot="end" icon={pencil}></IonIcon>
+        </IonItem>
+    </div>);
+}
+
+interface NoteContentProps{
+    noteHeader: string,
+    formName: string,
+}
+
+const NoteContent = (props: NoteContentProps) => {
+    return (<ModalFormWrapper key={0} label={props.noteHeader} defaultOn={false}
+                formName={props.formName}/>);
 }
 
 export const AccountSummaryContent = (props: SummaryContentProps) => {
-    const fields  = AccountFieldNames().map(f => {
-        return (`${props.formName}.${f}`);
-    });
-
+    const deriveFormName = (fieldName: string) => {
+        return (`${props.formName}.${fieldName}`);
+    }
     return (<>
-        {fields.map((f:string, fieldIndex) => {
+        {AccountFieldNames().map((f:string, fieldIndex) => {
             if(!(f.includes("person") || f.includes("pet"))){
-                if(f.includes("note")){
-                    return (<SummaryContent formName={f} fieldIndex={fieldIndex}></SummaryContent>);
+                if(f === "note"){
+                    return (<NoteContent key={fieldIndex} formName={f} noteHeader="AccountNoter"></NoteContent>);
                 } else {
-                    return (<SummaryContent formName={f} fieldIndex={fieldIndex}></SummaryContent>);
+                    return (<SummaryContent key={fieldIndex} formName={deriveFormName(f)} fieldName={f} fieldIndex={fieldIndex}></SummaryContent>);
                 }
             }
         })}
@@ -33,31 +52,33 @@ export const AccountSummaryContent = (props: SummaryContentProps) => {
 }
 
 export const PeopleSummaryContent = (props: SummaryContentProps) => {
-    const fields  = PeopleFieldNames().map(f => {
-        return (`${props.formName}.${f}`);
-    });
+
+    const deriveFormName = (fieldName: string, index: number) => {
+        return (`${props.formName}.${index}.${fieldName}`);
+    }
     return (<>
-        {fields.map((f, fieldIndex) => {
-            if(f.includes("note")){
-                return (<SummaryContent formName={f} fieldIndex={fieldIndex}></SummaryContent>);
+        {PeopleFieldNames().map((f, fieldIndex) => {
+            if(f === "note"){
+                return (<NoteContent key={fieldIndex} formName={f} noteHeader="PeopleNoter"></NoteContent>);
+            } else if(f === "phone"){
+                <IonText>Some good phone shit</IonText>
             } else {
-                return (<SummaryContent formName={f} fieldIndex={fieldIndex}></SummaryContent>);
+                return (<SummaryContent key={fieldIndex} formName={deriveFormName(f,0)} fieldName={f} fieldIndex={fieldIndex}></SummaryContent>);
             }
         })}
     </>);
 }
 
 export const PetsSummaryContent = (props: SummaryContentProps) => {
-    
-    const fields  = PetFieldNames().map(f => {
-        return(`${props.formName}.${f}`);
-    });
+    const deriveFormName = (fieldName: string, index: number) => {
+        return (`${props.formName}.${index}.${fieldName}`);
+    }
     return (<>
-        {fields.map((f, fieldIndex) => {
-            if(f.includes("note")){
-                return (<SummaryContent formName={f} fieldIndex={fieldIndex}></SummaryContent>);
+        {PetFieldNames().map((f, fieldIndex) => {
+            if(f === "note"){
+                return (<NoteContent key={fieldIndex} formName={f} noteHeader="PetNoter"></NoteContent>);
             } else {
-                return (<SummaryContent formName={f} fieldIndex={fieldIndex}></SummaryContent>);
+                return (<SummaryContent key={fieldIndex} formName={deriveFormName(f,0)} fieldName={f} fieldIndex={fieldIndex}></SummaryContent>);
             }
         })}
     </>);

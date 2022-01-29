@@ -75,7 +75,7 @@ const PeopleQuestions = (props: PeopleQuestionsProps) => {
                     watchedFields[fieldArrayIndex].firstName : `Person ${fieldArrayIndex+1}`;
 
                 return (<ModalFormWrapper key={questionIndex} label={personName} defaultOn={false}
-                            objectIndex={fieldArrayIndex} formPrefix={objectType}/>);
+                            formName={`${objectType}.fieldArrayIndex.note`}/>);
             default:
                 return  (
                     <MyTextLabelInput key={questionIndex}

@@ -42,7 +42,7 @@ const AccountQuestions = (props: AccountQuestionsProps) => {
                 let accountName = (props.accountNames[props.index] && props.accountNames[props.index] != '') ? 
                 props.accountNames[props.index] : `Account ${props.index+1}`;
                 return (<ModalFormWrapper key={questionIndex} label={accountName} defaultOn={false}
-                            objectIndex={props.index} formPrefix={field.objectType}/>);
+                            formName={`${field.objectType}.${props.index}.note`}/>);
 
             default:
                 return (<MyTextLabelInput key={questionIndex} required={field.required}

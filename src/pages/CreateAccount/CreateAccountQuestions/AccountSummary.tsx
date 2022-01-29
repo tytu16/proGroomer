@@ -1,12 +1,10 @@
-import { IonCol, IonGrid, IonLabel, IonList, IonRow, IonText } from "@ionic/react";
+import { IonCol, IonGrid, IonList, IonRow } from "@ionic/react";
 import { useState } from "react";
-import { useFormContext } from "react-hook-form";
-import {addCircleOutline, pencil} from "ionicons/icons";
+import {addCircleOutline} from "ionicons/icons";
 
 import SummaryHeader from "../../../components/Accordion/Summaries/SummaryHeader";
 import SummaryAccordionWrapper from "../../../components/Accordion/Summaries/SummaryAccordionWrapper";
 import {AccountSummaryContent, PeopleSummaryContent, PetsSummaryContent} from "../../../components/Accordion/Summaries/SummaryContent";
-import { AccountFieldNames, PeopleFieldNames, PetFieldNames } from "./QuestionObjects";
 import BottomSlideButtons from "../../../components/Slide/BottomButtons";
 
 export interface AccountSummaryProps {

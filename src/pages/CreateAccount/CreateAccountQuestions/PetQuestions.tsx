@@ -108,7 +108,7 @@ const PetQuestions = (props: PetQuestionsProps) => {
 
             case 'note':
                 return (<ModalFormWrapper key={questionIndex} label={derivePetLabel(petIndex, true)}
-                    defaultOn={false} objectIndex={petIndex} formPrefix={objectType}/>);
+                    defaultOn={false} formName={`${objectType}.${petIndex}.note`}/>);
 
             default:
                 return (
