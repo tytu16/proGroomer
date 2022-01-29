@@ -108,3 +108,36 @@ h1.bold-header{
 .my-text-area-item{
     width: 100%;
 }
+
+// test input fields
+.field:not(:last-child) {
+
+    margin-bottom: 1rem !important;
+}
+
+.field {
+    ion-label {
+        padding-left: 0.2rem;
+        padding-right: 0.5rem;
+        display: flex;
+        justify-content: space-between;
+        align-content: center;
+        align-items: center;
+
+        p {
+            color: var(--ion-color-danger);
+        }
+    }
+}
+.customInput {
+    --padding-bottom: 1rem;
+    --padding-top: 1rem;
+    --padding-start: 1rem;
+    --padding-end: 1rem;
+    border-radius: 10px;
+    border-style: solid;
+    border-color: var(--ion-color-primary);
+    border-width: 5%;
+    margin-top: 0.25rem;
+    transition: all 0.2s linear;
+}

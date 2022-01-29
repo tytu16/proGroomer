@@ -1,4 +1,6 @@
 import { Redirect, Route } from 'react-router-dom';
+
+import * as _ from 'lodash';
 import {
   setupIonicReact,
   IonApp,
@@ -33,10 +35,12 @@ import '@ionic/react/css/display.css';
 
 /* Theme variables */
 import './theme/variables.scss';
-import React from 'react';
+import { useState } from 'react';
 import CreateAccount from './pages/CreateAccount/CreateAccount';
 import { AccountInfo } from './models/AccountInfo';
 import AccountDetail from './pages/AccountDetails/AccountDetails';
+import useAuthToken from './hooks/useAuthToken';
+import LoginPage from './pages/Login/LoginPage';
 
 interface AppState {
   accounts: Array<AccountInfo>,
@@ -44,94 +48,89 @@ interface AppState {
 }
 
 setupIonicReact();
+function App () {
+  const [appState, setAppState] = useState<AppState>({accounts: [],topIndex:0});
+  const {token, setToken} = useAuthToken();
 
-export default class App extends React.Component<any,AppState> {
-
-  constructor(props: any){
-    super(props);
-    this.state = {
-      accounts: [],
-      topIndex: 0
-    }
-  }
-
-  onNewAccount = (accountName: string) => {
-    let currentState: AppState = this.state;
+  const onNewAccount = (accountName: string) => {
+    let currentState: AppState = _.cloneDeep(appState);
     const newAccount = new AccountInfo({
       id: currentState.topIndex + 1,
       accountName
     })
     currentState.accounts.push(newAccount);
     let newIndex = currentState.topIndex + 1
-    this.setState({
+    setAppState({
       accounts: currentState.accounts,
-      topIndex: newIndex
+      topIndex: currentState.topIndex+1
     });
   }
 
-  onCreateAccount = (newAccount: AccountInfo) => {
+  const onCreateAccount = (newAccount: AccountInfo) => {
     console.log('creating account');
-    let localState: AppState = this.state;
+    let localState: AppState = _.cloneDeep(appState);
 
     localState.accounts.push(newAccount);
     let newIndex = localState.topIndex+1
 
-    this.setState({
+    setAppState({
       accounts: localState.accounts,
       topIndex: newIndex,
 
     })
   }
 
-  defaultAccount = new AccountInfo({
+  const defaultAccount = new AccountInfo({
     accountName: "defaultAccount",
     id: -1
   });
 
-  render() {
-    return (
+  return (
       <IonApp>
       <IonReactRouter>
-        <IonTabs>
-          <IonRouterOutlet>
-            <Route exact path="/accounts">
-              <AccountsTab currentIndex={this.state.topIndex} accounts={this.state.accounts} onCreateAccount={this.onCreateAccount} onNewAccount={this.onNewAccount} />
-              <Route exact path="/accounts/createAccounts" >
-                <CreateAccount index={this.state.topIndex} onCreateAccount={this.onCreateAccount}/>
+        {!token || token == '' ? (<LoginPage ></LoginPage>) : (
+          <IonTabs>
+            <IonRouterOutlet>
+              <Route exact path="/accounts">
+                <AccountsTab currentIndex={appState.topIndex} accounts={appState.accounts} onCreateAccount={onCreateAccount} onNewAccount={onNewAccount} />
+                <Route exact path="/accounts/createAccounts" >
+                  <CreateAccount index={appState.topIndex} onCreateAccount={onCreateAccount}/>
+                </Route>
+                <Route exact path="/accounts/details:id" render={({match}) => (
+                  <AccountDetail account={appState.accounts.find( a =>  ':'+a.id.toString() == match.params.id ) || defaultAccount}/>
+                )} />
               </Route>
-              <Route exact path="/accounts/details:id" render={({match}) => (
-                <AccountDetail account={this.state.accounts.find( a =>  ':'+a.id.toString() == match.params.id ) || this.defaultAccount}/>
-              )} />
-            </Route>
-
-            <Route exact path="/calendars">
-              <CalendarsTab accounts={this.state.accounts} onNewAccount={this.onNewAccount} />
-            </Route>
-            
-            <Route path="/payments">
-              <PaymentsTab accounts={this.state.accounts}  onNewAccount={this.onNewAccount}/>
-            </Route>
-            <Route exact path="/">
-              <Redirect to="/accounts" />
-            </Route>
-          </IonRouterOutlet>
-          <IonTabBar slot="bottom">
-            <IonTabButton tab="Accounts" href="/accounts">
-              <IonIcon icon={people} />
-              <IonLabel>Accounts</IonLabel>
-            </IonTabButton>
-            <IonTabButton tab="Calendars" href="/calendars">
-              <IonIcon icon={calendar} />
-              <IonLabel>Calendars</IonLabel>
-            </IonTabButton>
-            <IonTabButton tab="Payments" href="/payments">
-              <IonIcon icon={wallet} />
-              <IonLabel>Payments</IonLabel>
-            </IonTabButton>
-          </IonTabBar>
-        </IonTabs>
+  
+              <Route exact path="/calendars">
+                <CalendarsTab accounts={appState.accounts} onNewAccount={onNewAccount} />
+              </Route>
+              
+              <Route path="/payments">
+                <PaymentsTab accounts={appState.accounts}  onNewAccount={onNewAccount}/>
+              </Route>
+              <Route exact path="/">
+                <Redirect to="/accounts" />
+              </Route>
+            </IonRouterOutlet>
+            <IonTabBar slot="bottom">
+              <IonTabButton tab="Accounts" href="/accounts">
+                <IonIcon icon={people} />
+                <IonLabel>Accounts</IonLabel>
+              </IonTabButton>
+              <IonTabButton tab="Calendars" href="/calendars">
+                <IonIcon icon={calendar} />
+                <IonLabel>Calendars</IonLabel>
+              </IonTabButton>
+              <IonTabButton tab="Payments" href="/payments">
+                <IonIcon icon={wallet} />
+                <IonLabel>Payments</IonLabel>
+              </IonTabButton>
+            </IonTabBar>
+          </IonTabs>
+        )}
       </IonReactRouter>
     </IonApp>
     );
-  }
 }
+
+export default App;

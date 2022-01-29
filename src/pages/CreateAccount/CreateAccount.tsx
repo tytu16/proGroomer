@@ -40,6 +40,7 @@ const CreateAccount = (props: CreateAccountProps) => {
   });
   const control = methods.control;
   const watch   = methods.watch;
+  const handleSubmit = methods.handleSubmit;
   const { fields, append, remove} = useFieldArray({
     control,
     name: "account",
@@ -79,18 +80,25 @@ const CreateAccount = (props: CreateAccountProps) => {
     IonContentRef.current.scrollToTop(300);
   }
 
-  const submitAndRepeat = () => {
+  const submitAndRepeat = (data: any) => {
     //Do validation stuff
+    console.log('submit and repeat');
+    console.log(data);
+    setActiveIndex(accountNames.length+1);
     appendAccount();
     console.log(`changing active index in CreateAccount: ${accountNames.length+1}`);
-    setActiveIndex(accountNames.length+1);
   }
 
-  const submitAndEnd = () => {
+  const submitAndEnd = (data: any) => {
     //Do validation stuff
     history.goBack();
   }
 
+  const handleErrors = (e: any) => {
+    console.log('arrr, der be errers');
+    console.log(e);
+  }
+  
   const appendAccount = () => {
     append(InitAccountQuestionState());
   }
@@ -114,7 +122,7 @@ const CreateAccount = (props: CreateAccountProps) => {
                     /></div>
                     <AccordionWrapper addBorder={false} classNames={activeIndex == accountIndex ? "accordion" : "accordion collapsed"}>
                       <CreateAccountSlideWrapper accountNames={accountNames} index={accountIndex}
-                        toTop={toTop} submitAndRepeat={submitAndRepeat} submitAndEnd={submitAndEnd}
+                        toTop={toTop} submitAndRepeat={handleSubmit(submitAndRepeat, handleErrors)} submitAndEnd={submitAndEnd}
                         handleAccountNames={handleAccountNames}/>
                     </AccordionWrapper>
                   </div>
