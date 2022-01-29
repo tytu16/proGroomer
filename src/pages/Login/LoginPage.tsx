@@ -1,6 +1,6 @@
 import { IonButton, IonCard, IonCardContent, IonCardHeader, IonCardTitle, IonCol, IonContent, IonFooter, IonGrid, IonInput, IonRow } from "@ionic/react";
 import { useForm } from "react-hook-form";
-import CustomField from "../../components/InputFields/TestField";
+import CustomField from "../../components/InputFields/CustomInput";
 import "./Login.scss";
 
 function LoginPage() {
@@ -23,10 +23,10 @@ function LoginPage() {
                                 <IonCardTitle>Login</IonCardTitle>
                             </IonCardHeader>
                             <IonCardContent className="text-center">
-                                <CustomField register={register} error={errors.email} name="email" 
-                                    require={true} placeholder="email address"></CustomField>
+                                <CustomField register={register} error={errors.email} name="email"
+                                    required={true} placeholder="email address"></CustomField>
                                 <CustomField register={register} error={errors.password} name="password"
-                                    require={true} placeholder="password"></CustomField>
+                                    required={true} placeholder="password"></CustomField>
                             </IonCardContent>
                             <IonFooter>
                                 <IonRow className="ion-justify-content-center">

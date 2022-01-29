@@ -1,12 +1,10 @@
-import { IonGrid, IonInput, IonItem, IonLabel, IonRow } from "@ionic/react";
-import { useState } from "react";
+import { IonGrid, IonItem, IonLabel, IonRow } from "@ionic/react";
+import CustomInput from './CustomInput';
 import { useFormContext } from "react-hook-form";
 import "./InputStyling.scss";
 
 export interface MyTextLabelInputProps {
-  index: number,
   label: string,
-  objectType: string,
   fieldName: string,
   placeholder: string,
   numbersOnly?: boolean,
@@ -17,15 +15,13 @@ export interface MyTextLabelInputProps {
 }
 
 export const MyTextLabelInput = (props: MyTextLabelInputProps) => {
-  const {label, placeholder, objectType, index, numbersOnly, maxLength, fieldName, onChange, watched} = props;
+  const {label, required, placeholder, numbersOnly, maxLength, fieldName, onChange, watched} = props;
   
   const {register} = useFormContext();
 
-  const myFieldName = `${objectType}.${index}.${fieldName}`;
-
   const handleChange = (e: any) => {
     const newFieldValue = e.detail.value;
-    onChange(newFieldValue, myFieldName);
+    onChange(newFieldValue, fieldName);
   }
 
   return(
@@ -34,14 +30,11 @@ export const MyTextLabelInput = (props: MyTextLabelInputProps) => {
         <IonRow>
           <IonLabel>{label}</IonLabel>
         </IonRow>
-        <IonRow className="ion-text-left">
-          <IonInput  {...register(myFieldName)}
-            class="text-input-field" type={numbersOnly ? "tel": "text"}
-            autocomplete="off" autoCorrect="off" maxlength={maxLength ? maxLength : undefined}
-            placeholder={placeholder}
-            onIonChange={(e) => {
-              if(watched){handleChange(e);}
-            }}/>
+        <IonRow className="ion-text-left ion-justify-content-center">
+          <CustomInput register={register} name={fieldName} error={null} required={required} 
+             watched={watched} handleChange={handleChange}
+             type={numbersOnly ? "tel": "text"} placeholder={placeholder}
+             maxLength={maxLength ? maxLength : undefined}></CustomInput>
         </IonRow>
       </IonGrid>
     </IonItem>);

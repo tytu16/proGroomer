@@ -71,17 +71,17 @@ const PetQuestions = (props: PetQuestionsProps) => {
                 return (
                     <IonRow key={questionIndex}>
                         <IonCol size ="6">
-                            <MyTextLabelInput key={questionIndex} index={petIndex} numbersOnly={true}
+                            <MyTextLabelInput key={questionIndex} numbersOnly={true}
                                 onChange={handleFieldChange} watched={field.watched} maxLength={2}
                                 placeholder={"years"} label={"Age - Years"}
-                                objectType={objectType} fieldName={'ageYr'} required={field.required}
+                                fieldName={`${objectType}.${petIndex}.ageYr`} required={field.required}
                             />
                         </IonCol>
                         <IonCol size="6">
-                            <MyTextLabelInput key={questionIndex} index={petIndex} numbersOnly={true}
+                            <MyTextLabelInput key={questionIndex} numbersOnly={true}
                                 onChange={handleFieldChange} watched={field.watched} maxLength={2}
                                 placeholder={"months"} label={"Age - Months"}
-                                objectType={objectType} fieldName={'ageMn'} required={field.required}
+                                fieldName={`${objectType}.${petIndex}.ageMn`} required={field.required}
                             />
                         </IonCol>
                     </IonRow>
@@ -91,10 +91,10 @@ const PetQuestions = (props: PetQuestionsProps) => {
                 return (
                     <IonRow key={questionIndex}>
                         <IonCol size ="6">
-                            <MyTextLabelInput key={questionIndex} index={petIndex} numbersOnly={true}
+                            <MyTextLabelInput key={questionIndex} numbersOnly={true}
                                 onChange={handleFieldChange} watched={field.watched}
                                 placeholder={field.placeholder} label={"Weight"}
-                                objectType={objectType} fieldName={'weight'} required={field.required}
+                                fieldName={`${objectType}.${petIndex}.weight`} required={field.required}
                             />
                         </IonCol>
                         <IonCol size="6">
@@ -112,10 +112,10 @@ const PetQuestions = (props: PetQuestionsProps) => {
 
             default:
                 return (
-                        <MyTextLabelInput key={questionIndex} index={petIndex} 
+                        <MyTextLabelInput key={questionIndex} required={field.required}
                             onChange={handleFieldChange} watched={field.watched}
                             placeholder={field.placeholder} label={field.label}
-                            objectType={objectType} fieldName={field.fieldName} required={field.required}
+                            fieldName={`${objectType}.${petIndex}.${field.fieldName}`}
                         />
                 );
         }

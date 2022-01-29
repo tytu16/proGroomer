@@ -78,10 +78,10 @@ const PeopleQuestions = (props: PeopleQuestionsProps) => {
                             objectIndex={fieldArrayIndex} formPrefix={objectType}/>);
             default:
                 return  (
-                    <MyTextLabelInput key={questionIndex} index={fieldArrayIndex} 
-                        onChange={handleFieldChange} watched={field.watched}
+                    <MyTextLabelInput key={questionIndex}
+                        onChange={handleFieldChange} watched={field.watched}  required={field.required}
                         placeholder={field.placeholder} label={field.label}
-                        objectType={objectType} fieldName={field.fieldName} required={field.required}
+                        fieldName={`${objectType}.${fieldArrayIndex}.${field.fieldName}`}
                     />
                 );
         }

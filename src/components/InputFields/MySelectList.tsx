@@ -26,7 +26,7 @@ export const MySelectList = (props: MySelectListProps) => {
                 <IonRow>
                     <label>{label}</label>
                 </IonRow>)}
-            <IonRow className="ion-text-left">
+            <IonRow className="ion-text-left ion-align-items-center">
                 {/* ToDo: make this populate from a default state set on profile setup  */}
                 <IonSelect id="my-list" value={defaultValue} placeholder={placeholder}{...register(`${objectType}.${index}.${fieldName}`)}>
                 {

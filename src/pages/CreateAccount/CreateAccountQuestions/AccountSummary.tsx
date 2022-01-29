@@ -3,8 +3,9 @@ import { useState } from "react";
 import { useFormContext } from "react-hook-form";
 import {addCircleOutline, pencil} from "ionicons/icons";
 
-import SummaryHeader from "../../../components/Accordion/SummaryHeader";
-import SummaryAccordion from "../../../components/Accordion/SummaryAccordion";
+import SummaryHeader from "../../../components/Accordion/Summaries/SummaryHeader";
+import SummaryAccordionWrapper from "../../../components/Accordion/Summaries/SummaryAccordionWrapper";
+import {AccountSummaryContent, PeopleSummaryContent, PetsSummaryContent} from "../../../components/Accordion/Summaries/SummaryContent";
 import { AccountFieldNames, PeopleFieldNames, PetFieldNames } from "./QuestionObjects";
 import BottomSlideButtons from "../../../components/Slide/BottomButtons";
 
@@ -17,27 +18,33 @@ export interface AccountSummaryProps {
 
 const AccountSummary = (props: AccountSummaryProps) => {
     const {submitAndEnd, submitAndRepeat, backToPets} = props;
-    const {watch} = useFormContext();
-    const accountSummary = watch(`account.${props.index}`);
-    const people = accountSummary.person;
-    const pets = accountSummary.pet;
 
     const [accountActive, setAccountActive] = useState<boolean>(true);
     const [peopleActive, setPeopleActive] = useState<boolean>(true);
     const [petsActive, setPetsActive] = useState<boolean>(true);
-    console.log(accountSummary);
+
+    const accountFormName = `account.${props.index}`;
+    const peopleFormName = `${accountFormName}.person`; 
+    const petsFormName = `${accountFormName}.pet`;
+
     return (
         <IonGrid>
             <IonRow><IonCol size="12">
             <IonList>
                 <SummaryHeader isActive={accountActive} setIsActive={setAccountActive} label={"Account Info"} />
-                <SummaryAccordion isActive={accountActive} fields={AccountFieldNames()}></SummaryAccordion>
+                <SummaryAccordionWrapper isActive={accountActive} >
+                    <AccountSummaryContent fieldIndex={props.index} formName={accountFormName}></AccountSummaryContent>
+                </SummaryAccordionWrapper>
 
                 <SummaryHeader isActive={peopleActive} setIsActive={setPeopleActive} label={"People Info"}/>
-                <SummaryAccordion isActive={peopleActive} fields={PeopleFieldNames()}></SummaryAccordion>
+                <SummaryAccordionWrapper isActive={peopleActive}>
+                    <PeopleSummaryContent fieldIndex={props.index} formName={peopleFormName}></PeopleSummaryContent>
+                </SummaryAccordionWrapper>
 
                 <SummaryHeader isActive={petsActive} setIsActive={setPetsActive} label={"Pet Info"}/>
-                <SummaryAccordion isActive={petsActive} fields={PetFieldNames()}></SummaryAccordion>
+                <SummaryAccordionWrapper isActive={petsActive}>
+                    <PetsSummaryContent fieldIndex={props.index} formName={petsFormName}></PetsSummaryContent>
+                </SummaryAccordionWrapper>
             </IonList>
             </IonCol></IonRow>
             <BottomSlideButtons numButtons="three"

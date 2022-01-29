@@ -39,7 +39,6 @@ const CreateAccount = (props: CreateAccountProps) => {
     defaultValues: {account: [defaultFormValues]}
   });
   const control = methods.control;
-  const watch   = methods.watch;
   const handleSubmit = methods.handleSubmit;
   const { fields, append, remove} = useFieldArray({
     control,

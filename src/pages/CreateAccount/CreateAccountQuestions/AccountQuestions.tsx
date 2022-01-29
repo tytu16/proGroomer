@@ -45,10 +45,10 @@ const AccountQuestions = (props: AccountQuestionsProps) => {
                             objectIndex={props.index} formPrefix={field.objectType}/>);
 
             default:
-                return (<MyTextLabelInput key={questionIndex} index={props.index}
+                return (<MyTextLabelInput key={questionIndex} required={field.required}
                     placeholder={field.placeholder} label={field.label} 
                     onChange={handleFieldChange} watched={field.watched}
-                    objectType={field.objectType} fieldName={field.fieldName} required={field.required}
+                    fieldName={`${field.objectType}.${props.index}.${field.fieldName}`}
                 />);
         }
     }
