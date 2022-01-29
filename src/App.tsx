@@ -88,7 +88,7 @@ function App () {
   return (
       <IonApp>
       <IonReactRouter>
-        {!token || token == '' ? (<LoginPage ></LoginPage>) : (
+        {/* {!token || token == '' ? (<LoginPage ></LoginPage>) : ( */}
           <IonTabs>
             <IonRouterOutlet>
               <Route exact path="/accounts">
@@ -127,7 +127,7 @@ function App () {
               </IonTabButton>
             </IonTabBar>
           </IonTabs>
-        )}
+         {/* )} */}
       </IonReactRouter>
     </IonApp>
     );
