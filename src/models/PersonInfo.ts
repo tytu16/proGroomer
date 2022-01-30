@@ -1,3 +1,4 @@
+import { Note } from './Note';
 import {PhoneInfo} from './PhoneInfo';
 
 export class PersonInfo {
@@ -7,6 +8,7 @@ export class PersonInfo {
     private _lastName: string;
     private _email: string;
     private _phone: Array<PhoneInfo>;
+    private _notes: Array<Note>;
 
     constructor(data: any, id=0){
         this._id = data.id ? data.id : "0";
@@ -14,12 +16,25 @@ export class PersonInfo {
         this._firstName = data.firstName ? data.firstName : "";
         this._lastName  = data.lastName ? data.lastName : "";
         this._email = data.email ? data.email : "";
-        this._phone = new Array<PhoneInfo>();
 
-        if(data.phone != null && data.phone.length > 0){
+        if(data.phone){
+            let newPhones = Array<PhoneInfo>();
             for(let pn of data.phone){
-                this._phone.push(pn);
+                newPhones = [...newPhones, new PhoneInfo(pn)];
             }
+            this._phone = newPhones;
+        } else {
+            this._phone = new Array<PhoneInfo>();
+        }
+
+        if(data.note){
+            let newNotes = new Array<Note>();
+            for(let note of data.note) {
+                newNotes = [...newNotes, new Note(note)];
+            }
+            this._notes = newNotes;
+        } else {
+            this._notes = new Array<Note>();
         }
     }
 

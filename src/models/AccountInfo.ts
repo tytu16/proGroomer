@@ -11,9 +11,9 @@ export class AccountInfo {
     private _addressState: string;
     private _addressZip: string;
     private _garageCd: string;
-    private _people: PersonInfo[];
-    private _pets: PetInfo[];
-    private _notes: Note[];
+    private _people: Array<PersonInfo>;
+    private _pets: Array<PetInfo>;
+    private _notes: Array<Note>;
 
     constructor(data: any){
         this._id = data.id ? data.id : "0" ;
@@ -25,7 +25,7 @@ export class AccountInfo {
         this._addressZip = data.addressZip ? data.addressZip : "";
         this._garageCd = data.garageCd ? data.garageCd : "";
 
-        if(data.people){
+        if(data.person){
             let newPeople = Array<PersonInfo>();
             for(let person of data.person){
                 newPeople = [...newPeople, new PersonInfo(person)];

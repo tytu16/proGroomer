@@ -25,7 +25,7 @@ const AccountDetail = (props: AccountDetailProps) => {
         {
             props.account.pets.map(p => {
                 return (
-                    <h3>pet name: {p.name + " " + p.breed + " " + p.sex}</h3>
+                    <h3>pet name: {p.name + " " + p.breed + " " + p.maleFemale}</h3>
                 );
             })
         }

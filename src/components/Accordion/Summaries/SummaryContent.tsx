@@ -151,7 +151,7 @@ const AgeContent = (props: SummaryContentProps) => {
     let mn = "";
     if (ageMn === '1'){
         mn = `${ageMn} month`;
-    } else if(ageMn != 0){
+    } else if(ageMn != '0'){
         mn = `${ageMn} months`;
     }
 
