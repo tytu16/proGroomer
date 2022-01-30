@@ -5,11 +5,11 @@ import { Note } from "./Note";
 export class AccountInfo {
     private _id: string;
     private _accountName: string;
-    private _addrOne: string;
-    private _addrTwo: string;
-    private _addrCity: string;
-    private _addrState: string;
-    private _addrZip: string;
+    private _addressOne: string;
+    private _addressTwo: string;
+    private _addressCity: string;
+    private _addressState: string;
+    private _addressZip: string;
     private _garageCd: string;
     private _people: PersonInfo[];
     private _pets: PetInfo[];
@@ -18,61 +18,88 @@ export class AccountInfo {
     constructor(data: any){
         this._id = data.id ? data.id : "0" ;
         this._accountName = data.accountName ? data.accountName : "";
-        this._people = data.people ? data.people : new Array<PersonInfo>() ;
-        this._pets = data.pets ? data.pets : new Array<PetInfo>();
-        this._notes = data.notes ? data.notes : new Array<Note>();  
-        this._addrOne =  data.addrOne ? data.addrOne : "";
-        this._addrTwo = data.addrTwo ? data.addrTwo : "";
-        this._addrCity = data.addrCity ? data.addrCity : "";
-        this._addrState = data.addrState ? data.addrState : "";
-        this._addrZip = data.addrZip ? data.addrZip : "";
+        this._addressOne =  data.addressOne ? data.addressOne : "";
+        this._addressTwo = data.addressTwo ? data.addressTwo : "";
+        this._addressCity = data.addressCity ? data.addressCity : "";
+        this._addressState = data.addressState ? data.addressState : "";
+        this._addressZip = data.addressZip ? data.addressZip : "";
         this._garageCd = data.garageCd ? data.garageCd : "";
+
+        if(data.people){
+            let newPeople = Array<PersonInfo>();
+            for(let person of data.person){
+                newPeople = [...newPeople, new PersonInfo(person)];
+            }
+            this._people = [...newPeople];
+        } else {
+            this._people = new Array<PersonInfo>() ;
+        }
+        
+        if(data.pet){
+            let newPets = Array<PetInfo>();
+            for(let pet of data.pet){
+                newPets = [...newPets, new PetInfo(pet)];
+            }
+            this._pets = newPets;
+        } else {
+            this._pets = new Array<PetInfo>();
+        }
+        
+        if(data.note){
+            let newNotes = new Array<Note>();
+            for(let note of data.note) {
+                newNotes = [...newNotes, new Note(note)];
+            }
+            this._notes = newNotes;
+        } else {
+            this._notes = new Array<Note>();
+        }
     }
 
-    get addrOne(){
-        return this._addrOne
+    get addressOne(){
+        return this._addressOne
     }
 
-    set addrOne(addrOne: string){
-        this._addrOne = addrOne;
+    set addressOne(addressOne: string){
+        this._addressOne = addressOne;
     }
 
-    get addrTwo(){
-        return this._addrTwo
+    get addressTwo(){
+        return this._addressTwo
     }
 
-    set addrTwo(addrTwo: string){
-        this._addrTwo = addrTwo;
+    set addressTwo(addressTwo: string){
+        this._addressTwo = addressTwo;
     }
 
-    get addrCity(){
-        return this._addrCity
+    get addressCity(){
+        return this._addressCity
     }
 
-    set addrCity(addrCity: string){
-        this._addrCity = addrCity;
+    set addressCity(addressCity: string){
+        this._addressCity = addressCity;
     }
 
-    get addrState(){
-        return this._addrState;
+    get addressState(){
+        return this._addressState;
     }
 
-    set addrState(addrState: string){
-        this._addrState = addrState;
+    set addressState(addressState: string){
+        this._addressState = addressState;
     }
 
-    get addrZip(){
-        return this._addrZip;
+    get addressZip(){
+        return this._addressZip;
     }
 
-    set addrZip(addrZip: string){
-        this._addrZip = addrZip; 
+    set addressZip(addressZip: string){
+        this._addressZip = addressZip; 
     }
 
     get fullAddress(): string{
-        let fullAddress = this._addrOne;
-        fullAddress += (this._addrTwo != "") ? " - " + this._addrTwo + ", " : ", ";
-        fullAddress += this._addrCity + " " + this._addrState + ", " + this._addrZip;
+        let fullAddress = this._addressOne;
+        fullAddress += (this._addressTwo != "") ? " - " + this._addressTwo + ", " : ", ";
+        fullAddress += this._addressCity + " " + this._addressState + ", " + this._addressZip;
         return fullAddress;
     }
 
@@ -134,10 +161,10 @@ export class AccountInfo {
 
     baseAccountEqual(other: AccountInfo){
         return this._accountName == other.accountName &&
-                this.addrOne == other.addrOne &&
-                this.addrTwo == other.addrTwo &&
-                this.addrCity == other.addrCity &&
-                this.addrState == other.addrState &&
-                this.addrZip == other.addrZip
+                this._addressOne == other.addressOne &&
+                this._addressTwo == other.addressTwo &&
+                this._addressCity == other.addressCity &&
+                this._addressState == other.addressState &&
+                this._addressZip == other.addressZip
     }
 }

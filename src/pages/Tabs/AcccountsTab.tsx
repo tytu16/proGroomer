@@ -12,7 +12,7 @@ export interface AccountsTabProps{
   accounts: Array<AccountInfo>,
   currentIndex: number
   onNewAccount: (account: string) => void,
-  onCreateAccount: (account: AccountInfo) => void
+  createAccounts: (accounts: any) => void
 }
 
 export interface AccountsProps {
@@ -35,14 +35,14 @@ export default class AccountsTab extends React.Component<AccountsTabProps,Accoun
   }
 
   render() {
-    const { onNewAccount, accounts, currentIndex, onCreateAccount } = this.props;
+    const { onNewAccount, accounts, currentIndex, createAccounts } = this.props;
     return (
       <IonPage>
         <IonRouterOutlet>
           <Route exact path="/accounts">
             <AccountList accounts={accounts} onNewAccount={onNewAccount} />
             <Route exact path="/accounts/createAccounts" >
-              <CreateAccount index={currentIndex} onCreateAccount={onCreateAccount}/>
+              <CreateAccount index={currentIndex} createAccounts={createAccounts}/>
             </Route>
             <Route exact path="/accounts/details:id" render={({match}) => (
               <AccountDetail account={accounts.find( a => ':'+a.id.toString() == match.params.id) || new AccountInfo({})} />

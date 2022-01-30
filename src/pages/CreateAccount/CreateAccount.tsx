@@ -12,7 +12,7 @@ import AccordionHeader from "../../components/Accordion/AccordionHeader";
 import { useHistory } from "react-router";
 
 export interface CreateAccountProps {
-    onCreateAccount: (account: AccountInfo) => void,
+    createAccounts: (accounts: Array<any>) => void,
     index: number
 }
 
@@ -92,6 +92,7 @@ const CreateAccount = (props: CreateAccountProps) => {
     console.log('submit and end - Create Account');
     console.log('CreateAccount Submit method');
     console.log(data);
+    props.createAccounts(data);
     history.goBack();
   }
 

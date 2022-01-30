@@ -66,17 +66,25 @@ function App () {
     });
   }
 
-  const onCreateAccount = (newAccount: AccountInfo) => {
+  const createAccounts = (newAccounts: any) => {
     console.log('creating account');
+    console.log(newAccounts);
     let localState: AppState = _.cloneDeep(appState);
+    let newAccountInfos = Array<AccountInfo>();
+    for(let account of newAccounts.account){
+      let newAccountInfo = new AccountInfo(account);
+      newAccountInfos.push(newAccountInfo)
+      console.log('data compare');
+      console.log(account);
+      console.log(newAccountInfo);
+    }
 
-    localState.accounts.push(newAccount);
+    localState.accounts = [...localState.accounts, ...newAccountInfos]
     let newIndex = localState.topIndex+1
 
     setAppState({
       accounts: localState.accounts,
       topIndex: newIndex,
-
     })
   }
 
@@ -92,9 +100,9 @@ function App () {
           <IonTabs>
             <IonRouterOutlet>
               <Route exact path="/accounts">
-                <AccountsTab currentIndex={appState.topIndex} accounts={appState.accounts} onCreateAccount={onCreateAccount} onNewAccount={onNewAccount} />
+                <AccountsTab currentIndex={appState.topIndex} accounts={appState.accounts} createAccounts={createAccounts} onNewAccount={onNewAccount} />
                 <Route exact path="/accounts/createAccounts" >
-                  <CreateAccount index={appState.topIndex} onCreateAccount={onCreateAccount}/>
+                  <CreateAccount index={appState.topIndex} createAccounts={createAccounts}/>
                 </Route>
                 <Route exact path="/accounts/details:id" render={({match}) => (
                   <AccountDetail account={appState.accounts.find( a =>  ':'+a.id.toString() == match.params.id ) || defaultAccount}/>
