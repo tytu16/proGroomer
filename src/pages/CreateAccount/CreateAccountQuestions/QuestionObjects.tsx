@@ -49,7 +49,7 @@ export const InitPersonQuestionState = () => {
     });
 }
 
-export const InitAccountQuestionState = () => {
+export const InitPrimaryAccountQuestionState = () => {
     return ({
         accountName: "",
         addressOne: "",
@@ -58,6 +58,20 @@ export const InitAccountQuestionState = () => {
         addressZip: "",
         garageCd: "",
         person: [InitPrimaryPersonQuestionState()],
+        pet: [InitPetQuestionState()],
+        note: [InitNoteQuestionState()]
+    });
+}
+
+export const InitAccountQuestionState = () => {
+    return ({
+        accountName: "",
+        addressOne: "",
+        addressTwo: "",
+        addressCity: "",
+        addressZip: "",
+        garageCd: "",
+        person: [InitPersonQuestionState()],
         pet: [InitPetQuestionState()],
         note: [InitNoteQuestionState()]
     });
@@ -77,7 +91,7 @@ export const AccountQuestionFields = [
         label: "Address One", 
         objectType: "account",
         fieldName: "addressOne",
-        required: true,
+        required: false,
         watched: false
     },
     {
@@ -93,7 +107,7 @@ export const AccountQuestionFields = [
         label: "City", 
         objectType: "account",
         fieldName: "addressCity",
-        required: true,
+        required: false,
         watched: false
     },
     {
@@ -109,7 +123,7 @@ export const AccountQuestionFields = [
         label: "Zipcode", 
         objectType: "account",
         fieldName: "addressZip",
-        required: true,
+        required: false,
         watched: false
     },
     {
@@ -117,7 +131,7 @@ export const AccountQuestionFields = [
         label: "Garage Code", 
         objectType: "account",
         fieldName: "garageCd",
-        required: true,
+        required: false,
         watched: false
     },
     {
@@ -125,7 +139,7 @@ export const AccountQuestionFields = [
         label: "Notes",
         objectType: "account",
         fieldName: "note",
-        required: true,
+        required: false,
         watched: true
     }
 ]
@@ -152,7 +166,7 @@ export const PeopleQuestionFields = [
         label: "Last Name", 
         objectType: "account.0.person",
         fieldName: "lastName",
-        required: true,
+        required: false,
         watched: true
     },
     {
@@ -160,7 +174,7 @@ export const PeopleQuestionFields = [
         label: "Email", 
         objectType: "account.0.person",
         fieldName: "email",
-        required: true,
+        required: false,
         watched: false
     },
     {
@@ -168,7 +182,7 @@ export const PeopleQuestionFields = [
         label: "Phone Number",
         objectType: "account.0.person.0.phone",
         fieldName: "phoneNumber",
-        required: true,
+        required: false,
         watched: false
     },
     {
@@ -176,7 +190,7 @@ export const PeopleQuestionFields = [
         label: "Notes",
         objectType: "account.0.person.0.note",
         fieldName: "note",
-        required: true,
+        required: false,
         watched: true
     }
 ]
@@ -227,7 +241,7 @@ export const PetQuestionFields = [
         label: "Notes",
         objectType: "account.0.pet.0.note",
         fieldName: "note",
-        required: true,
+        required: false,
         watched: true
     }
 ] 

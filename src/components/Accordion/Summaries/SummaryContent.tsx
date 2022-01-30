@@ -11,7 +11,18 @@ import { useState } from "react";
 interface SummaryContentProps{
     formName: string,
     fieldIndex: number,
-    fieldName?: string
+    fieldName?: string,
+    isSubmitted: boolean
+}
+
+interface EditIconProps{
+    isSubmitted: boolean,
+    isEdit: boolean,
+    setIsEdit: Function,
+}
+const EditIcon = (props: EditIconProps) => {
+    const {isSubmitted, isEdit, setIsEdit} = props;
+    return (<>{ !isSubmitted && <IonIcon slot="end" icon={pencil} onClick={()=>setIsEdit(!isEdit)}></IonIcon>}</>);
 }
 
 const SummaryContent = (props: SummaryContentProps) => {
@@ -32,7 +43,7 @@ const SummaryContent = (props: SummaryContentProps) => {
             ) : (
             <IonItem class={fieldValue ? "" : "empty"} mode='md' lines="none">
                 <IonText slot="start" >{fieldValue ? fieldValue : `${fieldName} is empty`}</IonText>
-                <IonIcon slot="end" icon={pencil} onClick={()=>setIsEdit(!isEdit)}></IonIcon>
+                <EditIcon isSubmitted={props.isSubmitted} isEdit={isEdit} setIsEdit={setIsEdit}></EditIcon>
             </IonItem>
             )
         }
@@ -61,7 +72,7 @@ export const AccountSummaryContent = (props: SummaryContentProps) => {
                 if(f === "note"){
                     return (<NoteContent key={fieldIndex} formName={deriveFormName(f)} noteHeader={noteHeader}></NoteContent>);
                 } else {
-                    return (<SummaryContent key={fieldIndex} formName={deriveFormName(f)} fieldName={f} fieldIndex={fieldIndex}></SummaryContent>);
+                    return (<SummaryContent isSubmitted={props.isSubmitted} key={fieldIndex} formName={deriveFormName(f)} fieldName={f} fieldIndex={fieldIndex}></SummaryContent>);
                 }
             }
         })}
@@ -71,7 +82,8 @@ export const AccountSummaryContent = (props: SummaryContentProps) => {
 // People Stuff //
 
 interface PhoneContentProps {
-    formName: string
+    formName: string,
+    isSubmitted: boolean
 }
 
 const PhoneContent = (props: PhoneContentProps) => {
@@ -82,9 +94,9 @@ const PhoneContent = (props: PhoneContentProps) => {
         {
             phoneFields.map((f:any, phoneIndex:number) => {
                 return(
-                    <IonItem mode='md' lines='none'>
+                    <IonItem key="phoneIndex" mode='md' lines='none'>
                         <IonText slot="start">{`${f.phoneNumber} - ${f.phoneType}`}</IonText>
-                        <IonIcon slot="end" icon={pencil} onClick={()=>setIsEdit(!isEdit)}></IonIcon>
+                        <EditIcon isSubmitted={props.isSubmitted} isEdit={isEdit} setIsEdit={setIsEdit}></EditIcon>
                     </IonItem>
                 );
             })
@@ -108,14 +120,14 @@ export const PeopleSummaryContent = (props: SummaryContentProps) => {
                                 noteHeader="person"/>);
 
                         case "phone":
-                            return (<PhoneContent key={fieldIndex} formName={deriveFormName(f,personIndex)}/>); 
+                            return (<PhoneContent key={fieldIndex} isSubmitted={props.isSubmitted} formName={deriveFormName(f,personIndex)}/>); 
 
                         case "isPrimary":
                             return;
 
                         default:
                             return (<SummaryContent key={fieldIndex} formName={deriveFormName(f,personIndex)} 
-                                fieldName={f} fieldIndex={fieldIndex}/>);
+                                fieldName={f} fieldIndex={fieldIndex} isSubmitted={props.isSubmitted}/>);
                     }
                 })}
             </div>)
@@ -165,7 +177,7 @@ const AgeContent = (props: SummaryContentProps) => {
             ) : (
                 <IonItem mode='md' lines="none">
                     <IonText slot="start">{age}</IonText>
-                    <IonIcon onClick={()=>setIsEdit(!isEdit)} slot="end" icon={pencil}></IonIcon>
+                    <EditIcon isSubmitted={props.isSubmitted} isEdit={isEdit} setIsEdit={setIsEdit}></EditIcon>
                 </IonItem>
             )
         }
@@ -182,7 +194,7 @@ const WeightContent = (props: SummaryContentProps) => {
     return (
         <IonItem mode='md' lines="none">
             <IonText slot="start">{weightString}</IonText>
-            <IonIcon slot="end" icon={pencil} onClick={()=>setIsEdit(!isEdit)}></IonIcon>
+            <EditIcon isSubmitted={props.isSubmitted} isEdit={isEdit} setIsEdit={setIsEdit}></EditIcon>
         </IonItem>
     );
 }
@@ -200,18 +212,18 @@ export const PetsSummaryContent = (props: SummaryContentProps) => {
                     return;
                 case "ageMn":
                     return (
-                        <AgeContent key={fieldIndex} fieldIndex={0} formName={`${props.formName}.${0}.`}></AgeContent>
+                        <AgeContent isSubmitted={props.isSubmitted} key={fieldIndex} fieldIndex={0} formName={`${props.formName}.${0}.`}></AgeContent>
                     );
 
                 case "wUnits":
                     return;
                 case "weight":
                     return (
-                        <WeightContent key={fieldIndex} fieldIndex={0} formName={`${props.formName}.${0}.`}></WeightContent>
+                        <WeightContent isSubmitted={props.isSubmitted} key={fieldIndex} fieldIndex={0} formName={`${props.formName}.${0}.`}></WeightContent>
                     );
 
                 default:
-                    return (<SummaryContent key={fieldIndex} formName={deriveFormName(f,0)} fieldName={f} fieldIndex={fieldIndex}></SummaryContent>);
+                    return (<SummaryContent isSubmitted={props.isSubmitted} key={fieldIndex} formName={deriveFormName(f,0)} fieldName={f} fieldIndex={fieldIndex}></SummaryContent>);
             }
         })}
     </>);

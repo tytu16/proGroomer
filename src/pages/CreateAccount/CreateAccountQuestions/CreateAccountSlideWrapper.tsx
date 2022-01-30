@@ -19,7 +19,7 @@ export interface CreateAccountSlideWrapperProps {
     index: number,
     accountNames: Array<string>,
     handleAccountNames: (name: string, index: number) => void,
-    submitAndEnd: (index: number) => void,
+    submitAndEnd: () => void,
     submitAndRepeat: () => void,
     toTop: () => void
 }
@@ -45,11 +45,6 @@ const CreateAccountSlideWrapper = (props: CreateAccountSlideWrapperProps) => {
     }
 
     const submitAndRepeat = () => {
-        console.log("to first slide");
-        if(swiper){
-            props.toTop();
-            swiper.slideTo(0);
-        }
         props.submitAndRepeat();
     }
 

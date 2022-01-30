@@ -20,35 +20,51 @@ const AccountSummary = (props: AccountSummaryProps) => {
     const [accountActive, setAccountActive] = useState<boolean>(true);
     const [peopleActive, setPeopleActive] = useState<boolean>(true);
     const [petsActive, setPetsActive] = useState<boolean>(true);
+    const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
 
     const accountFormName = `account.${props.index}`;
     const peopleFormName = `${accountFormName}.person`; 
     const petsFormName = `${accountFormName}.pet`;
 
+
+    //Todo: Handle errors
+    const handleSubmitEnd = () => {
+        console.log('submit and end - AccountSummary');
+        setIsSubmitted(true);
+        submitAndEnd();
+    }
+
+    const handleSubmitRepeat = () => {
+        console.log('submit and repeat - AccountSummary');
+        setIsSubmitted(true);
+        submitAndRepeat();
+    }
+
     return (
         <IonGrid>
             <IonRow><IonCol size="12">
             <IonList>
+                {/* Could make headers slidable to make account editable again */}
                 <SummaryHeader isActive={accountActive} setIsActive={setAccountActive} label={"Account Info"} />
                 <SummaryAccordionWrapper isActive={accountActive} >
-                    <AccountSummaryContent fieldIndex={props.index} formName={accountFormName}></AccountSummaryContent>
+                    <AccountSummaryContent isSubmitted={isSubmitted} fieldIndex={props.index} formName={accountFormName}></AccountSummaryContent>
                 </SummaryAccordionWrapper>
 
                 <SummaryHeader isActive={peopleActive} setIsActive={setPeopleActive} label={"People Info"}/>
                 <SummaryAccordionWrapper isActive={peopleActive}>
-                    <PeopleSummaryContent fieldIndex={props.index} formName={peopleFormName}></PeopleSummaryContent>
+                    <PeopleSummaryContent isSubmitted={isSubmitted} fieldIndex={props.index} formName={peopleFormName}></PeopleSummaryContent>
                 </SummaryAccordionWrapper>
 
                 <SummaryHeader isActive={petsActive} setIsActive={setPetsActive} label={"Pet Info"}/>
                 <SummaryAccordionWrapper isActive={petsActive}>
-                    <PetsSummaryContent fieldIndex={props.index} formName={petsFormName}></PetsSummaryContent>
+                    <PetsSummaryContent isSubmitted={isSubmitted} fieldIndex={props.index} formName={petsFormName}></PetsSummaryContent>
                 </SummaryAccordionWrapper>
             </IonList>
             </IonCol></IonRow>
-            <BottomSlideButtons numButtons="three"
-                buttonOneLabel={"Add Another Account"} buttonOneIcon={addCircleOutline} buttonOneClick={()=>submitAndRepeat()}
-                buttonTwoLabel="&lt; Pets" buttonTwoClick={()=>backToPets()}
-                buttonThreeLabel="Submit &gt;" buttonThreeClick={()=>submitAndEnd()}/>
+            { !isSubmitted && <BottomSlideButtons numButtons="three"
+                buttonOneLabel={"Add Another Account"} buttonOneIcon={addCircleOutline} buttonOneClick={handleSubmitRepeat}
+                buttonTwoLabel="&lt; Pets" buttonTwoClick={()=>backToPets}
+                buttonThreeLabel="Submit &gt;" buttonThreeClick={handleSubmitEnd}/>}
         </IonGrid>
     );
 }
