@@ -49,6 +49,29 @@ const NoteContent = (props: NoteContentProps) => {
                 formName={props.formName}/>);
 }
 
+interface PhoneContentProps {
+    formName: string
+}
+
+const PhoneContent = (props: PhoneContentProps) => {
+    const {watch} = useFormContext();
+    const phoneFields = watch(props.formName);
+    const prettifyPhone = (phone:string) => {
+        return '('+phone.substring(0,3)+') ' + phone.substring(3,6) + ' - ' + phone.substring(6);
+    }
+    return(<div className="wrapper">
+        {
+            phoneFields.map((f:any, phoneIndex:number) => {
+                return(
+                    <IonItem mode='md' lines="none">
+                        <IonText slot="start">{prettifyPhone(f.phoneNumber)}</IonText>
+                    </IonItem>
+                );
+            })
+        }
+    </div>);
+}
+
 export const AccountSummaryContent = (props: SummaryContentProps) => {
     const deriveFormName = (fieldName: string) => {
         return (`${props.formName}.${fieldName}`);
@@ -57,7 +80,7 @@ export const AccountSummaryContent = (props: SummaryContentProps) => {
         {AccountFieldNames().map((f:string, fieldIndex) => {
             if(!(f.includes("person") || f.includes("pet"))){
                 if(f === "note"){
-                    return (<NoteContent key={fieldIndex} formName={f} noteHeader="AccountNoter"></NoteContent>);
+                    return (<NoteContent key={fieldIndex} formName={deriveFormName(f)} noteHeader="AccountNoter"></NoteContent>);
                 } else {
                     return (<SummaryContent key={fieldIndex} formName={deriveFormName(f)} fieldName={f} fieldIndex={fieldIndex}></SummaryContent>);
                 }
@@ -67,23 +90,32 @@ export const AccountSummaryContent = (props: SummaryContentProps) => {
 }
 
 export const PeopleSummaryContent = (props: SummaryContentProps) => {
-
+    const {watch} = useFormContext();
+    const numPeople = watch(props.formName).length;
     const deriveFormName = (fieldName: string, index: number) => {
         return (`${props.formName}.${index}.${fieldName}`);
     }
-    return (<>
-        {PeopleFieldNames().map((f, fieldIndex) => {
-            if(f === "note"){
-                return (<NoteContent key={fieldIndex} formName={f} noteHeader="PeopleNoter"></NoteContent>);
-            } else if(f === "phone"){
-                <IonText>Some good phone shit</IonText>
-            } else if(f === 'isPrimary'){
-                return;
-            } else {
-                return (<SummaryContent key={fieldIndex} formName={deriveFormName(f,0)} fieldName={f} fieldIndex={fieldIndex}></SummaryContent>);
-            }
-        })}
-    </>);
+    return (<>{ 
+        [...Array(numPeople)].map((_,personIndex) => 
+            (<div key={personIndex}>
+                {PeopleFieldNames().map((f, fieldIndex) => {
+                    switch(f){
+                        case "note":
+                            return (<NoteContent key={fieldIndex} formName={deriveFormName(f,personIndex)} noteHeader="PeopleNoter"/>);
+
+                        case "phone":
+                            return (<PhoneContent key={fieldIndex} formName={deriveFormName(f,personIndex)}/>); 
+
+                        case "isPrimary":
+                            return;
+
+                        default:
+                            return (<SummaryContent key={fieldIndex} formName={deriveFormName(f,personIndex)} 
+                                fieldName={f} fieldIndex={fieldIndex}/>);
+                    }
+                })}
+            </div>)
+        )}</>);
 }
 
 export const PetsSummaryContent = (props: SummaryContentProps) => {
@@ -92,10 +124,12 @@ export const PetsSummaryContent = (props: SummaryContentProps) => {
     }
     return (<>
         {PetFieldNames().map((f, fieldIndex) => {
-            if(f === "note"){
-                return (<NoteContent key={fieldIndex} formName={f} noteHeader="PetNoter"></NoteContent>);
-            } else {
-                return (<SummaryContent key={fieldIndex} formName={deriveFormName(f,0)} fieldName={f} fieldIndex={fieldIndex}></SummaryContent>);
+            switch(f){
+                case "note":
+                    return (<NoteContent key={fieldIndex} formName={deriveFormName(f,0)} noteHeader="PeopleNoter"/>);
+
+                default:
+                    return (<SummaryContent key={fieldIndex} formName={deriveFormName(f,0)} fieldName={f} fieldIndex={fieldIndex}></SummaryContent>);
             }
         })}
     </>);
