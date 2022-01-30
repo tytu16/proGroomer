@@ -1,10 +1,12 @@
 
-import { IonContent, IonIcon, IonItem, IonLabel, IonText } from "@ionic/react";
+import { IonButton, IonIcon, IonInput, IonItem, IonText } from "@ionic/react";
 import { useFormContext } from "react-hook-form";
 import * as _ from "lodash";
 import {pencil} from "ionicons/icons";
 import { AccountFieldNames, PeopleFieldNames, PetFieldNames } from "../../../pages/CreateAccount/CreateAccountQuestions/QuestionObjects";
 import ModalFormWrapper from "../../Modal/ModalFormWrapper";
+import "../../InputFields/InputStyling.scss";
+import { useState } from "react";
 
 interface SummaryContentProps{
     formName: string,
@@ -13,14 +15,27 @@ interface SummaryContentProps{
 }
 
 const SummaryContent = (props: SummaryContentProps) => {
-    const {watch} = useFormContext();
+    const {watch, register} = useFormContext();
+    const [isEdit, setIsEdit] = useState<boolean>(false);
     const fieldName = props.fieldName ? props.fieldName : "";  
     let fieldValue = watch(props.formName);
-    return (<div>
-        <IonItem mode='md' lines="none">
-            <IonText slot="start" >{fieldValue ? fieldValue : fieldName}</IonText>
-            <IonIcon slot="end" icon={pencil}></IonIcon>
-        </IonItem>
+
+    const saveField = () => {
+        setIsEdit(!isEdit);
+    }
+    return (<div>{
+            isEdit ? (
+                <IonItem>
+                    <IonInput {...register(props.formName)} placeholder={props.fieldName}></IonInput>
+                    <IonButton onClick={saveField}>Save</IonButton>
+                </IonItem>
+            ) : (
+            <IonItem class={fieldValue ? "" : "empty"} mode='md' lines="none">
+                <IonText slot="start" >{fieldValue ? fieldValue : `${fieldName} is empty`}</IonText>
+                <IonIcon slot="end" icon={pencil} onClick={()=>setIsEdit(!isEdit)}></IonIcon>
+            </IonItem>
+            )
+        }
     </div>);
 }
 
@@ -62,6 +77,8 @@ export const PeopleSummaryContent = (props: SummaryContentProps) => {
                 return (<NoteContent key={fieldIndex} formName={f} noteHeader="PeopleNoter"></NoteContent>);
             } else if(f === "phone"){
                 <IonText>Some good phone shit</IonText>
+            } else if(f === 'isPrimary'){
+                return;
             } else {
                 return (<SummaryContent key={fieldIndex} formName={deriveFormName(f,0)} fieldName={f} fieldIndex={fieldIndex}></SummaryContent>);
             }

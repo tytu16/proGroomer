@@ -249,6 +249,19 @@ export const AutoFillPet = () => {
     })
 }
 
+export const AutoFillPetTwo = () => {
+    return({
+        name: "PetNameTwo",
+        breed: "PetBreedTwo",
+        maleFemale: "Male",
+        ageYr: "10",
+        ageMn: "0",
+        weight: "8",
+        wUnits: "LB",
+        note: [AutoFillNote()]
+    })
+}
+
 export const AutoFillPhoneNumbers = () => {
     return {phoneNumber: "5732752610", phoneType: "CL", textable: true};
 }
@@ -256,8 +269,8 @@ export const AutoFillPhoneNumbers = () => {
 export const AutoFillPrimaryPerson = () => {
     return ({
         isPrimary: true,
-        firstName: "Primary",
-        lastName: "Person",
+        firstName: "PrimaryFirst",
+        lastName: "PersonLast",
         email: "important@gmail.com",
         phone: [AutoFillPhoneNumbers()],
         note: [AutoFillNote()]
@@ -267,8 +280,8 @@ export const AutoFillPrimaryPerson = () => {
 export const AutoFillPerson = () => {
     return ({
         isPrimary: false,
-        firstName: "Secondary",
-        lastName: "Person",
+        firstName: "SecondaryFirst",
+        lastName: "PersonLast",
         email: "sad_rawr@msn.com",
         phone: [AutoFillPhoneNumbers()],
         note: [AutoFillNote()]
