@@ -22,7 +22,7 @@ export interface CreateAccountState {
 
 const CreateAccount = (props: CreateAccountProps) => {
   // Set this by hand for testing, autofills form
-  const autoFill = true;
+  const autoFill = false;
 
   const IonContentRef = useRef<any>(null);
   const IonListRef = useRef<any>(null);

@@ -30,7 +30,9 @@ export class PersonInfo {
         if(data.note){
             let newNotes = new Array<Note>();
             for(let note of data.note) {
-                newNotes = [...newNotes, new Note(note)];
+                if(note.label != '' || note.message != ''){
+                    newNotes = [...newNotes, new Note(note)];
+                }
             }
             this._notes = newNotes;
         } else {

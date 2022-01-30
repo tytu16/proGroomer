@@ -32,4 +32,8 @@ export class Note {
     set message(value: string){
         this._message = value;
     }
+
+    get hasMessage(): boolean {
+        return (this?._message != '');
+    }
 }

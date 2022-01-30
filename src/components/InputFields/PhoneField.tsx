@@ -83,6 +83,7 @@ export const PhoneFieldInput = (props: PhoneFieldProps) => {
 
   // ToDo: Sides of layout uneven with rest of page
   // ToDo: Selecting textable unchecks phoneType
+  // Todo: all sorts of bugs
   return(<div className="shadow-container">
     <IonGrid className="ion-no-padding">
       <div onClick={()=>setPhonesActive(!phonesActive)}>
