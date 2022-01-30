@@ -135,7 +135,6 @@ const PeopleQuestions = (props: PeopleQuestionsProps) => {
   // Add a new watchedField to state for header
    const addAnother = () => {
        console.log('adding another person');
-       logFormObject();
        append(InitPersonQuestionState());
        setActiveIndex(watchedFields.length);
        setWatchedFields(watchedFields.concat({firstName:"", lastName:""}));
@@ -154,13 +153,7 @@ const PeopleQuestions = (props: PeopleQuestionsProps) => {
 // Log pet data and move to next slide
    const moveToPets = () => {
        console.log('moving to pets');
-       logFormObject();
        props.toPetInfo();
-   }
-
-   const logFormObject = () => {
-      console.log(objectType);
-      console.log(watch(objectType));
    }
 
     return (

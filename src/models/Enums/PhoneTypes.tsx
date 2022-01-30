@@ -4,7 +4,7 @@ export interface PhoneTypeInterface{
  };
  
  export const PhoneTypeList = [
-    {value: "BS", label: "Business"},
-    {value: "CL", label: "Cell"},
-    {value: "HM", label: "Home"}
+    {value: "Business", label: "Business"},
+    {value: "Cell", label: "Cell"},
+    {value: "Home", label: "Home"}
  ];

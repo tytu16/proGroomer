@@ -1,6 +1,6 @@
 
 import { IonButton, IonIcon, IonInput, IonItem, IonText } from "@ionic/react";
-import { useFormContext } from "react-hook-form";
+import { useForm, useFormContext } from "react-hook-form";
 import * as _ from "lodash";
 import {pencil} from "ionicons/icons";
 import { AccountFieldNames, PeopleFieldNames, PetFieldNames } from "../../../pages/CreateAccount/CreateAccountQuestions/QuestionObjects";
@@ -49,44 +49,47 @@ const NoteContent = (props: NoteContentProps) => {
                 formName={props.formName}/>);
 }
 
-interface PhoneContentProps {
-    formName: string
-}
-
-const PhoneContent = (props: PhoneContentProps) => {
-    const {watch} = useFormContext();
-    const phoneFields = watch(props.formName);
-    const prettifyPhone = (phone:string) => {
-        return '('+phone.substring(0,3)+') ' + phone.substring(3,6) + ' - ' + phone.substring(6);
-    }
-    return(<div className="wrapper">
-        {
-            phoneFields.map((f:any, phoneIndex:number) => {
-                return(
-                    <IonItem mode='md' lines="none">
-                        <IonText slot="start">{prettifyPhone(f.phoneNumber)}</IonText>
-                    </IonItem>
-                );
-            })
-        }
-    </div>);
-}
-
 export const AccountSummaryContent = (props: SummaryContentProps) => {
+    const {watch} = useFormContext();
     const deriveFormName = (fieldName: string) => {
         return (`${props.formName}.${fieldName}`);
     }
+    let noteHeader = watch(`account.${props.fieldIndex}.accountName`);
     return (<>
         {AccountFieldNames().map((f:string, fieldIndex) => {
             if(!(f.includes("person") || f.includes("pet"))){
                 if(f === "note"){
-                    return (<NoteContent key={fieldIndex} formName={deriveFormName(f)} noteHeader="AccountNoter"></NoteContent>);
+                    return (<NoteContent key={fieldIndex} formName={deriveFormName(f)} noteHeader={noteHeader}></NoteContent>);
                 } else {
                     return (<SummaryContent key={fieldIndex} formName={deriveFormName(f)} fieldName={f} fieldIndex={fieldIndex}></SummaryContent>);
                 }
             }
         })}
     </>);
+}
+
+// People Stuff //
+
+interface PhoneContentProps {
+    formName: string
+}
+
+const PhoneContent = (props: PhoneContentProps) => {
+    const {watch} = useFormContext();
+    const [isEdit, setIsEdit] = useState<boolean>(false);
+    const phoneFields = watch(props.formName);
+    return(<div className="wrapper">
+        {
+            phoneFields.map((f:any, phoneIndex:number) => {
+                return(
+                    <IonItem mode='md' lines='none'>
+                        <IonText slot="start">{`${f.phoneNumber} - ${f.phoneType}`}</IonText>
+                        <IonIcon slot="end" icon={pencil} onClick={()=>setIsEdit(!isEdit)}></IonIcon>
+                    </IonItem>
+                );
+            })
+        }
+    </div>);
 }
 
 export const PeopleSummaryContent = (props: SummaryContentProps) => {
@@ -101,7 +104,8 @@ export const PeopleSummaryContent = (props: SummaryContentProps) => {
                 {PeopleFieldNames().map((f, fieldIndex) => {
                     switch(f){
                         case "note":
-                            return (<NoteContent key={fieldIndex} formName={deriveFormName(f,personIndex)} noteHeader="PeopleNoter"/>);
+                            return (<NoteContent key={fieldIndex} formName={deriveFormName(f,personIndex)} 
+                                noteHeader="person"/>);
 
                         case "phone":
                             return (<PhoneContent key={fieldIndex} formName={deriveFormName(f,personIndex)}/>); 
@@ -118,6 +122,71 @@ export const PeopleSummaryContent = (props: SummaryContentProps) => {
         )}</>);
 }
 
+// Pet stuff //
+
+const AgeContent = (props: SummaryContentProps) => {
+    const [isEdit, setIsEdit] = useState<boolean>(false);
+    const {watch, register} = useFormContext();
+    const ageYr = watch(props.formName+'ageYr');
+    const ageMn = watch(props.formName+'ageMn');
+    let yr = "";
+    if (ageYr === '1'){
+        yr = `${ageYr} yr`;
+    } else if(ageYr != '0') {
+        yr = `${ageYr} yrs`;
+    }
+
+    let mn = "";
+    if (ageMn === '1'){
+        mn = `${ageMn} month`;
+    } else if(ageMn != 0){
+        mn = `${ageMn} months`;
+    }
+
+    let age = "";
+    if(yr!='' && mn!=''){
+        age = yr + ' and ' + mn + ' old';
+    } else if(yr!=''){
+        age = yr + ' old';
+    } else {
+        age = mn + ' old';
+    }
+
+    const saveField = () => {
+        setIsEdit(!isEdit);
+    }
+    return(<div>{
+            isEdit ? (
+                <IonItem>
+                    <IonInput {...register(props.formName+'ageYr')} placeholder="years" slot="start"></IonInput>
+                    <IonInput {...register(props.formName+'ageMn')} placeholder="months" slot="end"></IonInput>
+                    <IonButton onClick={saveField}>Save</IonButton>
+                </IonItem>
+            ) : (
+                <IonItem mode='md' lines="none">
+                    <IonText slot="start">{age}</IonText>
+                    <IonIcon onClick={()=>setIsEdit(!isEdit)} slot="end" icon={pencil}></IonIcon>
+                </IonItem>
+            )
+        }
+    </div>);
+}
+
+const WeightContent = (props: SummaryContentProps) => {
+    const [isEdit, setIsEdit] = useState<boolean>(false);
+    const {watch, register} = useFormContext();
+    const weight = watch(props.formName+'weight');
+    const units = watch(props.formName+'wUnits');
+
+    const weightString = weight === '1' ? weight + " " + units : weight + " " + units+"s";
+    return (
+        <IonItem mode='md' lines="none">
+            <IonText slot="start">{weightString}</IonText>
+            <IonIcon slot="end" icon={pencil} onClick={()=>setIsEdit(!isEdit)}></IonIcon>
+        </IonItem>
+    );
+}
+
 export const PetsSummaryContent = (props: SummaryContentProps) => {
     const deriveFormName = (fieldName: string, index: number) => {
         return (`${props.formName}.${index}.${fieldName}`);
@@ -126,7 +195,20 @@ export const PetsSummaryContent = (props: SummaryContentProps) => {
         {PetFieldNames().map((f, fieldIndex) => {
             switch(f){
                 case "note":
-                    return (<NoteContent key={fieldIndex} formName={deriveFormName(f,0)} noteHeader="PeopleNoter"/>);
+                    return (<NoteContent key={fieldIndex} formName={deriveFormName(f,0)} noteHeader="Pet"/>);
+                case "ageYr":
+                    return;
+                case "ageMn":
+                    return (
+                        <AgeContent key={fieldIndex} fieldIndex={0} formName={`${props.formName}.${0}.`}></AgeContent>
+                    );
+
+                case "wUnits":
+                    return;
+                case "weight":
+                    return (
+                        <WeightContent key={fieldIndex} fieldIndex={0} formName={`${props.formName}.${0}.`}></WeightContent>
+                    );
 
                 default:
                     return (<SummaryContent key={fieldIndex} formName={deriveFormName(f,0)} fieldName={f} fieldIndex={fieldIndex}></SummaryContent>);

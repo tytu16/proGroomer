@@ -244,7 +244,7 @@ export const AutoFillPet = () => {
         ageYr: "1",
         ageMn: "4",
         weight: "14",
-        wUnits: "LB",
+        wUnits: "lb",
         note: [AutoFillNote()]
     })
 }
@@ -263,7 +263,7 @@ export const AutoFillPetTwo = () => {
 }
 
 export const AutoFillPhoneNumbers = () => {
-    return {phoneNumber: "5732752610", phoneType: "CL", textable: true};
+    return {phoneNumber: "(573) 275 - 2610", phoneType: "Cell", textable: true};
 }
 
 export const AutoFillPrimaryPerson = () => {
