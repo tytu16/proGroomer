@@ -152,7 +152,6 @@ const PeopleQuestions = (props: PeopleQuestionsProps) => {
 
 // Log pet data and move to next slide
    const moveToPets = () => {
-       console.log('moving to pets');
        props.toPetInfo();
    }
 

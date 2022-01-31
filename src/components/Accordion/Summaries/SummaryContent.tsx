@@ -94,7 +94,7 @@ const PhoneContent = (props: PhoneContentProps) => {
         {
             phoneFields.map((f:any, phoneIndex:number) => {
                 return(
-                    <IonItem key="phoneIndex" mode='md' lines='none'>
+                    <IonItem key={phoneIndex} mode='md' lines='none'>
                         <IonText slot="start">{`${f.phoneNumber} : ${f.phoneType}`}</IonText>
                         <EditIcon isSubmitted={props.isSubmitted} isEdit={isEdit} setIsEdit={setIsEdit}></EditIcon>
                     </IonItem>

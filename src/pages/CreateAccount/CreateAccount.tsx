@@ -81,17 +81,12 @@ const CreateAccount = (props: CreateAccountProps) => {
 
   const submitAndRepeat = (data: any) => {
     //Do validation stuff
-    console.log('submit and re[eat] - Create Account');
     setActiveIndex(accountNames.length+1);
     appendAccount();
-    console.log(`changing active index in CreateAccount: ${accountNames.length+1}`);
   }
 
   const submitAndEnd = (data: any) => {
     //Do validation stuff
-    console.log('submit and end - Create Account');
-    console.log('CreateAccount Submit method');
-    console.log(data);
     props.createAccounts(data);
     history.goBack();
   }

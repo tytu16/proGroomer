@@ -61,14 +61,10 @@ export const PhoneFieldInput = (props: PhoneFieldProps) => {
 
   const handleFieldChange = (phoneNumber: string, index: number) => {
     let newPhones = phoneNumbers.slice();
-    console.log('new phoneNum: '+phoneNumber);
     if(newPhones[index]){
-      console.log('old phoneNum: '+newPhones[index]);
       if(!newPhones[index].search(phoneRegex) && phoneNumber.search(phoneRegex)){
-        console.log(`lowering numFilledPhones: ${numFilledPhones} -> ${numFilledPhones-1}`)
         setNumFilledPhones(numFilledPhones-1);
       } else if(newPhones[index].search(phoneRegex) && !phoneNumber.search(phoneRegex)){
-        console.log(`raising numFilledPhones: ${numFilledPhones} -> ${numFilledPhones+1}`)
         setNumFilledPhones(numFilledPhones+1);
       }
     }

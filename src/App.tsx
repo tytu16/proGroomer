@@ -13,7 +13,7 @@ import {
 } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
 import { people, calendar, wallet } from 'ionicons/icons';
-import AccountsTab from './pages/Tabs/AcccountsTab';
+import AccountsTab from './pages/Tabs/AccountsTab';
 import CalendarsTab from './pages/Tabs/CalendarsTab';
 import PaymentsTab from './pages/Tabs/PaymentsTab';
 
@@ -51,7 +51,7 @@ setupIonicReact();
 function App () {
   const [appState, setAppState] = useState<AppState>({accounts: [],topIndex:0});
   const {token, setToken} = useAuthToken();
-
+  const useLogin = false; 
   const onNewAccount = (accountName: string) => {
     let currentState: AppState = _.cloneDeep(appState);
     const newAccount = new AccountInfo({
@@ -67,16 +67,11 @@ function App () {
   }
 
   const createAccounts = (newAccounts: any) => {
-    console.log('creating account');
-    console.log(newAccounts);
     let localState: AppState = _.cloneDeep(appState);
     let newAccountInfos = Array<AccountInfo>();
     for(let account of newAccounts.account){
       let newAccountInfo = new AccountInfo(account);
       newAccountInfos.push(newAccountInfo)
-      console.log('data compare');
-      console.log(account);
-      console.log(newAccountInfo);
     }
 
     localState.accounts = [...localState.accounts, ...newAccountInfos]
@@ -96,7 +91,7 @@ function App () {
   return (
       <IonApp>
       <IonReactRouter>
-        {/* {!token || token == '' ? (<LoginPage ></LoginPage>) : ( */}
+        {((!token || token == '') && useLogin) ? (<LoginPage ></LoginPage>) : (
           <IonTabs>
             <IonRouterOutlet>
               <Route exact path="/accounts">
@@ -135,7 +130,7 @@ function App () {
               </IonTabButton>
             </IonTabBar>
           </IonTabs>
-         {/* )} */}
+          )} 
       </IonReactRouter>
     </IonApp>
     );

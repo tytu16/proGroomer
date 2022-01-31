@@ -29,13 +29,11 @@ const AccountSummary = (props: AccountSummaryProps) => {
 
     //Todo: Handle errors
     const handleSubmitEnd = () => {
-        console.log('submit and end - AccountSummary');
         setIsSubmitted(true);
         submitAndEnd();
     }
 
     const handleSubmitRepeat = () => {
-        console.log('submit and repeat - AccountSummary');
         setIsSubmitted(true);
         submitAndRepeat();
     }
