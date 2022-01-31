@@ -39,9 +39,9 @@ export default class AccountList extends React.Component<AccountsProps> {
           {
             accountToDisplay ? (
               <>{
-                accounts.map(( account: AccountInfo ) => {
+                accounts.map(( account: AccountInfo, accountIndex: number ) => {
                   return (
-                      <AccountRow key={account.id} account={account} text={accountText}/>
+                      <AccountRow key={accountIndex} account={account} text={accountText}/>
                   );}
                 )
               }</>

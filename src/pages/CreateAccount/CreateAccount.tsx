@@ -104,7 +104,7 @@ const CreateAccount = (props: CreateAccountProps) => {
   const appendAccount = () => {
     console.log('appending');
     // Todo: Styling the header once submitted
-    append(InitAccountQuestionState());
+    append(InitPrimaryAccountQuestionState());
   }
 
   return (
