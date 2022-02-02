@@ -11,9 +11,9 @@ export class AccountInfo {
     private _addressState: string;
     private _addressZip: string;
     private _garageCd: string;
-    private _people: Array<PersonInfo>;
-    private _pets: Array<PetInfo>;
-    private _notes: Array<Note>;
+    private _person: Array<PersonInfo>;
+    private _pet: Array<PetInfo>;
+    private _note: Array<Note>;
 
     constructor(data: any){
         this._id = data.id ? data.id : "0" ;
@@ -26,23 +26,23 @@ export class AccountInfo {
         this._garageCd = data.garageCd ? data.garageCd : "";
 
         if(data.person){
-            let newPeople = Array<PersonInfo>();
+            let newPerson = Array<PersonInfo>();
             for(let person of data.person){
-                newPeople = [...newPeople, new PersonInfo(person)];
+                newPerson = [...newPerson, new PersonInfo(person)];
             }
-            this._people = [...newPeople];
+            this._person = [...newPerson];
         } else {
-            this._people = new Array<PersonInfo>() ;
+            this._person = new Array<PersonInfo>() ;
         }
         
         if(data.pet){
-            let newPets = Array<PetInfo>();
+            let newPet = Array<PetInfo>();
             for(let pet of data.pet){
-                newPets = [...newPets, new PetInfo(pet)];
+                newPet = [...newPet, new PetInfo(pet)];
             }
-            this._pets = newPets;
+            this._pet = newPet;
         } else {
-            this._pets = new Array<PetInfo>();
+            this._pet = new Array<PetInfo>();
         }
         
         if(data.note){
@@ -52,9 +52,9 @@ export class AccountInfo {
                     newNotes = [...newNotes, new Note(note)];
                 }
             }
-            this._notes = newNotes;
+            this._note = newNotes;
         } else {
-            this._notes = new Array<Note>();
+            this._note = new Array<Note>();
         }
     }
 
@@ -127,38 +127,38 @@ export class AccountInfo {
         this._accountName = accountName;
     }
 
-    get people(): PersonInfo[]{
-        return this._people;
+    get person(): PersonInfo[]{
+        return this._person;
     }
-    set people(people: PersonInfo[]){
-        this._people = people;
-    }
-
-    get pets(): PetInfo[]{
-        return this._pets;
-    }
-    set pets(pets: PetInfo[]){
-        this._pets = pets;
+    set person(person: PersonInfo[]){
+        this._person = person;
     }
 
-    get notes(): Note[]{
-        return this._notes;
+    get pet(): PetInfo[]{
+        return this._pet;
+    }
+    set pet(pet: PetInfo[]){
+        this._pet = pet;
     }
 
-    set notes(notes: Note[]){
-        this._notes = notes;
+    get note(): Note[]{
+        return this._note;
+    }
+
+    set note(note: Note[]){
+        this._note = note;
     }
 
     addPerson(person: PersonInfo){
-        this._people.push(person);
+        this._person.push(person);
     }
 
     addPet(pet: PetInfo){
-        this._pets.push(pet);
+        this._pet.push(pet);
     }
 
     addNote(note: Note){
-        this._notes.push(note);
+        this._note.push(note);
     }
 
     baseAccountEqual(other: AccountInfo){

@@ -15,7 +15,7 @@ const AccountDetail = (props: AccountDetailProps) => {
         <h2>account address: {props.account.fullAddress}</h2>
         <h2>People in the account:</h2>
         {
-            props.account.people.map(h => {
+            props.account.person.map(h => {
                 return (
                     <h3>Person name: {h.fullName + " - " + h.email}</h3>
                 );
@@ -23,7 +23,7 @@ const AccountDetail = (props: AccountDetailProps) => {
         }
         <h2>Pets in the account</h2>
         {
-            props.account.pets.map(p => {
+            props.account.pet.map(p => {
                 return (
                     <h3>pet name: {p.name + " " + p.breed + " " + p.maleFemale}</h3>
                 );

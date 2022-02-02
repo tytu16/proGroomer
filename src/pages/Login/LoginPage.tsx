@@ -1,16 +1,22 @@
 import { IonButton, IonCard, IonCardContent, IonCardHeader, IonCardTitle, IonCol, IonContent, IonFooter, IonGrid, IonInput, IonRow } from "@ionic/react";
 import { useForm } from "react-hook-form";
 import CustomField from "../../components/InputFields/CustomInput";
+import { Profile } from "../../models/Profile";
 import "./Login.scss";
 
-function LoginPage() {
+interface LoginPageProps{
+    onLogin: Function
+}
+
+function LoginPage(props: LoginPageProps) {
     const { register, handleSubmit, formState: { errors } } = useForm({
         defaultValues: {email: "", password: ""}
     });
 
-    const onSubmit = (data: any) => {
+    const onLogin = async (data: any) => {
         console.log('login submitted: ');
         console.log(data);
+        props.onLogin(data)
     }
 
     return (
@@ -30,7 +36,7 @@ function LoginPage() {
                             </IonCardContent>
                             <IonFooter>
                                 <IonRow className="ion-justify-content-center">
-                                    <IonButton color="primary" onClick={handleSubmit(onSubmit)}> Login</IonButton>
+                                    <IonButton color="primary" onClick={handleSubmit(onLogin)}> Login</IonButton>
                                     <IonButton color="light" onClick={() => {}}>Forgot Password</IonButton>
                                 </IonRow>
                                  <IonRow className="ion-justify-content-center">

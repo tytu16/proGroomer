@@ -79,7 +79,7 @@ export const AccountSummaryContent = (props: SummaryContentProps) => {
     </>);
 }
 
-// People Stuff //
+// Person Stuff //
 
 interface PhoneContentProps {
     formName: string,
