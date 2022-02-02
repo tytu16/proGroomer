@@ -16,7 +16,6 @@ import { people, calendar, wallet } from 'ionicons/icons';
 import AccountsTab from './pages/Tabs/AccountsTab';
 import CalendarsTab from './pages/Tabs/CalendarsTab';
 import PaymentsTab from './pages/Tabs/PaymentsTab';
-import {DoLogin} from './services/ApiService';
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
@@ -103,11 +102,8 @@ function App () {
   }
 
   const onLogin = async (data: any) => {
-    DoLogin(data.email,data.password).then((data) => {
-      console.log('in app');
-      console.log(data);
-      logProfileIn(data);
-    } )
+    console.log('in app onLogin');
+    logProfileIn(data);
   }
 
   return (
