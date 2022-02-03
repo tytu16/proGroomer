@@ -1,5 +1,5 @@
 import { IonButton, IonCard, IonCardContent, IonCardHeader, IonCardTitle, IonCol, IonContent, IonFooter, IonGrid, IonInput, IonLabel, IonRow } from "@ionic/react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import CustomInput from "../../components/InputFields/CustomInput";
 import { Profile } from "../../models/Profile";
@@ -18,27 +18,23 @@ function LoginPage(props: LoginPageProps) {
     });
     const [serverError, setServerError] = useState<any>(null);
 
-    useEffect(() => {
-        setServerError(null);
-    })
+    const onFieldChange = (data: any) => {
+        clearErrors(data);
+    }
 
     const onLogin = async (data: any) => {
-        console.log('login submitted: ');
-        console.log(data);
         setServerError(null);
         try {
             const response = await doLogin(data.email, data.password);
             props.onLogin(response)
         } catch (error) {
             const { errMessage: errorMessage } = errorHandler(error);
-            console.log('in login page catch');
-            console.log(errorMessage);
             setServerError(errorMessage);
           }
     }
 
-    const onFieldChange = (data: any) => {
-        clearErrors(data);
+    const handleFormErrors = (errors: any) => {
+        setServerError(null);
     }
 
     return (
@@ -51,23 +47,25 @@ function LoginPage(props: LoginPageProps) {
                                 <IonCardTitle>Login</IonCardTitle>
                             </IonCardHeader>
                             <IonCardContent className="text-center">
-                                <CustomInput register={register} error={errors.email} name="email" watched={true}
-                                    required={true} placeholder="email address" handleChange={()=>{onFieldChange("email")}}></CustomInput>
-                                <CustomInput register={register} error={errors.password} name="password" handleChange={()=>{onFieldChange("password")}}
-                                    required={true} placeholder="password"></CustomInput>
+                                <form>
+                                    <CustomInput register={register} error={errors.email} name="email" watched={true}
+                                        required={true} placeholder="email address" handleChange={()=>{onFieldChange("email")}}></CustomInput>
+                                    <CustomInput register={register} error={errors.password} name="password" watched={true}
+                                        required={true} placeholder="password" handleChange={()=>{onFieldChange("password")}}></CustomInput>
+                                </form>
                             </IonCardContent>
-                            {(serverError && !(errors.email || errors.password)) && <IonLabel className="animate__animated animate__bounceIn" color="danger">
+                            {serverError && <IonLabel className="animate__animated animate__bounceIn" color="danger">
                                 {serverError}
                             </IonLabel>}
                             <IonFooter>
                                 <IonRow className="ion-justify-content-center">
-                                    <IonButton type="submit" color="primary" onClick={handleSubmit(onLogin)}>
+                                    <IonButton type="submit" color="primary" onClick={handleSubmit(onLogin,handleFormErrors)}>
                                          Login
                                     </IonButton>
                                     <IonButton color="light" onClick={() => {}}>Forgot Password</IonButton>
                                 </IonRow>
                                  <IonRow className="ion-justify-content-center">
-                                    <IonButton color="secondary" onClick={() => {}}>Create Account</IonButton>
+                                    <IonButton color="secondary" onClick={() => {}}>Create Profile</IonButton>
                                 </IonRow>
                             </IonFooter>
                         </IonCard>
