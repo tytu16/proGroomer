@@ -40,8 +40,9 @@ import CreateAccount from './pages/CreateAccount/CreateAccount';
 import { AccountInfo } from './models/AccountInfo';
 import { Profile } from './models/Profile';
 import AccountDetail from './pages/AccountDetails/AccountDetails';
-import useAuthToken from './hooks/useAuthToken';
 import LoginPage from './pages/Login/LoginPage';
+import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute';
+import {AuthLevel} from "./models/Enums/AuthLevel";
 
 interface AppState {
   profile: Profile,
@@ -109,46 +110,7 @@ function App () {
   return (
       <IonApp>
       <IonReactRouter>
-        {((!token || token == '') && useLogin) ? (<LoginPage onLogin={onLogin} ></LoginPage>) : (
-          <IonTabs>
-            <IonRouterOutlet>
-              <Route exact path="/accounts">
-                <AccountsTab currentIndex={appState.topIndex} accounts={appState.profile.accounts} createAccounts={createAccounts} onNewAccount={onNewAccount} />
-                <Route exact path="/accounts/createAccounts" >
-                  <CreateAccount index={appState.topIndex} createAccounts={createAccounts}/>
-                </Route>
-                <Route exact path="/accounts/details:id" render={({match}) => (
-                  <AccountDetail account={appState.profile.accounts.find( a =>  ':'+a.id.toString() == match.params.id ) || defaultAccount}/>
-                )} />
-              </Route>
-  
-              <Route exact path="/calendars">
-                <CalendarsTab accounts={appState.profile.accounts} onNewAccount={onNewAccount} />
-              </Route>
-              
-              <Route path="/payments">
-                <PaymentsTab accounts={appState.profile.accounts}  onNewAccount={onNewAccount}/>
-              </Route>
-              <Route exact path="/">
-                <Redirect to="/accounts" />
-              </Route>
-            </IonRouterOutlet>
-            <IonTabBar slot="bottom">
-              <IonTabButton tab="Accounts" href="/accounts">
-                <IonIcon icon={people} />
-                <IonLabel>Accounts</IonLabel>
-              </IonTabButton>
-              <IonTabButton tab="Calendars" href="/calendars">
-                <IonIcon icon={calendar} />
-                <IonLabel>Calendars</IonLabel>
-              </IonTabButton>
-              <IonTabButton tab="Payments" href="/payments">
-                <IonIcon icon={wallet} />
-                <IonLabel>Payments</IonLabel>
-              </IonTabButton>
-            </IonTabBar>
-          </IonTabs>
-          )} 
+        { token ? <LoggedInRoot/> : <NotLoggedInRoot/> }
       </IonReactRouter>
     </IonApp>
     );

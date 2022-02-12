@@ -2,7 +2,6 @@ import { IonButton, IonCard, IonCardContent, IonCardHeader, IonCardTitle, IonCol
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import CustomInput from "../../components/InputFields/CustomInput";
-import { Profile } from "../../models/Profile";
 import { doLogin } from "../../services/ApiService";
 import { errorHandler } from "../../services/ErrorHandler";
 import "./Login.scss";

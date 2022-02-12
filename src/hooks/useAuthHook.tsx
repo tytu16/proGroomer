@@ -1,8 +1,9 @@
 import { useState } from "react";
 import {Storage} from "@ionic/storage";
 
-export default function useAuthToken(){
+export default function useAuthHook(){
     const [token, setToken] = useState<string>();
+    const [isPaid, setIsPaid] = useState<boolean>(false);
     const storage = new Storage();
     const tokenKey = 'tokenKey';
 
@@ -19,6 +20,8 @@ export default function useAuthToken(){
 
     return ({
         setToken: saveToken,
-        token
+        setIsPaid,
+        token,
+        isPaid
     });
 }
